@@ -1,17 +1,22 @@
 import React, { useState, useMemo } from 'react';
 import { Switch } from 'react-router-dom';
 
+import { useAuth } from '../hooks/auth';
+
 import Header from '../components/mols/Header';
 
-// Pages
-import Landing from '../pages/Landing';
-import Cursos from '../pages/Cursos';
-import AoVivo from '../pages/AoVivo';
+// Pages Non Logged
+import Landing from '../pages/NonLoggedPages/Landing';
+
+// Pages Logged
+import Cursos from '../pages/LoggedPages/Cursos';
+import AoVivo from '../pages/LoggedPages/AoVivo';
 
 import Route from './Route';
 
 const Routes: React.FC = () => {
   const [tab, setTab] = useState('cursos');
+  const { user } = useAuth();
 
   const HeaderTabs = useMemo(() => [
     { key: 'cursos', value: 'Cursos' },
@@ -23,7 +28,7 @@ const Routes: React.FC = () => {
 
   return (
     <>
-      <Header actualTab={tab} tabs={HeaderTabs} changeTab={setTab} />
+      {user && <Header actualTab={tab} tabs={HeaderTabs} changeTab={setTab} />}
       <Switch>
         <Route path="/" exact component={Landing} />
         <Route path="/cursos" component={Cursos} isPrivate />
