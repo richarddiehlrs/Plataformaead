@@ -1,87 +1,15 @@
 import styled, { css } from 'styled-components';
 import { shade } from 'polished';
 
-interface HeaderProps {
-  tab?: boolean;
+interface OptionProps {
+  tabIsSelected?: boolean;
 }
 
-interface OptionsProps {
-  collapsible?: boolean;
+interface WrapperProps {
   isCollapsed?: boolean;
 }
 
-export const Container = styled.header`
-  background: rgba(0, 0, 0, 0.1);
-
-  width: 100%;
-
-  border-radius: 0 0 10px 10px;
-  box-sizing: border-box;
-
-  padding: 0 80px;
-
-  display: flex;
-
-`;
-
-export const LogoContent = styled.div`
-  width: 100%;
-  height: 100px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const Logo = styled.img`
-  height: 40px;
-
-  opacity: 1;
-
-  transition: transform 0.4s;
-
-  &:hover{
-    transform: scaleX(1.1) scaleY(1.1);
-    cursor: pointer;
-  }
-`;
-
-export const Separator = styled.div`
-  background-image: linear-gradient(black, #707070);
-
-  width: 1px;
-  height: 60%;
-  margin-bottom: auto;
-  margin-left: 20px;
-`;
-
-export const UserContainer = styled.div`
-  margin-left: 2%;
-  width: 240px;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  .image-container{
-    img{
-      width: 56px;
-      height: 56px;
-
-      border: solid 2px #dbdbdb;
-
-      border-radius: 50%;
-    }
-  }
-
-  .user-data-container{
-    color: #dbdbdb;
-  }
-
-`;
-
-export const LogoOptions = styled.div<OptionsProps>`
+export const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -102,7 +30,7 @@ export const LogoOptions = styled.div<OptionsProps>`
   }
 `;
 
-export const CollasibleMenu = styled.div<OptionsProps>`
+export const MenuWrapper = styled.div<WrapperProps>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -127,11 +55,10 @@ export const CollasibleMenu = styled.div<OptionsProps>`
     transition: color 0.4s;
 
     font-family: 'Fira Sans', sans-serif;
-    font-size: 16px;
 
     &:hover {
       cursor: pointer;
-      color: ${shade(0.4, '#bdbdbd')};
+      color: ${shade(0.4, '#fff')};
     }
   }
 
@@ -159,7 +86,7 @@ export const CollasibleMenu = styled.div<OptionsProps>`
       flex-direction: column;
       align-items: flex-start;
       p{
-        margin-bottom: 12px;
+        margin-bottom: 16px;
       }
 
     `}
@@ -183,7 +110,6 @@ export const CollasibleMenu = styled.div<OptionsProps>`
         display: block;
       }
     `}
-
   }
 `;
 
@@ -205,9 +131,12 @@ export const CollapsedMenu = styled.div`
   }
 `;
 
-export const Option = styled.p<HeaderProps>`
-   ${(props) => props.tab
+export const Option = styled.p<OptionProps>`
+  font-size: 16px;
+
+  ${(props) => props.tabIsSelected
     && css`
-      border-bottom: 1px solid #fff;
-    `}
+    font-size: 18px;
+    border-bottom: 1.4px solid #fff;
+  `}
 `;
