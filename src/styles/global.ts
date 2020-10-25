@@ -11,6 +11,14 @@ export default createGlobalStyle`
     &::-webkit-scrollbar {
       display: none;
     }
+
+    @media(max-width: 830px){
+      overflow: hidden;
+
+      body{
+        min-width: 820px;
+      }
+    }
   }
 
   body {
@@ -22,7 +30,7 @@ export default createGlobalStyle`
     background-repeat: no-repeat;
     background-size: cover;
 
-  }
 
+  }
 
 `;

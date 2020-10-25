@@ -3,14 +3,16 @@ import { Switch } from 'react-router-dom';
 
 // Pages
 import Landing from '../pages/Landing';
-import Dashboard from '../pages/Dashboard';
+import Cursos from '../pages/Cursos';
+import AoVivo from '../pages/AoVivo';
 
 import Route from './Route';
 
 const routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={Landing} />
-    <Route path="/dashboard" component={Dashboard} isPrivate />
+    <Route path="/cursos" component={Cursos} isPrivate />
+    <Route path="/aovivo" component={AoVivo} isPrivate />
   </Switch>
 );
 

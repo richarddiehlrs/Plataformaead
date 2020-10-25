@@ -64,7 +64,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     const { user, school } = response.data;
 
-    Object.assign(user, school);
+    Object.assign(user, { schoolCity: school.city, schoolName: school.name });
 
     if (user !== undefined) {
       localStorage.setItem('@NextLevel:user', JSON.stringify(user));
