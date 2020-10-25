@@ -1,18 +1,19 @@
-import React, { useState, useMemo } from 'react';
+import React, {
+  useState, useMemo,
+} from 'react';
 import { Switch } from 'react-router-dom';
 
 import { useAuth } from '../hooks/auth';
 
 import Header from '../components/mols/Header';
 
+import Route from './Route';
+
 // Pages Non Logged
 import Landing from '../pages/NonLoggedPages/Landing';
-
 // Pages Logged
 import Cursos from '../pages/LoggedPages/Cursos';
 import AoVivo from '../pages/LoggedPages/AoVivo';
-
-import Route from './Route';
 
 const Routes: React.FC = () => {
   const [tab, setTab] = useState('cursos');
