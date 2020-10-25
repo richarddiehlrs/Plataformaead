@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { FiLogOut } from 'react-icons/fi';
 
+import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../../hooks/auth';
 
 import CollapsibleMenu from '../../atoms/CollapsibleMenu';
@@ -23,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const { push } = useHistory();
 
   const handleChangeTab = useCallback((tab: string) => {
@@ -38,6 +39,10 @@ const Header: React.FC<HeaderProps> = ({
     setIsCollapsed(!isCollapsed);
   }, [isCollapsed]);
 
+  const handleSignOut = useCallback(() => {
+    signOut();
+  }, [signOut]);
+
   return (
     <Container>
       <LogoContent>
@@ -50,6 +55,12 @@ const Header: React.FC<HeaderProps> = ({
           <div className="user-data-container">
             <h3>{user.fullname}</h3>
             <p>{`${user.levelid}-${user.roomid}`}</p>
+          </div>
+          <div>
+            <button type="button" onClick={handleSignOut}>
+              <FiLogOut size={20} />
+            </button>
+
           </div>
         </UserContainer>
         <CollapsibleMenu

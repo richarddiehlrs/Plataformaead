@@ -18,7 +18,7 @@ const CollapsibleMenu: React.FC<CollapsibleMenuProps> = ({
     <Container className="logo-options">
       <MenuWrapper isCollapsed={isCollapsed} onClick={handleCollapseMenu}>
         {items && items.map((item) => (
-          <Option className="logo-option" tabIsSelected={actualTab === item.key} onClick={() => handleChangeTab && handleChangeTab(item.key)}>{item.value}</Option>
+          <Option key={item.value} className="logo-option" tabIsSelected={actualTab === item.key} onClick={() => handleChangeTab && handleChangeTab(item.key)}>{item.value}</Option>
         ))}
         <CollapsedMenu onClick={handleCollapseMenu} className="collapsed-icon">
           <div className="bar" />

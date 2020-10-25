@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const Container = styled.header`
   background: rgba(0, 0, 0, 0.1);
@@ -54,6 +55,22 @@ export const UserContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  button{
+    background: transparent;
+    border: none;
+  }
+
+  svg{
+    color:#dbdbdb;
+
+    transition: color 0.4s;
+
+    &:hover{
+      color: ${shade(0.4, '#dbdbdb')};
+      cursor: pointer;
+    }
+  }
+
   .image-container{
     img{
       width: 56px;
@@ -64,9 +81,7 @@ export const UserContainer = styled.div`
       border-radius: 50%;
     }
   }
-
   .user-data-container{
     color: #dbdbdb;
   }
-
 `;
