@@ -25,7 +25,7 @@ export const LogoContent = styled.div`
 `;
 
 export const Logo = styled.img`
-  height: 40px;
+  height: 60px;
 
   opacity: 1;
 
@@ -35,15 +35,6 @@ export const Logo = styled.img`
     transform: scaleX(1.1) scaleY(1.1);
     cursor: pointer;
   }
-`;
-
-export const Separator = styled.div`
-  background-image: linear-gradient(black, #707070);
-
-  width: 1px;
-  height: 60%;
-  margin-bottom: auto;
-  margin-left: 20px;
 `;
 
 export const UserContainer = styled.div`
@@ -82,6 +73,7 @@ export const UserContainer = styled.div`
     }
   }
   .user-data-container{
+    margin-left: 14px;
     color: #dbdbdb;
   }
 `;

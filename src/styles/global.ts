@@ -13,8 +13,6 @@ export default createGlobalStyle`
     }
 
     @media(max-width: 830px){
-      overflow: hidden;
-
       body{
         min-width: 820px;
       }
@@ -22,7 +20,6 @@ export default createGlobalStyle`
   }
 
   body {
-    /* font-family: 'Archivo'; */
     background-image: url(${grayGradient});
 
     background-attachment: fixed;

@@ -2,15 +2,16 @@ import React, { useState, useCallback } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 
 import { useHistory } from 'react-router-dom';
-import { useAuth } from '../../../hooks/auth';
+import { useAuth } from 'hooks/auth';
 
-import CollapsibleMenu from '../../atoms/CollapsibleMenu';
+import CollapsibleMenu from 'components/atoms/CollapsibleMenu';
+import Separator from 'components/atoms/Separator';
+
+import nlLogo from 'assets/images/nextLevel_512.png';
 
 import {
-  Container, LogoContent, Logo, Separator, UserContainer,
+  Container, LogoContent, Logo, UserContainer,
 } from './styles';
-
-import nlLogo from '../../../assets/images/nlicon.png';
 
 interface HeaderProps {
   changeTab(tab: string): void;
@@ -46,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <Container>
       <LogoContent>
-        <Logo onClick={() => handleChangeTab('dashboard')} src={nlLogo} alt="nllogo" />
+        <Logo onClick={() => handleChangeTab('cursos')} src={nlLogo} alt="nllogo" />
         <Separator />
         <UserContainer>
           <div className="image-container">
