@@ -4,7 +4,7 @@ import React, {
 import { v4 } from 'uuid';
 
 /* Componentes */
-import ToastContainer from 'components/atoms/ToastContainer';
+import ToastContainer from 'components/Atoms/ToastContainer';
 
 interface ToastContextData {
   addToast(message: Omit<ToastMessage, 'id'>): void;

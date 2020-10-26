@@ -4,16 +4,15 @@ import { FiUser, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 
-import Input from 'components/atoms/Input';
-import Button from 'components/atoms/Button';
-import Loading from 'components/atoms/Loading';
+import Input from 'components/Atoms/Input';
+import Loading from 'components/Atoms/Loading';
 
 import nlLogo from 'assets/images/nlicon.png';
 
 import { useAuth } from 'hooks/auth';
 
 import {
-  Container, ContentWrapper, LoginWrapper, FormWrapper,
+  Container, ContentWrapper, LoginWrapper, FormWrapper, StyledButton,
 } from './styles';
 
 const Landing: React.FC = () => {
@@ -22,9 +21,9 @@ const Landing: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { signIn } = useAuth();
 
-  const handleLogin = useCallback(() => {
+  const handleLogin = useCallback(async () => {
     setIsLogging(true);
-    signIn({ username: 'thiago.coradi', password: '123456' });
+    await signIn({ username: 'thiago.coradi', password: '123456' });
     setIsLogging(false);
   }, [signIn]);
 
@@ -48,13 +47,12 @@ const Landing: React.FC = () => {
                 type="password"
                 placeholder="Sua senha"
               />
-              <Button
-                style={{ width: '50%' }}
-                // enabled={isEnabled}
+              <StyledButton
                 type="submit"
+                enabled={!isLogging}
               >
                 {isLogging ? <Loading /> : 'Entrar'}
-              </Button>
+              </StyledButton>
             </FormWrapper>
           </Form>
         </LoginWrapper>

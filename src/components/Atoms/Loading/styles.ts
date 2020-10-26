@@ -17,6 +17,7 @@ span{
   border-left: 0.2rem solid #ffefdb;
 
   border-radius: 50%;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.4);
 
   box-sizing: border-box;
   top: 0;
