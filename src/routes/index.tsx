@@ -5,7 +5,7 @@ import { Switch } from 'react-router-dom';
 
 import { useAuth } from '../hooks/auth';
 
-import Header from '../components/mols/Header';
+import Header from '../components/Mols/Header';
 
 import Route from './Route';
 

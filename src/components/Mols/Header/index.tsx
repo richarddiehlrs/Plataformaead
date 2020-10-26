@@ -4,8 +4,8 @@ import { FiLogOut } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from 'hooks/auth';
 
-import CollapsibleMenu from 'components/atoms/CollapsibleMenu';
-import Separator from 'components/atoms/Separator';
+import CollapsibleMenu from 'components/Atoms/CollapsibleMenu';
+import Separator from 'components/Atoms/Separator';
 
 import nlLogo from 'assets/images/nextLevel_512.png';
 

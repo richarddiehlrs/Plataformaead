@@ -70,7 +70,9 @@ export const UserContainer = styled.div`
       border: solid 2px #dbdbdb;
 
       border-radius: 50%;
+      flex-shrink: 0;
     }
+    flex-shrink: 0;
   }
   .user-data-container{
     margin-left: 14px;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Button from 'components/Atoms/Button';
 
 export const Container = styled.div`
   width: 100vw;
@@ -13,9 +14,6 @@ export const ContentWrapper = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-
-
 `;
 
 export const LoginWrapper = styled.div`
@@ -41,4 +39,12 @@ export const FormWrapper = styled.div`
 
   justify-content: space-between;
   align-items: center;
+`;
+
+export const StyledButton = styled(Button)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 50%;
 `;
