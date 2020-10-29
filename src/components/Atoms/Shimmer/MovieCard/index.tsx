@@ -3,8 +3,12 @@ import React from 'react';
 import Skeleton from 'components/Skeleton';
 import { Container } from './styles';
 
-const MovieCard: React.FC = () => (
-  <Container>
+interface ShimmerMovieCard {
+  movieViewType: string;
+}
+
+const MovieCard: React.FC<ShimmerMovieCard> = ({ movieViewType }) => (
+  <Container type={movieViewType}>
     <Skeleton className="bg-skeleton" />
     <span>
       <Skeleton className="progress-bar-wrapper-skeleton">

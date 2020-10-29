@@ -4,6 +4,7 @@ import MovieCard from 'components/Atoms/MovieCard';
 import ShimmerMovieCard from 'components/Atoms/Shimmer/MovieCard';
 
 import MovieInterface from 'models/Movies';
+import { useAuth } from 'hooks/auth';
 
 import { Container } from './styles';
 
@@ -13,7 +14,8 @@ interface MovieContainerProps {
 }
 
 const MovieContainer: React.FC<MovieContainerProps> = ({ movies, isLoading }) => {
-  const sixMovies = useMemo(() => movies.map((movie, index) => index < 6 && movie), [movies]);
+  const sixMovies = useMemo(() => movies.map((movie, index) => index < 10 && movie), [movies]);
+  const { movieTypeView } = useAuth();
 
   return (
     <>
@@ -23,17 +25,22 @@ const MovieContainer: React.FC<MovieContainerProps> = ({ movies, isLoading }) =>
             <MovieCard
               key={movie.movieid}
               movie={movie}
+              movieViewType={movieTypeView}
             />
           ))}
         </Container>
       )
         : (
           <Container>
-            <ShimmerMovieCard />
-            <ShimmerMovieCard />
-            <ShimmerMovieCard />
-            <ShimmerMovieCard />
-            <ShimmerMovieCard />
+            <ShimmerMovieCard movieViewType={movieTypeView} />
+            <ShimmerMovieCard movieViewType={movieTypeView} />
+            <ShimmerMovieCard movieViewType={movieTypeView} />
+            <ShimmerMovieCard movieViewType={movieTypeView} />
+            <ShimmerMovieCard movieViewType={movieTypeView} />
+            <ShimmerMovieCard movieViewType={movieTypeView} />
+            <ShimmerMovieCard movieViewType={movieTypeView} />
+            <ShimmerMovieCard movieViewType={movieTypeView} />
+            <ShimmerMovieCard movieViewType={movieTypeView} />
           </Container>
         )}
     </>

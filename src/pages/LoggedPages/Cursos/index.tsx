@@ -1,46 +1,44 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import AwesomeSlider from 'react-awesome-slider';
-import 'react-awesome-slider/dist/styles.css';
 
+import { useAuth } from 'hooks/auth';
 import api from 'services/api';
-import MoviesInterface from 'models/Movies';
+import CategoryInterface from 'models/Category';
 
-import MovieContainer from 'components/Mols/MovieContainer';
+import CategoryContainer from 'components/Mols/CategoryContainer';
 
-import {
-  Container, CarouselWrapper,
-} from './styles';
+import { Container } from './styles';
 
 const Cursos: React.FC = () => {
-  const [movies, setMovies] = useState<MoviesInterface[]>([]);
+  const [categories, setCategories] = useState<CategoryInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getAllMovies = useCallback(async () => {
+  const { user, updateMovieView } = useAuth();
+
+  const getAllCategories = useCallback(async () => {
     setIsLoading(true);
-    const response = await api.get<MoviesInterface[]>('/movie/all');
+    const response = await api.get<CategoryInterface[]>(`/movie?userid=${user.userid}`);
     setIsLoading(false);
 
-    setMovies(response.data);
-  }, []);
+    setCategories(response.data);
+  }, [user.userid]);
+
+  const handleChangeMovieTypeView = useCallback(() => {
+    updateMovieView();
+  }, [updateMovieView]);
 
   useEffect(() => {
-    getAllMovies();
-  }, [getAllMovies]);
+    getAllCategories();
+  }, [getAllCategories]);
 
   return (
     <Container>
-      <CarouselWrapper>
-        <AwesomeSlider
-          animation="foldOutAnimation"
-          className="slider-container"
-          organicArrows
-          bullets={false}
-        >
-          <div>
-            <MovieContainer movies={movies} isLoading={isLoading} />
-          </div>
-        </AwesomeSlider>
-      </CarouselWrapper>
+      <div className="teste">
+        <button type="button" onClick={handleChangeMovieTypeView}>Mudar modo de visulização</button>
+      </div>
+      <CategoryContainer
+        categories={categories}
+        isLoading={isLoading}
+      />
     </Container>
   );
 };
