@@ -2,6 +2,10 @@ import React from 'react';
 
 import { Container } from './styles';
 
-const Separator: React.FC = () => <Container />;
+interface SeparatorProps {
+  type?: 'vertical' | 'horizontal';
+}
+
+const Separator: React.FC<SeparatorProps> = ({ type = 'vertical' }) => <Container />;
 
 export default Separator;

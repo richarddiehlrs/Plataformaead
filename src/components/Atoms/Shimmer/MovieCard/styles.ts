@@ -1,14 +1,42 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface MovieContainerProps {
+  type: string;
+}
+
+export const Container = styled.div<MovieContainerProps>`
   display: flex;
   flex-direction: column;
   margin-right: 36px;
   border-radius: 4px;
 
+  transition: width 0.4s, height 0.4s;
+
+  ${(props) => props.type === 'large' && css`
+    width: 240px;
+    height: 160px;
+  `}
+
+  ${(props) => props.type === 'thin' && css`
+    width: 140px;
+    height: 180px;
+  `}
+
   .bg-skeleton{
     width: 240px;
     height: 160px;
+
+    transition: width 0.4s, height 0.4s;
+
+    ${(props) => props.type === 'large' && css`
+      width: 240px;
+      height: 160px;
+    `}
+
+    ${(props) => props.type === 'thin' && css`
+      width: 140px;
+      height: 180px;
+    `}
 
     box-shadow: 0 0 10px rgba(0,0,0,0.08);
     /* filter: brightness(98%); */

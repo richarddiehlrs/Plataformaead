@@ -20,13 +20,13 @@ export const Container = styled.div<ContainerProps>`
   border: 2px solid #7a8095;
   color: white;
 
-  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
 
   & + div {
     margin-top: 8px;
   }
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 
-  transition: border 0.3s;
+  transition: border 0.4s, box-shadow 0.4s;
 
   ${(props) => props.hasError
     && css`
@@ -37,6 +37,7 @@ export const Container = styled.div<ContainerProps>`
     && css`
       border: 2px solid #ffa22b;
       color: #ffa22b;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
     `}
 
   ${(props) => props.hasValue

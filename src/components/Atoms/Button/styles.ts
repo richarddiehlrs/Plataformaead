@@ -21,6 +21,11 @@ export const Container = styled.button<ContainerProps>`
   margin-top: 16px;
   transition: background-color 0.2s;
 
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: #353536;
+
   &:hover {
     background: ${shade(0.4, '#ffd35c')};
     cursor: pointer;

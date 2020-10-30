@@ -51,7 +51,7 @@ const Landing: React.FC = () => {
                 type="submit"
                 enabled={!isLogging}
               >
-                {isLogging ? <Loading /> : 'Entrar'}
+                {isLogging ? <Loading /> : 'ENTRAR'}
               </StyledButton>
             </FormWrapper>
           </Form>

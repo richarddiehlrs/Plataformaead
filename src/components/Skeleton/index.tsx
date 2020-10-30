@@ -3,13 +3,13 @@ import styled from 'styled-components';
 export default styled.div`
   background-image: linear-gradient(
     -90deg,
-   #a6a6a6 0%,
-   #cccccc 50%,
-   #a6a6a6 100%
+   rgba(61,61,61,0.6) 0%,
+   rgba(133,133,133,0.2) 50%,
+   rgba(61,61,61,0.6) 100%
   );
 
   background-size: 400% 400%;
-  animation: shimmer 1.2s ease-in-out infinite;
+  animation: shimmer 1.6s ease-in-out infinite;
 
   @keyframes shimmer {
     0%{

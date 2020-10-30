@@ -1,29 +1,19 @@
 import React, {
-  createContext, useCallback, useState, useContext,
+  createContext, useCallback, useState, useContext, useMemo,
 } from 'react';
+
+import UserInterface from 'models/User';
+import SchoolInterface from 'models/School';
 import api from 'services/api';
 
-interface User {
-  userid: string;
-  fullname: string;
-  username: string;
-  levelid: string;
-  roomid: string;
-  schoolid: string;
-}
-
-interface School {
-  schoolid: string;
-  name: string;
-  city: string;
-}
-
 interface AuthContextData {
-  user: User;
+  user: UserInterface;
   senha?: string;
+  movieTypeView: string;
   signIn(loginInfo: Login): Promise<void>;
   signOut(): void;
-  updateUser(user: User): void;
+  updateMovieView(): void;
+  updateUser(user: UserInterface): void;
 }
 
 interface Login {
@@ -32,12 +22,28 @@ interface Login {
 }
 
 interface UserLoginData {
-  user: User;
+  user: UserInterface;
+}
+
+interface LoginRequestData {
+  user: UserInterface;
+  school: SchoolInterface;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
+  const [movieTypeView, setMovieTypeView] = useState<string>(() => {
+    const movieView = localStorage.getItem('@NextLevel:movieView');
+
+    if (movieView) {
+      const type = movieView;
+      return type;
+    }
+
+    return 'thin';
+  });
+
   const [data, setData] = useState<UserLoginData>(() => {
     const token = localStorage.getItem('@NextLevel:token');
     const user = localStorage.getItem('@NextLevel:user');
@@ -53,8 +59,10 @@ export const AuthProvider: React.FC = ({ children }) => {
     return {} as UserLoginData;
   });
 
+  const defaultUserProfileImage = useMemo<string>(() => 'https://nextlevelimagesprofile.s3-sa-east-1.amazonaws.com/defaultUser.png', []);
+
   const signIn = useCallback(async ({ username, password }) => {
-    const response = await api.post(
+    const response = await api.post<LoginRequestData>(
       `${process.env.REACT_APP_PROD_API}/login`,
       {
         username,
@@ -63,6 +71,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     );
 
     const { user, school } = response.data;
+
+    user.imageurl = user.imageurl !== ' ' || '' ? user.imageurl : defaultUserProfileImage;
 
     Object.assign(user, { schoolCity: school.city, schoolName: school.name });
 
@@ -73,17 +83,26 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({
       user,
     });
-  }, []);
+  }, [defaultUserProfileImage]);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@NextLevel:token');
     localStorage.removeItem('@NextLevel:user');
+    localStorage.removeItem('@NextLevel:movieView');
 
     setData({} as UserLoginData);
   }, []);
 
+  const updateMovieView = useCallback(() => {
+    const type = movieTypeView === 'thin' ? 'large' : 'thin';
+
+    setMovieTypeView(type);
+
+    localStorage.setItem('@NextLevel:movieView', type);
+  }, [movieTypeView]);
+
   const updateUser = useCallback(
-    (user: User) => {
+    (user: UserInterface) => {
       localStorage.setItem('@NextLevel:user', JSON.stringify(user));
 
       setData({
@@ -96,7 +115,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        user: data.user, signIn, signOut, updateUser,
+        user: data.user, signIn, signOut, updateUser, updateMovieView, movieTypeView,
       }}
     >
       {children}

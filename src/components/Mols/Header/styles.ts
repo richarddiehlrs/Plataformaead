@@ -39,7 +39,7 @@ export const Logo = styled.img`
 
 export const UserContainer = styled.div`
   margin-left: 2%;
-  width: 240px;
+  width: 300px;
 
   display: flex;
   flex-direction: row;
@@ -75,7 +75,6 @@ export const UserContainer = styled.div`
     flex-shrink: 0;
   }
   .user-data-container{
-    margin-left: 14px;
     color: #dbdbdb;
   }
 `;
