@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
 
+interface UserContainerProps {
+  bg: string;
+}
+
 export const Container = styled.header`
   background: rgba(0, 0, 0, 0.1);
 
@@ -37,7 +41,7 @@ export const Logo = styled.img`
   }
 `;
 
-export const UserContainer = styled.div`
+export const UserContainer = styled.div<UserContainerProps>`
   margin-left: 2%;
   width: 300px;
 
@@ -63,15 +67,18 @@ export const UserContainer = styled.div`
   }
 
   .image-container{
-    img{
-      width: 56px;
-      height: 56px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: solid 2px #dbdbdb;
 
-      border: solid 2px #dbdbdb;
+    background-image: url(${(props) => `${props.bg}`});
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    object-fit: cover;
 
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
     flex-shrink: 0;
   }
   .user-data-container{

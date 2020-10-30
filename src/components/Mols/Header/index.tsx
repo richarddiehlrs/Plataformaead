@@ -49,10 +49,8 @@ const Header: React.FC<HeaderProps> = ({
       <LogoContent>
         <Logo onClick={() => handleChangeTab('cursos')} src={nlLogo} alt="nllogo" />
         <Separator type="vertical" />
-        <UserContainer>
-          <div className="image-container">
-            <img src={user.imageurl} alt={user.username} />
-          </div>
+        <UserContainer bg="https://avatars0.githubusercontent.com/u/53842905?s=460&u=e3ed01c01307e54599f5a8d7e38c99571a365b5f&v=4">
+          <div className="image-container" />
           <div className="user-data-container">
             <h3>{user.fullname}</h3>
             <p>{`${user.levelid}-${user.roomid}`}</p>
