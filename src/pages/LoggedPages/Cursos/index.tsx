@@ -16,7 +16,7 @@ const Cursos: React.FC = () => {
 
   const getAllCategories = useCallback(async () => {
     setIsLoading(true);
-    const response = await api.get<CategoryInterface[]>(`/movie?userid=${user.userid}`);
+    const response = await api.get<CategoryInterface[]>(`a/movie?userid=${user.userid}`);
     setIsLoading(false);
 
     setCategories(response.data);
