@@ -33,14 +33,17 @@ const MovieContainer: React.FC<MovieContainerProps> = ({ movies, isLoading }) =>
         : (
           <Container>
             <ShimmerMovieCard movieViewType={movieTypeView} />
-            <ShimmerMovieCard movieViewType={movieTypeView} />
-            <ShimmerMovieCard movieViewType={movieTypeView} />
-            <ShimmerMovieCard movieViewType={movieTypeView} />
-            <ShimmerMovieCard movieViewType={movieTypeView} />
-            <ShimmerMovieCard movieViewType={movieTypeView} />
-            <ShimmerMovieCard movieViewType={movieTypeView} />
-            <ShimmerMovieCard movieViewType={movieTypeView} />
-            <ShimmerMovieCard movieViewType={movieTypeView} />
+            <ShimmerMovieCard animationDelay={0.3 * 0} movieViewType={movieTypeView} />
+            <ShimmerMovieCard animationDelay={0.3 * 1} movieViewType={movieTypeView} />
+            <ShimmerMovieCard animationDelay={0.3 * 2} movieViewType={movieTypeView} />
+            <ShimmerMovieCard animationDelay={0.3 * 3} movieViewType={movieTypeView} />
+            <ShimmerMovieCard animationDelay={0.3 * 4} movieViewType={movieTypeView} />
+            <ShimmerMovieCard animationDelay={0.3 * 5} movieViewType={movieTypeView} />
+            <ShimmerMovieCard animationDelay={0.3 * 6} movieViewType={movieTypeView} />
+            <ShimmerMovieCard animationDelay={0.3 * 7} movieViewType={movieTypeView} />
+            <ShimmerMovieCard animationDelay={0.3 * 8} movieViewType={movieTypeView} />
+            <ShimmerMovieCard animationDelay={0.3 * 9} movieViewType={movieTypeView} />
+            <ShimmerMovieCard animationDelay={0.3 * 10} movieViewType={movieTypeView} />
           </Container>
         )}
     </>

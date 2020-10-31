@@ -63,7 +63,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const signIn = useCallback(async ({ username, password }) => {
     const response = await api.post<LoginRequestData>(
-      `${process.env.REACT_APP_PROD_API}/login`,
+      `${process.env.REACT_APP_API_URL}/login`,
       {
         username,
         password,
