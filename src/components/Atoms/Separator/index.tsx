@@ -6,6 +6,6 @@ interface SeparatorProps {
   type?: 'vertical' | 'horizontal';
 }
 
-const Separator: React.FC<SeparatorProps> = ({ type = 'vertical' }) => <Container />;
+const Separator: React.FC<SeparatorProps> = ({ type = 'vertical' }) => <Container type={type} />;
 
 export default Separator;

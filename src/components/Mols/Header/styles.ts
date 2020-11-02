@@ -16,7 +16,6 @@ export const Container = styled.header`
   padding: 0 80px;
 
   display: flex;
-
 `;
 
 export const LogoContent = styled.div`

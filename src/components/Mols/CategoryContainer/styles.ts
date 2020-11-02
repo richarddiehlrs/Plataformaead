@@ -12,21 +12,30 @@ export const CategoryTitle = styled.div`
   align-items: center;
 
   color: #fff;
-  width: 92%;
-
-  padding: 0 68px;
+  width: 100%;
+  padding: 0 4%;
 
   font-family: 'Roboto Regular', sans-serif;
 
+  margin-bottom: -60px;
   p{
     font-size: 20px;
     margin-right: 12px;
-    margin-bottom: -80px;
   }
 
   h3{
-    margin-bottom: -80px;
     margin-right: 12px;
+  }
+
+  h4{
+    margin-left: auto;
+    margin-right: 12px;
+    z-index: 3;
+  }
+
+  button{
+    margin-left: 12px;
+    z-index: 3;
   }
 `;
 

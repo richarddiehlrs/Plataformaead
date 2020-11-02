@@ -4,46 +4,45 @@ import MovieCard from 'components/Atoms/MovieCard';
 import ShimmerMovieCard from 'components/Atoms/Shimmer/MovieCard';
 
 import MovieInterface from 'models/Movies';
-import { useAuth } from 'hooks/auth';
 
 import { Container } from './styles';
 
 interface MovieContainerProps {
   movies: Array<MovieInterface>;
   isLoading: boolean;
+  movieViewType?: string;
 }
 
-const MovieContainer: React.FC<MovieContainerProps> = ({ movies, isLoading }) => {
+const MovieContainer: React.FC<MovieContainerProps> = ({ movies, movieViewType = 'thin', isLoading }) => {
   const sixMovies = useMemo(() => movies.map((movie, index) => index < 10 && movie), [movies]);
-  const { movieTypeView } = useAuth();
 
   return (
     <>
       {!isLoading ? (
         <Container>
-          {sixMovies.map((movie) => movie && (
+          {sixMovies.map((movie, index) => movie && (
             <MovieCard
               key={movie.movieid}
               movie={movie}
-              movieViewType={movieTypeView}
+              movieViewType={movieViewType}
             />
           ))}
         </Container>
       )
         : (
           <Container>
-            <ShimmerMovieCard movieViewType={movieTypeView} />
-            <ShimmerMovieCard animationDelay={0.3 * 0} movieViewType={movieTypeView} />
-            <ShimmerMovieCard animationDelay={0.3 * 1} movieViewType={movieTypeView} />
-            <ShimmerMovieCard animationDelay={0.3 * 2} movieViewType={movieTypeView} />
-            <ShimmerMovieCard animationDelay={0.3 * 3} movieViewType={movieTypeView} />
-            <ShimmerMovieCard animationDelay={0.3 * 4} movieViewType={movieTypeView} />
-            <ShimmerMovieCard animationDelay={0.3 * 5} movieViewType={movieTypeView} />
-            <ShimmerMovieCard animationDelay={0.3 * 6} movieViewType={movieTypeView} />
-            <ShimmerMovieCard animationDelay={0.3 * 7} movieViewType={movieTypeView} />
-            <ShimmerMovieCard animationDelay={0.3 * 8} movieViewType={movieTypeView} />
-            <ShimmerMovieCard animationDelay={0.3 * 9} movieViewType={movieTypeView} />
-            <ShimmerMovieCard animationDelay={0.3 * 10} movieViewType={movieTypeView} />
+            <ShimmerMovieCard movieViewType="thin" />
+            <ShimmerMovieCard animationDelay={0.3 * 0} movieViewType="thin" />
+            <ShimmerMovieCard animationDelay={0.3 * 1} movieViewType="thin" />
+            <ShimmerMovieCard animationDelay={0.3 * 2} movieViewType="thin" />
+            <ShimmerMovieCard animationDelay={0.3 * 3} movieViewType="thin" />
+            <ShimmerMovieCard animationDelay={0.3 * 4} movieViewType="thin" />
+            <ShimmerMovieCard animationDelay={0.3 * 5} movieViewType="thin" />
+            <ShimmerMovieCard animationDelay={0.3 * 6} movieViewType="thin" />
+            <ShimmerMovieCard animationDelay={0.3 * 7} movieViewType="thin" />
+            <ShimmerMovieCard animationDelay={0.3 * 8} movieViewType="thin" />
+            <ShimmerMovieCard animationDelay={0.3 * 9} movieViewType="thin" />
+            <ShimmerMovieCard animationDelay={0.3 * 10} movieViewType="thin" />
           </Container>
         )}
     </>
