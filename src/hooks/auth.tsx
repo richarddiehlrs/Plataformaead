@@ -9,10 +9,8 @@ import api from 'services/api';
 interface AuthContextData {
   user: UserInterface;
   senha?: string;
-  movieTypeView: string;
   signIn(loginInfo: Login): Promise<void>;
   signOut(): void;
-  updateMovieView(): void;
   updateUser(user: UserInterface): void;
 }
 
@@ -30,19 +28,23 @@ interface LoginRequestData {
   school: SchoolInterface;
 }
 
+interface MovieTypeView {
+  [x: string]: string;
+}
+
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [movieTypeView, setMovieTypeView] = useState<string>(() => {
-    const movieView = localStorage.getItem('@NextLevel:movieView');
+  // const [moviesTypeView, setMoviesTypeView] = useState<MovieTypeView[]>(() => {
+  //   const movieView = localStorage.getItem('@NextLevel:movieView');
 
-    if (movieView) {
-      const type = movieView;
-      return type;
-    }
+  //   if (movieView) {
+  //     const type = JSON.parse(movieView);
+  //     return type;
+  //   }
 
-    return 'thin';
-  });
+  //   return [{}];
+  // });
 
   const [data, setData] = useState<UserLoginData>(() => {
     const token = localStorage.getItem('@NextLevel:token');
@@ -63,7 +65,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const signIn = useCallback(async ({ username, password }) => {
     const response = await api.post<LoginRequestData>(
-      `${process.env.REACT_APP_PROD_API}/login`,
+      `${process.env.REACT_APP_API_URL}/login`,
       {
         username,
         password,
@@ -93,13 +95,42 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({} as UserLoginData);
   }, []);
 
-  const updateMovieView = useCallback(() => {
-    const type = movieTypeView === 'thin' ? 'large' : 'thin';
+  // const updateMoviesView = useCallback((categoryTitle: string) => {
+  //   let categoryTypeView: {} | undefined;
+  //   let movieTypeViewIndex;
+  //   let newMoviesTypeView: MovieTypeView[];
 
-    setMovieTypeView(type);
+  //   if (moviesTypeView.length > 1) {
+  //     let newItem;
+  //     let viewType;
 
-    localStorage.setItem('@NextLevel:movieView', type);
-  }, [movieTypeView]);
+  //     categoryTypeView = moviesTypeView.find((movieTypeView) => Object.keys(movieTypeView)[0] === categoryTitle && movieTypeView);
+  //     movieTypeViewIndex = moviesTypeView.findIndex((movieTypeView) => Object.keys(movieTypeView)[0] === categoryTitle && movieTypeView);
+  //     newMoviesTypeView = moviesTypeView;
+
+  //     if (categoryTypeView) {
+  //       viewType = Object.values(newMoviesTypeView[movieTypeViewIndex])[0] === 'thin' ? 'large' : 'thin';
+  //       newItem = newMoviesTypeView[movieTypeViewIndex];
+  //       newItem = { [categoryTitle]: viewType };
+  //       newMoviesTypeView.splice(movieTypeViewIndex, 1, newItem);
+
+  //       setMoviesTypeView(newMoviesTypeView);
+  //     } else {
+  //       newItem = { [categoryTitle]: 'large' };
+  //       newMoviesTypeView.push(newItem);
+
+  //       setMoviesTypeView(newMoviesTypeView);
+  //     }
+  //   } else {
+  //     categoryTypeView = { [categoryTitle]: 'large' };
+  //     newMoviesTypeView = moviesTypeView;
+  //     newMoviesTypeView.push(categoryTypeView);
+
+  //     setMoviesTypeView(newMoviesTypeView);
+  //   }
+
+  //   localStorage.setItem('@NextLevel:movieView', JSON.stringify(newMoviesTypeView));
+  // }, [moviesTypeView]);
 
   const updateUser = useCallback(
     (user: UserInterface) => {
@@ -115,7 +146,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        user: data.user, signIn, signOut, updateUser, updateMovieView, movieTypeView,
+        user: data.user, signIn, signOut, updateUser,
       }}
     >
       {children}

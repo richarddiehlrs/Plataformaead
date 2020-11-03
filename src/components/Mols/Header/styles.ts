@@ -16,7 +16,6 @@ export const Container = styled.header`
   padding: 0 80px;
 
   display: flex;
-
 `;
 
 export const LogoContent = styled.div`
@@ -67,19 +66,22 @@ export const UserContainer = styled.div<UserContainerProps>`
   }
 
   .image-container{
+    display: flex;
+
     width: 56px;
     height: 56px;
     border-radius: 50%;
     border: solid 2px #dbdbdb;
 
-    background-image: url(${(props) => `${props.bg}`});
-    background-size: auto;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    object-fit: cover;
-
     flex-shrink: 0;
+
+    img{
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
   }
   .user-data-container{
     color: #dbdbdb;

@@ -12,7 +12,7 @@ const Cursos: React.FC = () => {
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { user, updateMovieView } = useAuth();
+  const { user } = useAuth();
 
   const getAllCategories = useCallback(async () => {
     setIsLoading(true);
@@ -22,19 +22,12 @@ const Cursos: React.FC = () => {
     setCategories(response.data);
   }, [user.userid]);
 
-  const handleChangeMovieTypeView = useCallback(() => {
-    updateMovieView();
-  }, [updateMovieView]);
-
   useEffect(() => {
     getAllCategories();
   }, [getAllCategories]);
 
   return (
     <Container>
-      <div className="teste">
-        <button type="button" onClick={handleChangeMovieTypeView}>Mudar modo de visulização</button>
-      </div>
       <CategoryContainer
         categories={categories}
         isLoading={isLoading}

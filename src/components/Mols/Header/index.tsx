@@ -45,34 +45,38 @@ const Header: React.FC<HeaderProps> = ({
   }, [signOut]);
 
   return (
-    <Container>
-      <LogoContent>
-        <Logo onClick={() => handleChangeTab('cursos')} src={nlLogo} alt="nllogo" />
-        <Separator type="vertical" />
-        <UserContainer bg="https://avatars0.githubusercontent.com/u/53842905?s=460&u=e3ed01c01307e54599f5a8d7e38c99571a365b5f&v=4">
-          <div className="image-container" />
-          <div className="user-data-container">
-            <h3>{user.fullname}</h3>
-            <p>{`${user.levelid}-${user.roomid}`}</p>
-          </div>
-          <div>
-            <button type="button" onClick={handleSignOut}>
-              <FiLogOut size={20} />
-            </button>
-
-          </div>
-        </UserContainer>
-        <CollapsibleMenu
-          items={tabs}
-          handleChangeTab={handleChangeTab}
-          handleCollapseMenu={handleCollapseMenu}
-          isCollapsed={isCollapsed}
-          actualTab={actualTab}
-        >
-          {children}
-        </CollapsibleMenu>
-      </LogoContent>
-    </Container>
+    <>
+      <Container>
+        <LogoContent>
+          <Logo onClick={() => handleChangeTab('cursos')} src={nlLogo} alt="nllogo" />
+          <Separator type="vertical" />
+          <UserContainer bg={user.imageurl}>
+            <div className="image-container">
+              <img src={user.imageurl} alt="user" />
+            </div>
+            <div className="user-data-container">
+              <h3>{user.fullname}</h3>
+              <p>{`${user.levelid}-${user.roomid}`}</p>
+            </div>
+            <div>
+              <button type="button" onClick={handleSignOut}>
+                <FiLogOut size={20} />
+              </button>
+            </div>
+          </UserContainer>
+          <CollapsibleMenu
+            items={tabs}
+            handleChangeTab={handleChangeTab}
+            handleCollapseMenu={handleCollapseMenu}
+            isCollapsed={isCollapsed}
+            actualTab={actualTab}
+          >
+            {children}
+          </CollapsibleMenu>
+        </LogoContent>
+      </Container>
+      <Separator type="horizontal" />
+    </>
   );
 };
 

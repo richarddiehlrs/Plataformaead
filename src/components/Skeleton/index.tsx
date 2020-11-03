@@ -1,15 +1,16 @@
 import styled from 'styled-components';
 
-export default styled.div`
-  background-image: linear-gradient(
-    -90deg,
-   rgba(61,61,61,0.6) 0%,
-   rgba(133,133,133,0.2) 50%,
-   rgba(61,61,61,0.6) 100%
-  );
+interface SkeletonProps {
+  animationDelay?: number;
+}
 
-  background-size: 400% 400%;
-  animation: shimmer 1.6s ease-in-out infinite;
+export default styled.div<SkeletonProps>`
+
+  transition: background-color 0.4s;
+
+  animation: shimmer2 3s ease-in-out infinite;
+
+  animation-delay: ${(props) => (props.animationDelay ? props.animationDelay : 0)}s;
 
   @keyframes shimmer {
     0%{
@@ -17,6 +18,17 @@ export default styled.div`
     }
     100%{
       background-position: -135% 0%;
+    }
+  }
+  @keyframes shimmer2 {
+    0%{
+      background:rgba(61,61,61,0);
+    }
+    50%{
+      background:rgba(61,61,61,0.8);
+    }
+    100%{
+      background:rgba(61,61,61,0);
     }
   }
 
