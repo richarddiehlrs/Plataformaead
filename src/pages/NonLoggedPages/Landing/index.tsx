@@ -34,7 +34,7 @@ const Landing: React.FC = () => {
           <img src={nlLogo} alt="logo" />
           <Form ref={formRef} onSubmit={handleLogin}>
             <FormWrapper>
-              <h3>Login</h3>
+              <h3>LOGIN</h3>
               <Input
                 name="username"
                 icon={FiUser}
