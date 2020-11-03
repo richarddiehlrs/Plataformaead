@@ -39,6 +39,14 @@ export const FormWrapper = styled.div`
 
   justify-content: space-between;
   align-items: center;
+
+  h3{
+    font-family: 'Raleway', sans-serif;
+    font-size: 26px;
+    font-weight: lighter;
+    color: #353536;
+    letter-spacing: 4px;
+  }
 `;
 
 export const StyledButton = styled(Button)`
