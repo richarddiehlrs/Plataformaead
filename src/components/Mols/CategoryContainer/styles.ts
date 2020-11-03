@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
 
+  margin-top: 20px;
 `;
 
 export const CategoryTitle = styled.div`
@@ -27,15 +28,35 @@ export const CategoryTitle = styled.div`
     margin-right: 12px;
   }
 
-  h4{
+  a{
+    text-decoration: none;
+
+    display: flex;
+    justify-content: center;
     margin-left: auto;
     margin-right: 12px;
+
+    color: rgb(254,212,74,1);
+  }
+
+  h4{
     z-index: 3;
+    align-items: center;
+
+    &:hover{
+      text-shadow: 0 0 10px rgb(254,212,74,0.4);
+      cursor: pointer;
+    }
   }
 
   button{
     margin-left: 12px;
     z-index: 3;
+  }
+
+  .category-title{
+    width: 100px;
+    height: 12px;
   }
 `;
 
@@ -57,6 +78,7 @@ export const CarouselWrapper = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     width: 92%;
+
   }
 
   .awssld__controls__arrow-right::before,
@@ -64,5 +86,8 @@ export const CarouselWrapper = styled.div`
   .awssld__controls__arrow-left::before,
   .awssld__controls__arrow-left::after{
     background: #fff;
+    opacity: 0;
+
+    transition: opacity 0.4s;
   }
 `;

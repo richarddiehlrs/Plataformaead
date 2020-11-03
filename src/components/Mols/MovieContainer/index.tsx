@@ -13,13 +13,13 @@ interface MovieContainerProps {
   movieViewType?: string;
 }
 
-const MovieContainer: React.FC<MovieContainerProps> = ({ movies, movieViewType = 'thin', isLoading }) => {
+const MovieContainer: React.FC<MovieContainerProps> = ({ movies, movieViewType = 'vertical', isLoading }) => {
   const sixMovies = useMemo(() => movies.map((movie, index) => index < 10 && movie), [movies]);
 
   return (
     <>
       {!isLoading ? (
-        <Container>
+        <Container className="a">
           {sixMovies.map((movie, index) => movie && (
             <MovieCard
               key={movie.movieid}
@@ -31,18 +31,18 @@ const MovieContainer: React.FC<MovieContainerProps> = ({ movies, movieViewType =
       )
         : (
           <Container>
-            <ShimmerMovieCard movieViewType="thin" />
-            <ShimmerMovieCard animationDelay={0.3 * 0} movieViewType="thin" />
-            <ShimmerMovieCard animationDelay={0.3 * 1} movieViewType="thin" />
-            <ShimmerMovieCard animationDelay={0.3 * 2} movieViewType="thin" />
-            <ShimmerMovieCard animationDelay={0.3 * 3} movieViewType="thin" />
-            <ShimmerMovieCard animationDelay={0.3 * 4} movieViewType="thin" />
-            <ShimmerMovieCard animationDelay={0.3 * 5} movieViewType="thin" />
-            <ShimmerMovieCard animationDelay={0.3 * 6} movieViewType="thin" />
-            <ShimmerMovieCard animationDelay={0.3 * 7} movieViewType="thin" />
-            <ShimmerMovieCard animationDelay={0.3 * 8} movieViewType="thin" />
-            <ShimmerMovieCard animationDelay={0.3 * 9} movieViewType="thin" />
-            <ShimmerMovieCard animationDelay={0.3 * 10} movieViewType="thin" />
+            <ShimmerMovieCard movieViewType="vertical" />
+            <ShimmerMovieCard animationDelay={0.3 * 0} movieViewType="vertical" />
+            <ShimmerMovieCard animationDelay={0.3 * 1} movieViewType="vertical" />
+            <ShimmerMovieCard animationDelay={0.3 * 2} movieViewType="vertical" />
+            <ShimmerMovieCard animationDelay={0.3 * 3} movieViewType="vertical" />
+            <ShimmerMovieCard animationDelay={0.3 * 4} movieViewType="vertical" />
+            <ShimmerMovieCard animationDelay={0.3 * 5} movieViewType="vertical" />
+            <ShimmerMovieCard animationDelay={0.3 * 6} movieViewType="vertical" />
+            <ShimmerMovieCard animationDelay={0.3 * 7} movieViewType="vertical" />
+            <ShimmerMovieCard animationDelay={0.3 * 8} movieViewType="vertical" />
+            <ShimmerMovieCard animationDelay={0.3 * 9} movieViewType="vertical" />
+            <ShimmerMovieCard animationDelay={0.3 * 10} movieViewType="vertical" />
           </Container>
         )}
     </>

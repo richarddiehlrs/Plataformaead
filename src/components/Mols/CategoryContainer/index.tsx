@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
+import React from 'react';
+import { FiChevronRight } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import AwesomeSlider from 'react-awesome-slider';
 
 import CategoryInterface from 'models/Category';
-import { useAuth } from 'hooks/auth';
 
 import MovieContainer from 'components/Mols/MovieContainer';
 import ShimmerCategoryContainer from 'components/Mols/Shimmer/CategoryContainer';
@@ -17,26 +18,18 @@ interface CategoryContainerProps {
 const CategoryContainer: React.FC<CategoryContainerProps> = (
   { categories, isLoading },
 ) => {
-  const { updateMoviesView, moviesTypeView } = useAuth();
-
-  const handleChangeMovieTypeView = useCallback((categoryTitle: string) => {
-    updateMoviesView(categoryTitle);
-  }, [updateMoviesView]);
-
   if (!isLoading) {
     return (
       <>
-        {categories.map((category, index) => (
+        {categories.map((category) => (
           <Container key={category.id}>
             <CategoryTitle>
               <h3>{category.title}</h3>
               <p>{`(${category.movies.length})`}</p>
-              <h4>
-                VER TODOS
-              </h4>
-              <div className="teste">
-                <button type="button" onClick={() => handleChangeMovieTypeView(category.title)}>Mudar modo de visulização</button>
-              </div>
+              <Link to={`/movies/${category.id}`}>
+                <h4>VER TODOS</h4>
+                <FiChevronRight size={20} />
+              </Link>
             </CategoryTitle>
             <CarouselWrapper className={category.title}>
               <AwesomeSlider
@@ -47,7 +40,7 @@ const CategoryContainer: React.FC<CategoryContainerProps> = (
               >
                 <div>
                   <MovieContainer
-                    movieViewType={moviesTypeView[index + 1] ? Object.keys(moviesTypeView[index + 1])[0] === category.title ? Object.values(moviesTypeView[index + 1])[0] : 'thin' : 'thin'}
+                    movieViewType={category.type}
                     movies={category.movies}
                     isLoading={isLoading}
                   />

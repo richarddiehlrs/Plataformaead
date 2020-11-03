@@ -9,10 +9,8 @@ import api from 'services/api';
 interface AuthContextData {
   user: UserInterface;
   senha?: string;
-  moviesTypeView: Array<MovieTypeView>;
   signIn(loginInfo: Login): Promise<void>;
   signOut(): void;
-  updateMoviesView(categoryTitle: string): void;
   updateUser(user: UserInterface): void;
 }
 
@@ -37,16 +35,16 @@ interface MovieTypeView {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [moviesTypeView, setMoviesTypeView] = useState<MovieTypeView[]>(() => {
-    const movieView = localStorage.getItem('@NextLevel:movieView');
+  // const [moviesTypeView, setMoviesTypeView] = useState<MovieTypeView[]>(() => {
+  //   const movieView = localStorage.getItem('@NextLevel:movieView');
 
-    if (movieView) {
-      const type = JSON.parse(movieView);
-      return type;
-    }
+  //   if (movieView) {
+  //     const type = JSON.parse(movieView);
+  //     return type;
+  //   }
 
-    return [{}];
-  });
+  //   return [{}];
+  // });
 
   const [data, setData] = useState<UserLoginData>(() => {
     const token = localStorage.getItem('@NextLevel:token');
@@ -97,42 +95,42 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({} as UserLoginData);
   }, []);
 
-  const updateMoviesView = useCallback((categoryTitle: string) => {
-    let categoryTypeView: {} | undefined;
-    let movieTypeViewIndex;
-    let newMoviesTypeView: MovieTypeView[];
+  // const updateMoviesView = useCallback((categoryTitle: string) => {
+  //   let categoryTypeView: {} | undefined;
+  //   let movieTypeViewIndex;
+  //   let newMoviesTypeView: MovieTypeView[];
 
-    if (moviesTypeView.length > 1) {
-      let newItem;
-      let viewType;
+  //   if (moviesTypeView.length > 1) {
+  //     let newItem;
+  //     let viewType;
 
-      categoryTypeView = moviesTypeView.find((movieTypeView) => Object.keys(movieTypeView)[0] === categoryTitle && movieTypeView);
-      movieTypeViewIndex = moviesTypeView.findIndex((movieTypeView) => Object.keys(movieTypeView)[0] === categoryTitle && movieTypeView);
-      newMoviesTypeView = moviesTypeView;
+  //     categoryTypeView = moviesTypeView.find((movieTypeView) => Object.keys(movieTypeView)[0] === categoryTitle && movieTypeView);
+  //     movieTypeViewIndex = moviesTypeView.findIndex((movieTypeView) => Object.keys(movieTypeView)[0] === categoryTitle && movieTypeView);
+  //     newMoviesTypeView = moviesTypeView;
 
-      if (categoryTypeView) {
-        viewType = Object.values(newMoviesTypeView[movieTypeViewIndex])[0] === 'thin' ? 'large' : 'thin';
-        newItem = newMoviesTypeView[movieTypeViewIndex];
-        newItem = { [categoryTitle]: viewType };
-        newMoviesTypeView.splice(movieTypeViewIndex, 1, newItem);
+  //     if (categoryTypeView) {
+  //       viewType = Object.values(newMoviesTypeView[movieTypeViewIndex])[0] === 'thin' ? 'large' : 'thin';
+  //       newItem = newMoviesTypeView[movieTypeViewIndex];
+  //       newItem = { [categoryTitle]: viewType };
+  //       newMoviesTypeView.splice(movieTypeViewIndex, 1, newItem);
 
-        setMoviesTypeView(newMoviesTypeView);
-      } else {
-        newItem = { [categoryTitle]: 'large' };
-        newMoviesTypeView.push(newItem);
+  //       setMoviesTypeView(newMoviesTypeView);
+  //     } else {
+  //       newItem = { [categoryTitle]: 'large' };
+  //       newMoviesTypeView.push(newItem);
 
-        setMoviesTypeView(newMoviesTypeView);
-      }
-    } else {
-      categoryTypeView = { [categoryTitle]: 'large' };
-      newMoviesTypeView = moviesTypeView;
-      newMoviesTypeView.push(categoryTypeView);
+  //       setMoviesTypeView(newMoviesTypeView);
+  //     }
+  //   } else {
+  //     categoryTypeView = { [categoryTitle]: 'large' };
+  //     newMoviesTypeView = moviesTypeView;
+  //     newMoviesTypeView.push(categoryTypeView);
 
-      setMoviesTypeView(newMoviesTypeView);
-    }
+  //     setMoviesTypeView(newMoviesTypeView);
+  //   }
 
-    localStorage.setItem('@NextLevel:movieView', JSON.stringify(newMoviesTypeView));
-  }, [moviesTypeView]);
+  //   localStorage.setItem('@NextLevel:movieView', JSON.stringify(newMoviesTypeView));
+  // }, [moviesTypeView]);
 
   const updateUser = useCallback(
     (user: UserInterface) => {
@@ -148,7 +146,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        user: data.user, signIn, signOut, updateUser, updateMoviesView, moviesTypeView,
+        user: data.user, signIn, signOut, updateUser,
       }}
     >
       {children}
