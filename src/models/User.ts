@@ -6,4 +6,6 @@ export default interface User {
   roomid: string;
   imageurl: string;
   schoolid: string;
-}
+  schoolName: string;
+  schoolCity: string;
+};

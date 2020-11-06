@@ -9,10 +9,11 @@ import MovieCard from 'components/Atoms/MovieCard';
 import ShimmerMovieCard from 'components/Atoms/Shimmer/MovieCard';
 import PaginationComponent from 'components/Atoms/PaginationComponent';
 
-import { Wrapper, Container } from './styles';
+import { Wrapper, Container, Heading } from './styles';
 
 interface CategoryMoviesParams {
   categoryId: string;
+  categoryName: string;
 }
 
 interface CategoryMovieListDTO {
@@ -27,7 +28,7 @@ const CategoryMovies: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { user } = useAuth();
-  const { categoryId } = useParams() as CategoryMoviesParams;
+  const { categoryId, categoryName } = useParams() as CategoryMoviesParams;
 
   const getCategoryMovies = useCallback(async (pageNumber?: number) => {
     setIsLoading(true);
@@ -49,9 +50,14 @@ const CategoryMovies: React.FC = () => {
 
   return (
     <Wrapper>
+      <Heading>
+        {movies.length > 0 && (
+          <p>{`${categoryName} (${movies.length})`}</p>
+        )}
+      </Heading>
       <Container>
         {!isLoading && movies ? movies.map((movie) => (
-          <MovieCard key={movie.movieid} movie={movie} movieViewType="vertical" />
+          <MovieCard key={movie.movieid} movie={movie} movieViewType="category" customClass="flex-item" />
         )) : (
             <>
               <ShimmerMovieCard movieViewType="vertical" />
@@ -63,7 +69,9 @@ const CategoryMovies: React.FC = () => {
             </>
           )}
       </Container>
-      <PaginationComponent setPage={handleChangePage} totalPages={totalPages} page={page} />
+      {!isLoading && (
+        <PaginationComponent setPage={handleChangePage} totalPages={totalPages} page={page} />
+      )}
     </Wrapper>
   );
 };

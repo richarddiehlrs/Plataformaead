@@ -5,7 +5,8 @@ interface ContainerProps {
 }
 
 export const Container = styled.div<ContainerProps>`
-  background: linear-gradient(black, #707070);
+  /* background: linear-gradient(black, #707070); */
+  background: rgba(0,0,0,0.4);
 
   margin-bottom: auto;
   margin-left: 20px;

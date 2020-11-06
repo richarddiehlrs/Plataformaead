@@ -21,12 +21,12 @@ const CategoryContainer: React.FC<CategoryContainerProps> = (
   if (!isLoading) {
     return (
       <>
-        {categories.map((category) => (
-          <Container key={category.id}>
+        {categories.map((category, index) => (
+          <Container key={category.id} position={index}>
             <CategoryTitle>
               <h3>{category.title}</h3>
               <p>{`(${category.movies.length})`}</p>
-              <Link to={`/movies/${category.id}`}>
+              <Link to={`/movies/${category.id}/${category.title}`}>
                 <h4>VER TODOS</h4>
                 <FiChevronRight size={20} />
               </Link>
