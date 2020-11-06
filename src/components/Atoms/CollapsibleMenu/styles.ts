@@ -24,7 +24,7 @@ export const Container = styled.div`
 
   transition: width 0.2s;
 
-  @media (max-width: 1240px){
+  @media (max-width: 1270px){
     width: 120px;
     display: block;
   }
@@ -68,7 +68,7 @@ export const MenuWrapper = styled.div<WrapperProps>`
 
   transition: height 0.4s;
 
-  @media (max-width: 1240px){
+  @media (max-width: 1270px){
     overflow: hidden;
     margin-top: -20px;
 
@@ -116,7 +116,7 @@ export const MenuWrapper = styled.div<WrapperProps>`
 export const CollapsedMenu = styled.div`
   .bar{
     display: none;
-    @media(max-width: 1240px){
+    @media(max-width: 1270px){
       width: 44px;
       height: 2px;
       background: white;

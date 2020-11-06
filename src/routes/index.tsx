@@ -14,6 +14,7 @@ import Landing from '../pages/NonLoggedPages/Landing';
 // Pages Logged
 import Cursos from '../pages/LoggedPages/Cursos';
 import AoVivo from '../pages/LoggedPages/AoVivo';
+import CategoryMovies from '../pages/LoggedPages/CategoryMovies';
 
 const Routes: React.FC = () => {
   const [tab, setTab] = useState('cursos');
@@ -34,6 +35,7 @@ const Routes: React.FC = () => {
         <Route path="/" exact component={Landing} />
         <Route path="/cursos" component={Cursos} isPrivate />
         <Route path="/aovivo" component={AoVivo} isPrivate />
+        <Route path="/movies/:categoryId/:categoryName" component={CategoryMovies} isPrivate />
       </Switch>
     </>
   );

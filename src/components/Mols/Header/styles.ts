@@ -6,7 +6,7 @@ interface UserContainerProps {
 }
 
 export const Container = styled.header`
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0);
 
   width: 100%;
 
@@ -16,12 +16,11 @@ export const Container = styled.header`
   padding: 0 80px;
 
   display: flex;
-
 `;
 
 export const LogoContent = styled.div`
   width: 100%;
-  height: 100px;
+  height: 120px;
 
   display: flex;
   align-items: center;
@@ -44,11 +43,14 @@ export const Logo = styled.img`
 export const UserContainer = styled.div<UserContainerProps>`
   margin-left: 2%;
   width: 300px;
+  height: 64px;
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+
 
   button{
     background: transparent;
@@ -67,21 +69,29 @@ export const UserContainer = styled.div<UserContainerProps>`
   }
 
   .image-container{
-    width: 56px;
-    height: 56px;
+    display: flex;
+
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     border: solid 2px #dbdbdb;
 
-    background-image: url(${(props) => `${props.bg}`});
-    background-size: auto;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    object-fit: cover;
-
     flex-shrink: 0;
+
+    img{
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
   }
   .user-data-container{
     color: #dbdbdb;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 `;

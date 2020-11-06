@@ -4,6 +4,8 @@ interface MovieContainerProps {
   type: string;
 }
 
+export const FlexContainer = styled.div``;
+
 export const Container = styled.div<MovieContainerProps>`
   display: flex;
   flex-direction: column;
@@ -13,14 +15,19 @@ export const Container = styled.div<MovieContainerProps>`
 
   transition: width 0.4s, height 0.4s;
 
-  ${(props) => props.type === 'large' && css`
+  ${(props) => props.type === 'horizontal' && css`
     width: 240px;
     height: 160px;
   `}
 
-  ${(props) => props.type === 'thin' && css`
+  ${(props) => props.type === 'vertical' && css`
     width: 140px;
     height: 180px;
+  `}
+
+  ${(props) => props.type === 'category' && css`
+    width: 160px;
+    height: 200px;
   `}
 
   img{
@@ -31,14 +38,19 @@ export const Container = styled.div<MovieContainerProps>`
     border: solid 0.8px rgba(117, 117, 117,0.5);
     border-radius: 4px;
 
-    ${(props) => props.type === 'large' && css`
+    ${(props) => props.type === 'horizontal' && css`
       width: 240px;
       height: 160px;
     `}
 
-    ${(props) => props.type === 'thin' && css`
+    ${(props) => props.type === 'vertical' && css`
       width: 140px;
       height: 180px;
+    `}
+
+    ${(props) => props.type === 'category' && css`
+      width: 160px;
+      height: 200px;
     `}
 
     &:hover{

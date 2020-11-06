@@ -5,8 +5,8 @@ interface ContainerProps {
 }
 
 export const Container = styled.div<ContainerProps>`
-  background: linear-gradient(black, #707070);
-
+  /* background: linear-gradient(black, #707070); */
+  background: rgba(0,0,0,0.4);
 
   margin-bottom: auto;
   margin-left: 20px;
@@ -21,7 +21,11 @@ export const Container = styled.div<ContainerProps>`
 ${(props) => props.type === 'horizontal' && (
     css`
       height: 2px;
-      width: 60%;
+      width: 100%;
+      margin: 0;
+
+      background: rgba(112,112,112,0.4);
+      background: linear-gradient(90deg, rgba(112,112,112,0.4) 0%, rgba(173,173,173,0.6) 50%, rgba(112,112,112,0.4) 100%);
     `
   )}
 `;
