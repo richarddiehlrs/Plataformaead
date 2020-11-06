@@ -44,8 +44,6 @@ const Header: React.FC<HeaderProps> = ({
     signOut();
   }, [signOut]);
 
-  console.log(user);
-
   return (
     <>
       <Container>

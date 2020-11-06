@@ -9,7 +9,9 @@ import MovieCard from 'components/Atoms/MovieCard';
 import ShimmerMovieCard from 'components/Atoms/Shimmer/MovieCard';
 import PaginationComponent from 'components/Atoms/PaginationComponent';
 
-import { Wrapper, Container, Heading } from './styles';
+import {
+  Wrapper, Container, Heading, FooterContainer,
+} from './styles';
 
 interface CategoryMoviesParams {
   categoryId: string;
@@ -52,7 +54,7 @@ const CategoryMovies: React.FC = () => {
     <Wrapper>
       <Heading>
         {movies.length > 0 && (
-          <p>{`${categoryName} (${movies.length})`}</p>
+          <p>{`${categoryName} ( ${movies.length} )`}</p>
         )}
       </Heading>
       <Container>
@@ -60,18 +62,20 @@ const CategoryMovies: React.FC = () => {
           <MovieCard key={movie.movieid} movie={movie} movieViewType="category" customClass="flex-item" />
         )) : (
             <>
-              <ShimmerMovieCard movieViewType="vertical" />
-              <ShimmerMovieCard movieViewType="vertical" />
-              <ShimmerMovieCard movieViewType="vertical" />
-              <ShimmerMovieCard movieViewType="vertical" />
-              <ShimmerMovieCard movieViewType="vertical" />
-              <ShimmerMovieCard movieViewType="vertical" />
+              <ShimmerMovieCard animationDelay={0 * 0.3} movieViewType="vertical" />
+              <ShimmerMovieCard animationDelay={1 * 0.3} movieViewType="vertical" />
+              <ShimmerMovieCard animationDelay={2 * 0.3} movieViewType="vertical" />
+              <ShimmerMovieCard animationDelay={3 * 0.3} movieViewType="vertical" />
+              <ShimmerMovieCard animationDelay={4 * 0.3} movieViewType="vertical" />
+              <ShimmerMovieCard animationDelay={5 * 0.3} movieViewType="vertical" />
             </>
           )}
       </Container>
-      {!isLoading && (
-        <PaginationComponent setPage={handleChangePage} totalPages={totalPages} page={page} />
-      )}
+      <FooterContainer>
+        {!isLoading && (
+          <PaginationComponent setPage={handleChangePage} totalPages={totalPages} page={page} />
+        )}
+      </FooterContainer>
     </Wrapper>
   );
 };

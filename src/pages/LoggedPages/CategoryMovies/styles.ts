@@ -33,3 +33,7 @@ export const Container = styled.div`
     flex: 0 1 calc(12.6666%);
   }
 `;
+
+export const FooterContainer = styled.div`
+  margin-top: auto;
+`;
