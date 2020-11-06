@@ -1,11 +1,16 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface ContainerStyle {
+  position?: number;
+}
+
+export const Container = styled.div<ContainerStyle>`
   display: flex;
   flex-direction: column;
   width: 100%;
 
-  margin-top: 20px;
+  ${(props) => (props.position === 0 ? css`margin-top: 60px;` : css`margin-top: 20px;`)}
+
 `;
 
 export const CategoryTitle = styled.div`
@@ -42,6 +47,8 @@ export const CategoryTitle = styled.div`
   h4{
     z-index: 3;
     align-items: center;
+    font-weight: lighter;
+    font-size: 14px;
 
     &:hover{
       text-shadow: 0 0 10px rgb(254,212,74,0.4);
@@ -69,7 +76,7 @@ export const CarouselWrapper = styled.div`
 
 
   .awssld__content{
-    background-color: rgba(0,0,0,0.02);
+    background: transparent;
 
     border-radius: 12px;
   }

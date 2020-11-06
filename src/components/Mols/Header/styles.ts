@@ -6,7 +6,7 @@ interface UserContainerProps {
 }
 
 export const Container = styled.header`
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0);
 
   width: 100%;
 
@@ -20,7 +20,7 @@ export const Container = styled.header`
 
 export const LogoContent = styled.div`
   width: 100%;
-  height: 100px;
+  height: 120px;
 
   display: flex;
   align-items: center;
@@ -43,11 +43,14 @@ export const Logo = styled.img`
 export const UserContainer = styled.div<UserContainerProps>`
   margin-left: 2%;
   width: 300px;
+  height: 64px;
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+
 
   button{
     background: transparent;
@@ -68,8 +71,8 @@ export const UserContainer = styled.div<UserContainerProps>`
   .image-container{
     display: flex;
 
-    width: 56px;
-    height: 56px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     border: solid 2px #dbdbdb;
 
@@ -85,5 +88,10 @@ export const UserContainer = styled.div<UserContainerProps>`
   }
   .user-data-container{
     color: #dbdbdb;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 `;
