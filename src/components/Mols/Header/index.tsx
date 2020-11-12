@@ -56,8 +56,8 @@ const Header: React.FC<HeaderProps> = ({
             </div>
             <div className="user-data-container">
               <h3>{user.fullname}</h3>
-              <p>{`${user.schoolName} ${user.schoolCity}`}</p>
-              <p>{`${user.levelid}-${user.roomid}`}</p>
+              <p>{`${user.schoolName} `}</p>
+              <p>{`${user.roomid}`}</p>
             </div>
             <div>
               <button type="button" onClick={handleSignOut}>
