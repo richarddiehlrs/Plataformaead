@@ -77,6 +77,7 @@ export const UserContainer = styled.div<UserContainerProps>`
     border: solid 2px #dbdbdb;
 
     flex-shrink: 0;
+    margin-right: 10px;
 
     img{
       width: 100%;
