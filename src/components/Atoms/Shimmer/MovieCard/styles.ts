@@ -22,6 +22,11 @@ export const Container = styled.div<MovieContainerProps>`
     height: 180px;
   `}
 
+  ${(props) => props.type === 'category' && css`
+    width: 160px;
+    height: 200px;
+  `}
+
   .bg-skeleton{
     width: 240px;
     height: 160px;
@@ -37,6 +42,11 @@ export const Container = styled.div<MovieContainerProps>`
       width: 140px;
       height: 180px;
     `}
+
+    ${(props) => props.type === 'category' && css`
+    width: 160px;
+    height: 200px;
+  `}
 
     box-shadow: 0 0 10px rgba(0,0,0,0.08);
     /* filter: brightness(98%); */

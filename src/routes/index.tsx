@@ -3,18 +3,19 @@ import React, {
 } from 'react';
 import { Switch } from 'react-router-dom';
 
-import { useAuth } from '../hooks/auth';
+import { useAuth } from 'hooks/auth';
 
-import Header from '../components/Mols/Header';
-
-import Route from './Route';
+import Header from 'components/Mols/Header';
+import Footer from 'components/Mols/Footer';
 
 // Pages Non Logged
-import Landing from '../pages/NonLoggedPages/Landing';
+import Landing from 'pages/NonLoggedPages/Landing';
 // Pages Logged
-import Cursos from '../pages/LoggedPages/Cursos';
-import AoVivo from '../pages/LoggedPages/AoVivo';
-import CategoryMovies from '../pages/LoggedPages/CategoryMovies';
+import Cursos from 'pages/LoggedPages/Cursos';
+import AoVivo from 'pages/LoggedPages/AoVivo';
+import CategoryMovies from 'pages/LoggedPages/CategoryMovies';
+
+import Route from './Route';
 
 const Routes: React.FC = () => {
   const [tab, setTab] = useState('cursos');
@@ -37,6 +38,8 @@ const Routes: React.FC = () => {
         <Route path="/aovivo" component={AoVivo} isPrivate />
         <Route path="/movies/:categoryId/:categoryName" component={CategoryMovies} isPrivate />
       </Switch>
+
+      {user && <Footer />}
     </>
   );
 };

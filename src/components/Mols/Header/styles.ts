@@ -87,7 +87,7 @@ export const UserContainer = styled.div<UserContainerProps>`
     }
   }
   .user-data-container{
-    color: #dbdbdb;
+    color: #E9EAED;
     height: 100%;
 
     display: flex;

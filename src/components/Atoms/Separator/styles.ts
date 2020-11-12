@@ -5,10 +5,8 @@ interface ContainerProps {
 }
 
 export const Container = styled.div<ContainerProps>`
-  /* background: linear-gradient(black, #707070); */
-  background: rgba(0,0,0,0.4);
+  background: rgba(147, 147, 147,0.6);
 
-  margin-bottom: auto;
   margin-left: 20px;
 
   ${(props) => props.type === 'vertical' && (
@@ -20,12 +18,11 @@ export const Container = styled.div<ContainerProps>`
 
 ${(props) => props.type === 'horizontal' && (
     css`
-      height: 2px;
+      height: 1px;
       width: 100%;
       margin: 0;
 
-      background: rgba(112,112,112,0.4);
-      background: linear-gradient(90deg, rgba(112,112,112,0.4) 0%, rgba(173,173,173,0.6) 50%, rgba(112,112,112,0.4) 100%);
+      background: linear-gradient(90deg, rgba(157, 163, 186,0.22) 0%, rgba(157, 163, 186,1) 50%, rgba(157, 163, 186,0.22) 100%);
     `
   )}
 `;

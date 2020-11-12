@@ -50,7 +50,7 @@ export const MenuWrapper = styled.div<WrapperProps>`
   }
 
   p {
-    color: #fff;
+    color: #E9EAED;
 
     transition: color 0.4s;
 
@@ -58,7 +58,7 @@ export const MenuWrapper = styled.div<WrapperProps>`
 
     &:hover {
       cursor: pointer;
-      color: ${shade(0.4, '#fff')};
+      color: ${shade(0.4, '#E9EAED')};
     }
   }
 

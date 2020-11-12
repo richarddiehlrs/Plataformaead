@@ -27,7 +27,8 @@ export const LoginWrapper = styled.div`
   margin-bottom: 8%;
 
   img{
-    height: 200px;
+    height: 160px;
+    margin-bottom: 8%;
   }
 `;
 

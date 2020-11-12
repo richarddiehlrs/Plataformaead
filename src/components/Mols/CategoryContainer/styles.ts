@@ -17,7 +17,7 @@ export const CategoryTitle = styled.div`
   display: flex;
   align-items: center;
 
-  color: #fff;
+  color: #E9EAED;
   width: 100%;
   padding: 0 4%;
 

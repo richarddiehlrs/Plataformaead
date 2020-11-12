@@ -35,8 +35,9 @@ const CategoryContainer: React.FC<CategoryContainerProps> = (
               <AwesomeSlider
                 animation="foldOutAnimation"
                 className="slider-container"
-                organicArrows
+                // organicArrows={false}
                 bullets={false}
+                transitionDelay={10}
               >
                 <div>
                   <MovieContainer
