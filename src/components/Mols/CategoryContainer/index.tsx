@@ -5,7 +5,7 @@ import AwesomeSlider from 'react-awesome-slider';
 
 import CategoryInterface from 'models/Category';
 
-import MovieContainer from 'components/Mols/MovieContainer';
+import CourseContainer from 'components/Mols/CourseContainer';
 import ShimmerCategoryContainer from 'components/Mols/Shimmer/CategoryContainer';
 
 import { Container, CategoryTitle, CarouselWrapper } from './styles';
@@ -25,8 +25,8 @@ const CategoryContainer: React.FC<CategoryContainerProps> = (
           <Container key={category.id} position={index}>
             <CategoryTitle>
               <h3>{category.title}</h3>
-              <p>{`(${category.movies.length})`}</p>
-              <Link to={`/movies/${category.id}/${category.title}`}>
+              <p>{`(${category.courses.length})`}</p>
+              <Link to={`/courses/${category.id}/${category.title}`}>
                 <h4>VER TODOS</h4>
                 <FiChevronRight size={20} />
               </Link>
@@ -40,9 +40,9 @@ const CategoryContainer: React.FC<CategoryContainerProps> = (
                 transitionDelay={10}
               >
                 <div>
-                  <MovieContainer
-                    movieViewType={category.type}
-                    movies={category.movies}
+                  <CourseContainer
+                    courseViewType={category.type}
+                    courses={category.courses}
                     isLoading={isLoading}
                   />
                 </div>

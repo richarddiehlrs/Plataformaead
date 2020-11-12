@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
 
-interface MovieContainerProps {
+interface CourseContainerProps {
   type: string;
 }
 
-export const Container = styled.div<MovieContainerProps>`
+export const Container = styled.div<CourseContainerProps>`
   display: flex;
   flex-direction: column;
   margin-right: 36px;

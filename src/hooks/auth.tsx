@@ -28,9 +28,9 @@ interface LoginRequestData {
   school: SchoolInterface;
 }
 
-interface MovieTypeView {
-  [x: string]: string;
-}
+// interface MovieTypeView {
+//   [x: string]: string;
+// }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
@@ -90,7 +90,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const signOut = useCallback(() => {
     localStorage.removeItem('@NextLevel:token');
     localStorage.removeItem('@NextLevel:user');
-    localStorage.removeItem('@NextLevel:movieView');
+    // localStorage.removeItem('@NextLevel:movieView');
 
     setData({} as UserLoginData);
   }, []);

@@ -2,7 +2,7 @@ import React from 'react';
 
 import AwesomeSlider from 'react-awesome-slider';
 
-import MovieContainer from 'components/Mols/MovieContainer';
+import CourseContainer from 'components/Mols/CourseContainer';
 import Skeleton from 'components/Skeleton';
 
 import { Container, CategoryTitle, CarouselWrapper } from 'components/Mols/CategoryContainer/styles';
@@ -20,7 +20,7 @@ const CategoryContainer: React.FC = () => (
         bullets={false}
       >
         <div>
-          <MovieContainer movies={[]} isLoading />
+          <CourseContainer courses={[]} isLoading />
         </div>
       </AwesomeSlider>
     </CarouselWrapper>

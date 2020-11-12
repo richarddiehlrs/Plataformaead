@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components';
 
-interface MovieContainerProps {
+interface CourseContainerProps {
   type: string;
 }
 
 export const FlexContainer = styled.div``;
 
-export const Container = styled.div<MovieContainerProps>`
+export const Container = styled.div<CourseContainerProps>`
   display: flex;
   flex-direction: column;
   margin-right: 36px;
@@ -90,9 +90,6 @@ export const Container = styled.div<MovieContainerProps>`
       border-radius: 12px;
 
       background: rgb(254, 212, 74);
-      /* -moz-box-shadow:    inset 0 0 4px #000000;
-      -webkit-box-shadow: inset 0 0 4px #000000;
-      box-shadow:         inset 0 0 4px #000000; */
     }
   }
 `;

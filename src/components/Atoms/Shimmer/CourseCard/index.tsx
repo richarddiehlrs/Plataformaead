@@ -3,13 +3,13 @@ import React from 'react';
 import Skeleton from 'components/Skeleton';
 import { Container } from './styles';
 
-interface ShimmerMovieCard {
-  movieViewType: string;
+interface ShimmerCourseCard {
+  courseViewType: string;
   animationDelay?: number;
 }
 
-const MovieCard: React.FC<ShimmerMovieCard> = ({ movieViewType, animationDelay }) => (
-  <Container type={movieViewType}>
+const CourseCard: React.FC<ShimmerCourseCard> = ({ courseViewType, animationDelay }) => (
+  <Container type={courseViewType}>
     <Skeleton className="bg-skeleton" animationDelay={animationDelay} />
     <span>
       <Skeleton className="progress-bar-wrapper-skeleton" animationDelay={animationDelay}>
@@ -19,4 +19,4 @@ const MovieCard: React.FC<ShimmerMovieCard> = ({ movieViewType, animationDelay }
   </Container>
 );
 
-export default MovieCard;
+export default CourseCard;

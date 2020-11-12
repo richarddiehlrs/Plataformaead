@@ -3,11 +3,11 @@ import { useParams, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import api from 'services/api';
-import MovieInterface from 'models/Movies';
+import CourseInterface from 'models/Course';
 import { useAuth } from 'hooks/auth';
 
-import MovieCard from 'components/Atoms/MovieCard';
-import ShimmerMovieCard from 'components/Atoms/Shimmer/MovieCard';
+import CourseCard from 'components/Atoms/CourseCard';
+import ShimmerCourseCard from 'components/Atoms/Shimmer/CourseCard';
 import PaginationComponent from 'components/Atoms/PaginationComponent';
 import Skeleton from 'components/Skeleton';
 
@@ -15,61 +15,61 @@ import {
   Wrapper, Container, Heading, FooterContainer,
 } from './styles';
 
-interface CategoryMoviesParams {
+interface CategoryCourseParams {
   categoryId: string;
   categoryName: string;
 }
 
-interface CategoryMovieListDTO {
-  categorymovieList: Array<MovieInterface>;
+interface CategoryCourseListDTO {
+  categorycourseList: Array<CourseInterface>;
   pages: number;
 }
 
-const CategoryMovies: React.FC = () => {
-  const [movies, setMovies] = useState<MovieInterface[]>([]);
+const CategoryCourses: React.FC = () => {
+  const [courses, setCourses] = useState<CourseInterface[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const totalShimmer = [0, 1, 2, 3, 4, 5];
 
   const { user } = useAuth();
-  const { categoryId, categoryName } = useParams() as CategoryMoviesParams;
+  const { categoryId, categoryName } = useParams() as CategoryCourseParams;
   const { goBack } = useHistory();
 
-  const getCategoryMovies = useCallback(async (pageNumber?: number) => {
+  const getCategoryCourses = useCallback(async (pageNumber?: number) => {
     setIsLoading(true);
-    const { data } = await api.get<CategoryMovieListDTO>(`/movie/category?userid=${user.userid}&categoryid=${categoryId}&page=${pageNumber || 0}`);
-    const { pages, categorymovieList } = data;
-    setMovies(categorymovieList);
+    const { data } = await api.get<CategoryCourseListDTO>(`/course/category?userid=${user.userid}&categoryid=${categoryId}&page=${pageNumber || 0}`);
+    const { pages, categorycourseList } = data;
+    setCourses(categorycourseList);
     setTotalPages(pages);
     setIsLoading(false);
   }, [categoryId, user]);
 
   const handleChangePage = useCallback((pageNumber: number) => {
     setPage(pageNumber);
-    getCategoryMovies(pageNumber - 1);
-  }, [setPage, getCategoryMovies]);
+    getCategoryCourses(pageNumber - 1);
+  }, [setPage, getCategoryCourses]);
 
   useEffect(() => {
-    getCategoryMovies();
-  }, [getCategoryMovies]);
+    getCategoryCourses();
+  }, [getCategoryCourses]);
 
   return (
     <Wrapper>
       <Heading>
         <FiArrowLeft size={20} onClick={() => goBack()} />
-        {movies.length > 0 && (
-          <p>{`${categoryName} ( ${movies.length} )`}</p>
+        {courses.length > 0 && (
+          <p>{`${categoryName} ( ${courses.length} )`}</p>
         )}
         {isLoading && (<Skeleton className="category-title" />)}
       </Heading>
       <Container>
-        {!isLoading && movies ? movies.map((movie) => (
-          <MovieCard key={movie.movieid} movie={movie} movieViewType="category" customClass="flex-item" />
+        {!isLoading && courses ? courses.map((course) => (
+          <CourseCard key={course.courseid} course={course} courseViewType="category" customClass="flex-item" />
         )) : (
           <>
             {totalShimmer.map((item, index) => (
-              <ShimmerMovieCard key={item} animationDelay={index * 0.3} movieViewType="category" />
+              <ShimmerCourseCard key={item} animationDelay={index * 0.3} courseViewType="category" />
 
             ))}
           </>
@@ -84,4 +84,4 @@ const CategoryMovies: React.FC = () => {
   );
 };
 
-export default CategoryMovies;
+export default CategoryCourses;
