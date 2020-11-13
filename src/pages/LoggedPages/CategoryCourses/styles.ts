@@ -8,15 +8,17 @@ export const Wrapper = styled.div`
 `;
 
 export const Heading = styled.div`
-  width: 100vw;
-  padding: 40px 120px;
   display: flex;
   align-items: center;
 
-  p{
-    font-family: 'Raleway', sans-serif;
+  width: 100vw;
+  padding: 40px 120px;
+
+  h3{
+    display: flex;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
     font-weight: bold;
-    font-size: 22px;
     color: #E9EAED;
     margin-left: 20px;
 
