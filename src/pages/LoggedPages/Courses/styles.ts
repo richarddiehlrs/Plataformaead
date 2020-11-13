@@ -7,4 +7,6 @@ export const Container = styled.div`
       margin-left: auto;
     }
   }
+
+  margin-bottom: 4%;
 `;

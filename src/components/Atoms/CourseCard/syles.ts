@@ -4,7 +4,11 @@ interface CourseContainerProps {
   type: string;
 }
 
-export const FlexContainer = styled.div``;
+export const FlexContainer = styled.div`
+  a{
+    text-decoration: none;
+  }
+`;
 
 export const Container = styled.div<CourseContainerProps>`
   display: flex;

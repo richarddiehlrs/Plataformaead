@@ -26,7 +26,7 @@ const CategoryContainer: React.FC<CategoryContainerProps> = (
             <CategoryTitle>
               <h3>{category.title}</h3>
               <p>{`(${category.courses.length})`}</p>
-              <Link to={`/courses/${category.id}/${category.title}`}>
+              <Link to={`/categorycourses/${category.id}/${category.title}`}>
                 <h4>VER TODOS</h4>
                 <FiChevronRight size={20} />
               </Link>

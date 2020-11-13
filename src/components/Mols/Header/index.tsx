@@ -7,7 +7,7 @@ import { useAuth } from 'hooks/auth';
 import CollapsibleMenu from 'components/Atoms/CollapsibleMenu';
 import Separator from 'components/Atoms/Separator';
 
-import nlLogo from 'assets/images/nliconshaddow.png';
+import nlLogo from 'assets/images/nextLevel_512_sombra.png';
 
 import {
   Container, LogoContent, Logo, UserContainer,
