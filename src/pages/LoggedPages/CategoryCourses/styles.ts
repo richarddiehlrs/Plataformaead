@@ -15,6 +15,7 @@ export const Heading = styled.div`
 
   p{
     font-family: 'Raleway', sans-serif;
+    font-weight: bold;
     font-size: 22px;
     color: #E9EAED;
     margin-left: 20px;
@@ -63,5 +64,5 @@ export const Container = styled.div`
 `;
 
 export const FooterContainer = styled.div`
-  margin-top: 10%;
+  margin-top: 4%;
 `;

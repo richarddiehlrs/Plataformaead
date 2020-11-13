@@ -4,6 +4,7 @@ interface ContainerProps {
   type?: 'vertical' | 'horizontal';
   customHeight?: number;
   customWidth?: number;
+  customColor?: string;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -18,7 +19,7 @@ export const Container = styled.div<ContainerProps>`
     `
   )}
 
-${(props) => props.type === 'horizontal' && (
+  ${(props) => props.type === 'horizontal' && (
     css`
       height: 1px;
       width: ${props.customWidth}%;
@@ -27,4 +28,8 @@ ${(props) => props.type === 'horizontal' && (
       background: linear-gradient(90deg, rgba(157, 163, 186,0.22) 0%, rgba(157, 163, 186,1) 50%, rgba(157, 163, 186,0.22) 100%);
     `
   )}
+
+  ${(props) => props.customColor && css`
+    background: ${props.customColor};
+  `}
 `;
