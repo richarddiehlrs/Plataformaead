@@ -7,7 +7,7 @@ import { useAuth } from 'hooks/auth';
 import CollapsibleMenu from 'components/Atoms/CollapsibleMenu';
 import Separator from 'components/Atoms/Separator';
 
-import nlLogo from 'assets/images/nextLevel_512.png';
+import nlLogo from 'assets/images/nliconshaddow.png';
 
 import {
   Container, LogoContent, Logo, UserContainer,
@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({
       <Container>
         <LogoContent>
           <Logo onClick={() => handleChangeTab('cursos')} src={nlLogo} alt="nllogo" />
-          <Separator type="vertical" />
+          <Separator customHeight={40} type="vertical" />
           <UserContainer bg={user.imageurl}>
             <div className="image-container">
               <img src={user.imageurl} alt="user" />

@@ -5,6 +5,7 @@ interface ContainerProps {
   isFocused: boolean;
   hasValue: boolean;
   hasError: boolean;
+  enabled: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -44,6 +45,12 @@ export const Container = styled.div<ContainerProps>`
     && css`
       border: 2px solid #ffa22b;
       color: #ffa22b;
+    `}
+
+  ${(props) => !props.enabled
+    && css`
+      pointer-events: none;
+      opacity: 0.5;
     `}
 
   input {

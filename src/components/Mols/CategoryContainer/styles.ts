@@ -38,6 +38,7 @@ export const CategoryTitle = styled.div`
 
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-left: auto;
     margin-right: 12px;
 

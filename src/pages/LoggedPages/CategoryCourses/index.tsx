@@ -59,7 +59,10 @@ const CategoryCourses: React.FC = () => {
       <Heading>
         <FiArrowLeft size={20} onClick={() => goBack()} />
         {courses.length > 0 && (
-          <p>{`${categoryName} ( ${courses.length} )`}</p>
+          <p>
+            {categoryName}
+            <strong>{`(${courses.length})`}</strong>
+          </p>
         )}
         {isLoading && (<Skeleton className="category-title" />)}
       </Heading>

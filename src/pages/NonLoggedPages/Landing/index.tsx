@@ -40,12 +40,14 @@ const Landing: React.FC = () => {
                 icon={FiUser}
                 placeholder="Digite seu e-mail"
                 style={{ width: 300 }}
+                enabled={!isLogging}
               />
               <Input
                 name="password"
                 icon={FiLock}
                 type="password"
                 placeholder="Sua senha"
+                enabled={!isLogging}
               />
               <StyledButton
                 type="submit"

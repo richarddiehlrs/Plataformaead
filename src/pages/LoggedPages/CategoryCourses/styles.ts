@@ -5,8 +5,6 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  height: 86vh;
 `;
 
 export const Heading = styled.div`
@@ -19,12 +17,17 @@ export const Heading = styled.div`
     font-family: 'Raleway', sans-serif;
     font-size: 22px;
     color: #E9EAED;
-    font-weight: bold;
     margin-left: 20px;
+
+    strong{
+      font-weight: lighter;
+      margin-left: 12px;
+    }
   }
 
   svg{
     color: #fff;
+    font-weight: bolder;
 
     transition: color 0.4s;
     margin-left: -40px;
@@ -60,5 +63,5 @@ export const Container = styled.div`
 `;
 
 export const FooterContainer = styled.div`
-  margin-top: auto;
+  margin-top: 10%;
 `;
