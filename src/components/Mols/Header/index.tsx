@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({
     <>
       <Container>
         <LogoContent>
-          <Logo onClick={() => handleChangeTab('cursos')} src={nlLogo} alt="nllogo" />
+          <Logo onClick={() => handleChangeTab('courses')} src={nlLogo} alt="nllogo" />
           <Separator customHeight={40} type="vertical" />
           <UserContainer bg={user.imageurl}>
             <div className="image-container">
