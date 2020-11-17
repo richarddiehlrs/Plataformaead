@@ -5,14 +5,22 @@ export const Container = styled.div`
   align-items: center;
 
   width: 100%;
+  padding: 12px 0;
 
   margin-top: 16px;
 
   font-family: 'Roboto', sans-serif;
   color: #E9EAED;
 
+  transition: 0.4s;
+
   img{
     width: 100px;
+  }
+
+  &:hover{
+    box-shadow: inset 0 0 8px rgba(0,0,0,.8);
+    cursor: pointer;
   }
 `;
 
