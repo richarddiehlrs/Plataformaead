@@ -39,6 +39,7 @@ export const VideoInfo = styled.div`
   h3{
     font-size: 14px;
     font-weight: bold;
+    margin-bottom: 4px;
   }
   p{
     font-size: 12px;
