@@ -14,7 +14,7 @@ const Course: React.FC = () => (
       <VideoContainer>
         <img src="https://kanto.legiaodosherois.com.br/w760-h398-gnw-cfill-q80/wp-content/uploads/2020/03/legiao_nY1sQCx90KB2dGLcWrM354mIJfFaHApgNwO7qlUzZk.jpg.jpeg" alt="thumb" />
       </VideoContainer>
-      <AnotationsContainer>
+      <AnotationsContainer className="hasVerticalScroll">
         <AnotationCard />
         <AnotationCard />
         <AnotationCard />

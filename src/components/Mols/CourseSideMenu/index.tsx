@@ -1,6 +1,7 @@
 import React from 'react';
 
 import VideoCard from 'components/Atoms/VideoCard';
+import Dropdown from 'components/Atoms/Dropdown';
 
 import Separator from 'components/Atoms/Separator';
 import {
@@ -18,13 +19,19 @@ const CourseSideMenu: React.FC = () => (
     <Content>
       <FilterContainer>
         <p>Selecione para alterar</p>
-        <select name="cars" id="cars">
+        {/* <select name="cars" id="cars">
           <option value="java">Java</option>
           <option value="c">C</option>
-        </select>
+        </select> */}
+        <Dropdown
+          title="Selecionar aula"
+          items={[
+            { key: 'Java', value: 'java' },
+            { key: 'C', value: 'c' }]}
+        />
       </FilterContainer>
-      <VideosScrollContainer>
-        <VideoCard />
+      <VideosScrollContainer className="hasVerticalScroll">
+        <VideoCard isWatching />
         <VideoCard />
         <VideoCard />
         <VideoCard />

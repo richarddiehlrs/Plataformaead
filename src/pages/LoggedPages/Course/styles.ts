@@ -42,5 +42,7 @@ export const AnotationsContainer = styled.div`
 
   overflow: scroll;
 
-  border: solid 1px yellow;
+  &::-webkit-scrollbar-thumb {
+    background: rgb(254,212,74) !important;
+  }
 `;

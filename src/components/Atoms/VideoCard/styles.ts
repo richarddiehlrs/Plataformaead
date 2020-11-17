@@ -6,10 +6,9 @@ export const Container = styled.div`
 
   width: 100%;
 
-  border: solid 1px aquamarine;
   margin-top: 16px;
 
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: #E9EAED;
 
   img{
@@ -17,18 +16,31 @@ export const Container = styled.div`
   }
 `;
 
+export const SelectedIconContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  height: 20px;
+  width: 20px;
+
+  padding: 0;
+  margin: 0;
+`;
+
 export const VideoInfo = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
 
   margin-left: 12px;
 
   h3{
-    font-size: 18px;
+    font-size: 14px;
+    font-weight: bold;
   }
   p{
-    font-size: 14px;
+    font-size: 12px;
   }
 `;
