@@ -15,15 +15,15 @@ const Course: React.FC = () => (
         <img src="https://kanto.legiaodosherois.com.br/w760-h398-gnw-cfill-q80/wp-content/uploads/2020/03/legiao_nY1sQCx90KB2dGLcWrM354mIJfFaHApgNwO7qlUzZk.jpg.jpeg" alt="thumb" />
       </VideoContainer>
       <AnotationsContainer className="hasVerticalScroll">
-        <AnotationCard />
-        <AnotationCard />
-        <AnotationCard />
-        <AnotationCard />
-        <AnotationCard />
-        <AnotationCard />
-        <AnotationCard />
-        <AnotationCard />
-        <AnotationCard />
+        <AnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+        <AnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+        <AnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+        <AnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+        <AnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+        <AnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+        <AnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+        <AnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+        <AnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
       </AnotationsContainer>
     </Content>
   </Container>

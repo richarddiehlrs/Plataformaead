@@ -27,7 +27,7 @@ export const VideoContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  border: solid 1px blue;
+  /* border: solid 1px blue; */
 
   margin-bottom: auto;
 `;
@@ -41,6 +41,8 @@ export const AnotationsContainer = styled.div`
   height: 100%;
 
   overflow: scroll;
+
+  background: rgba(0,0,0,0.04);
 
   &::-webkit-scrollbar-thumb {
     background: rgb(254,212,74) !important;

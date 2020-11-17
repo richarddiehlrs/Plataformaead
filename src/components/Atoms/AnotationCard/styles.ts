@@ -15,9 +15,18 @@ export const Container = styled.div`
   font-family: 'Raleway';
   color: #e7eaf2;
 
+  transition: 0.4s;
+
   h4{
     font-weight: lighter;
     margin-bottom: 4px;
+  }
+
+  &:hover{
+    background: ${shade(0.4, '#535a6c')};
+    transform: scaleX(1.05) scaleY(1.05);
+
+    cursor: pointer;
   }
 
 `;

@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import grayGradient from '../assets/images/background.png';
 
 export default createGlobalStyle`
   * {
