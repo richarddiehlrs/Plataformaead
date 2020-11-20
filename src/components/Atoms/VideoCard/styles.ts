@@ -2,6 +2,15 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  margin-bottom: 16px;
+`;
+
+export const VideoCardWrapper = styled.div`
+  display: flex;
   align-items: center;
 
   width: 100%;

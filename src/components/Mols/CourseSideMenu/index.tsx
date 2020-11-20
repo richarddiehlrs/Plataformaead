@@ -19,10 +19,6 @@ const CourseSideMenu: React.FC = () => (
     <Content>
       <FilterContainer>
         <p>Selecione para alterar</p>
-        {/* <select name="cars" id="cars">
-          <option value="java">Java</option>
-          <option value="c">C</option>
-        </select> */}
         <Dropdown
           title="Selecionar aula"
           items={[
@@ -31,7 +27,7 @@ const CourseSideMenu: React.FC = () => (
         />
       </FilterContainer>
       <VideosScrollContainer className="hasVerticalScroll">
-        <VideoCard isWatching />
+        <VideoCard isWatching exercisePreviewActive />
         <VideoCard />
         <VideoCard />
         <VideoCard />

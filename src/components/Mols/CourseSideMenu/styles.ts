@@ -5,7 +5,6 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  border: solid 1px red;
   background: #242a39;
 
   font-family: 'Raleway';

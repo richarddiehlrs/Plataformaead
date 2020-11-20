@@ -5,9 +5,6 @@ export const Container = styled.div`
   align-items: center;
 
   height: 84vh;
-
-  border: solid 1px green;
-
 `;
 
 export const Content = styled.div`
@@ -27,7 +24,6 @@ export const VideoContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  /* border: solid 1px blue; */
 
   margin-bottom: auto;
 `;
