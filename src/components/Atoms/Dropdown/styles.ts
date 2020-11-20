@@ -65,6 +65,7 @@ export const DropdownHeaderAction = styled.div<DropdownHeaderActionProps>`
 
 export const ItemsList = styled.ul`
   position: absolute;
+  z-index: 10;
 
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
   padding: 0;
