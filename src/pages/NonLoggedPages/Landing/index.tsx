@@ -51,6 +51,7 @@ const Landing: React.FC = () => {
         const errors = getValidationErrors(err);
 
         formRef.current?.setErrors(errors);
+        setIsLogging(false);
       } else {
         addToast({
           type: 'error',
