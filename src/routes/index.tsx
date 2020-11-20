@@ -19,7 +19,7 @@ import CategoryCourses from 'pages/LoggedPages/CategoryCourses';
 import Route from './Route';
 
 const Routes: React.FC = () => {
-  const [tab, setTab] = useState('cursos');
+  const [tab, setTab] = useState('courses');
   const { user } = useAuth();
 
   const HeaderTabs = useMemo(() => [

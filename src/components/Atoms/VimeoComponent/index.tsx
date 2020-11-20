@@ -7,7 +7,7 @@ interface ViemoComponentProps {
   url?: string;
 }
 
-const VimeoComponent: React.FC<ViemoComponentProps> = ({ url = '478269537' }) => {
+const VimeoComponent: React.FC<ViemoComponentProps> = ({ url = 'https://vimeo.com/423163324/f4fc5a31fa' }) => {
   const showCurrentTime = useCallback((info: any) => { }, []);
 
   const handleEndVideo = useCallback((info: any) => { }, []);

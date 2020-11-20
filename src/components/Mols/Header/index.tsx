@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useAuth } from 'hooks/auth';
 
 import CollapsibleMenu from 'components/Atoms/CollapsibleMenu';
@@ -27,14 +27,18 @@ const Header: React.FC<HeaderProps> = ({
 
   const { user, signOut } = useAuth();
   const { push } = useHistory();
+  const { pathname } = useLocation();
 
   const handleChangeTab = useCallback((tab: string) => {
     changeTab(tab);
-    push({
-      pathname: `/${tab}`,
-      state: { tab },
-    });
-  }, [push, changeTab]);
+
+    if (pathname !== '/courses') {
+      push({
+        pathname: `/${tab}`,
+        state: { tab },
+      });
+    }
+  }, [push, changeTab, pathname]);
 
   const handleCollapseMenu = useCallback(() => {
     setIsCollapsed(!isCollapsed);

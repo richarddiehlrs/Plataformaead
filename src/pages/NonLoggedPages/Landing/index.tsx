@@ -46,6 +46,8 @@ const Landing: React.FC = () => {
       });
 
       await signIn({ username: data.username, password: data.password });
+
+      // window.location.href = '/courses';
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
