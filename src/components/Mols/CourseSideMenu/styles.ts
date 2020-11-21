@@ -5,10 +5,34 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  border: solid 1px red;
+  background: #242a39;
+
+  font-family: 'Raleway';
+  color: #e7eaf2;
 
   width: 400px;
   height: 100%;
+
+  > h3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: 500;
+
+    margin-bottom: 4px;
+    margin-right: auto;
+    padding: 4px 12px;
+
+    svg{
+      margin-right: 12px;
+      transition: color .4s;
+      &:hover{
+        color: rgba(255,255,255,0.3);
+        cursor: pointer;
+      }
+    }
+  }
 `;
 
 export const Heading = styled.div`
@@ -25,23 +49,14 @@ export const Heading = styled.div`
     object-fit: cover;
     margin-bottom: 12px;
   }
-  h3{
-    font-weight: 500;
-    margin-bottom: 4px;
-  }
-  p{
-    /* margin-bottom: 8px; */
-  }
-
-  border: solid 1px red;
 `;
 
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 16px 24px;
+  padding: 16px 4px;
 
-  border: solid 1px aquamarine;
+  width: 96%;
 
   overflow: scroll;
 `;
@@ -50,11 +65,12 @@ export const FilterContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 60%;
-
-  border: solid 1px red;
+  width: 80%;
 
   margin-bottom: 32px;
+  > p{
+    margin-bottom: 12px;
+  }
 `;
 
 export const VideosScrollContainer = styled.div`
@@ -62,5 +78,5 @@ export const VideosScrollContainer = styled.div`
   flex-direction: column;
   overflow: scroll;
 
-  border: solid 1px green;
+  padding: 0 8px;
 `;

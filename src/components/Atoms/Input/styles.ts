@@ -96,6 +96,7 @@ export const Error = styled(Tooltip)`
 
 export const EyePassword = styled.div`
   height: 20px;
+  margin-left: 8px;
 
   svg {
     margin-right: 0px;

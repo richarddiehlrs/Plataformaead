@@ -4,10 +4,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
 
-  height: 84vh;
-
-  border: solid 1px green;
-
+  height: 88vh;
 `;
 
 export const Content = styled.div`
@@ -18,7 +15,7 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
 
-
+  padding: 0 10px;
 `;
 
 export const VideoContainer = styled.div`
@@ -27,7 +24,7 @@ export const VideoContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  border: solid 1px blue;
+  height: 100%;
 
   margin-bottom: auto;
 `;
@@ -38,9 +35,13 @@ export const AnotationsContainer = styled.div`
   padding: 32px 128px;
 
   width: 100%;
-  height: 100%;
+  height: 70%;
 
   overflow: scroll;
 
-  border: solid 1px yellow;
+  background: rgba(0,0,0,0.04);
+
+  &::-webkit-scrollbar-thumb {
+    background: rgb(254,212,74) !important;
+  }
 `;

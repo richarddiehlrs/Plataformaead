@@ -17,8 +17,8 @@ export const Heading = styled.div`
   h3{
     display: flex;
     align-items: center;
-    font-family: 'Roboto', sans-serif;
-    font-weight: bold;
+    font-family: 'Roboto-Regular', sans-serif;
+    font-weight: bolder;
     color: #E9EAED;
     margin-left: 20px;
 

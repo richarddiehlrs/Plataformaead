@@ -13,13 +13,11 @@ const Tooltip: React.FC<TooltipProps> = ({
   className = '',
   title,
   ...rest
-}) => {
-  return (
-    <Container className={className}>
-      {children}
-      <span {...rest}>{title}</span>
-    </Container>
-  );
-};
+}) => (
+  <Container className={className}>
+    {children}
+    <span {...rest}>{title}</span>
+  </Container>
+);
 
 export default Tooltip;
