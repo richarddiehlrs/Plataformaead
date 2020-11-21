@@ -44,9 +44,6 @@ const Dropdown: React.FC<DropdownProps> = ({
       if (!multiSelect) {
         setSelection([item]);
       } else {
-        // const newItems = selection;
-        // newItems.push(item);
-        // setSelection(newItems);
         setSelection([...selection, item]);
       }
     } else {
@@ -54,6 +51,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       selectionAfterRemoval = selectionAfterRemoval.filter((current) => current.key !== item.key);
       setSelection([...selectionAfterRemoval]);
     }
+    setOpen(false);
   }, [multiSelect, selection]);
 
   const isItemSelected = useCallback((item: Item) => selection.find((current) => current.key === item.key), [selection]);

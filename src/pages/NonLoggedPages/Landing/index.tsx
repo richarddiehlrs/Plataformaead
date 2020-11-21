@@ -37,7 +37,7 @@ const Landing: React.FC = () => {
       formRef.current?.setErrors({});
 
       const schema = Yup.object().shape({
-        username: Yup.string().required('Email obrigatório!'),
+        username: Yup.string().required('Usuário obrigatório!'),
         password: Yup.string().required('Senha obrigatória!'),
       });
 
@@ -46,8 +46,6 @@ const Landing: React.FC = () => {
       });
 
       await signIn({ username: data.username, password: data.password });
-
-      // window.location.href = '/courses';
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
@@ -76,7 +74,7 @@ const Landing: React.FC = () => {
               <Input
                 name="username"
                 icon={FiUser}
-                placeholder="Digite seu e-mail"
+                placeholder="Digite seu usuário"
                 style={{ width: 300 }}
                 enabled={!isLogging}
               />

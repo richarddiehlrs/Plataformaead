@@ -25,13 +25,14 @@ export default createGlobalStyle`
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+
   }
 
   .hasVerticalScroll{
-    overflow-x: hidden;
+    overflow-x: hidden !important;
 
     &::-webkit-scrollbar {
-    display: unset;
+      display: unset;
     }
     &::-webkit-scrollbar {
       width: 4px !important;
@@ -45,6 +46,10 @@ export default createGlobalStyle`
     }
     &::-webkit-scrollbar-thumb:hover {
       background: #555;
+    }
+
+    &:hover{
+      cursor: pointer;
     }
   }
 

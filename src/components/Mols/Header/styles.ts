@@ -41,7 +41,7 @@ export const Logo = styled.img`
 `;
 
 export const UserContainer = styled.div<UserContainerProps>`
-  margin-left: 2%;
+  margin-left: 1.2%;
   width: 300px;
   height: 64px;
 

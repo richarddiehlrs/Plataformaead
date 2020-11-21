@@ -25,7 +25,7 @@ export const StyledButton = styled(Button)`
   right: 0;
   bottom: -16px;
 
-  width: 50%;
+  width: 54%;
   height: 24px;
 
   font-size: 12px;

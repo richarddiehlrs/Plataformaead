@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
 
-  height: 84vh;
+  height: 88vh;
 `;
 
 export const Content = styled.div`
@@ -15,7 +15,7 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
 
-
+  padding: 0 10px;
 `;
 
 export const VideoContainer = styled.div`
@@ -24,6 +24,7 @@ export const VideoContainer = styled.div`
   align-items: center;
 
   width: 100%;
+  height: 100%;
 
   margin-bottom: auto;
 `;
@@ -34,7 +35,7 @@ export const AnotationsContainer = styled.div`
   padding: 32px 128px;
 
   width: 100%;
-  height: 100%;
+  height: 70%;
 
   overflow: scroll;
 

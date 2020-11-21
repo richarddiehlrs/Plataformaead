@@ -6,7 +6,6 @@ import { Switch } from 'react-router-dom';
 import { useAuth } from 'hooks/auth';
 
 import Header from 'components/Mols/Header';
-import Footer from 'components/Mols/Footer';
 
 // Pages Non Logged
 import Landing from 'pages/NonLoggedPages/Landing';
@@ -40,8 +39,6 @@ const Routes: React.FC = () => {
         <Route path="/course/:courseid" component={Course} isPrivate />
         <Route path="/liveclasses" component={LiveClasses} isPrivate />
       </Switch>
-
-      {user && <Footer />}
     </>
   );
 };

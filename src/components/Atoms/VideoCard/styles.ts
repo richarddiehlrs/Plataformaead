@@ -28,7 +28,7 @@ export const VideoCardWrapper = styled.div`
   }
 
   &:hover{
-    box-shadow: inset 0 0 8px rgba(0,0,0,.8);
+    /* box-shadow: inset 0 0 8px rgba(0,0,0,.8); */
     cursor: pointer;
   }
 `;

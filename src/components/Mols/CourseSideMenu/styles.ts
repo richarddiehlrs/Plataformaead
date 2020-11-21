@@ -12,6 +12,27 @@ export const Container = styled.div`
 
   width: 400px;
   height: 100%;
+
+  > h3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: 500;
+
+    margin-bottom: 4px;
+    margin-right: auto;
+    padding: 4px 12px;
+
+    svg{
+      margin-right: 12px;
+      transition: color .4s;
+      &:hover{
+        color: rgba(255,255,255,0.3);
+        cursor: pointer;
+      }
+    }
+  }
 `;
 
 export const Heading = styled.div`
@@ -28,14 +49,6 @@ export const Heading = styled.div`
     object-fit: cover;
     margin-bottom: 12px;
   }
-  h3{
-    font-weight: 500;
-    margin-bottom: 4px;
-  }
-  p{
-    /* margin-bottom: 8px; */
-  }
-
 `;
 
 export const Content = styled.div`
@@ -64,4 +77,6 @@ export const VideosScrollContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: scroll;
+
+  padding: 0 8px;
 `;
