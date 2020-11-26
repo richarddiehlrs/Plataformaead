@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -34,6 +34,7 @@ export const VideoCardWrapper = styled.div`
 `;
 
 export const SelectedIconContainer = styled.div`
+  position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -43,6 +44,16 @@ export const SelectedIconContainer = styled.div`
 
   padding: 0;
   margin: 0;
+
+  .checked-container{
+    position: absolute;
+    display: flex;
+
+    top: 14px;
+    left: 20px;
+
+    z-index: 3;
+  }
 `;
 
 export const VideoInfo = styled.div`

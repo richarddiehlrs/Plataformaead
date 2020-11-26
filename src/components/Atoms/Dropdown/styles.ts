@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components';
 interface DropdownHeaderActionProps {
   open?: boolean;
   hasValue?: boolean;
+  textColor?: string;
+  arrowColor?: string;
 }
 
 export const DropdownWrapper = styled.div`
@@ -43,7 +45,10 @@ export const DropdownHeaderTitle = styled.div<DropdownHeaderActionProps>`
   p{
     font-size: 14px;
     font-weight: bold;
-    ${(props) => (props.hasValue ? css`color: rgba(255,255,255,1);` : css`color: rgba(255,255,255,0.5);`)}
+    ${(props) => (props.hasValue
+    ? (css`color: ${props.textColor ? props.textColor : '#fff'}; opacity: 1;`)
+    : (css`color: #fff; opacity: 0.5;`))
+}
   }
 `;
 
@@ -54,6 +59,7 @@ export const DropdownHeaderAction = styled.div<DropdownHeaderActionProps>`
 
   .chevron{
     transition: 0.4s;
+    color: ${(props) => (props.arrowColor ? props.arrowColor : '#fff')};
   }
 
   ${(props) => props.open && css`

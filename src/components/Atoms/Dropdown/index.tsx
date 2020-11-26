@@ -21,10 +21,12 @@ interface DropdownProps {
   title: string;
   items: Array<Item>;
   multiSelect?: boolean;
+  textColor?: string;
+  arrowColor?: string;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
-  title, items = [], multiSelect = false,
+  title, items = [], multiSelect = false, textColor, arrowColor,
 }) => {
   const [open, setOpen] = useState(false);
   const [selection, setSelection] = useState<Item[]>([]);
@@ -64,7 +66,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         onKeyPress={() => setOpen(!open)}
         onClick={() => setOpen(!open)}
       >
-        <DropdownHeaderTitle hasValue={selection.length > 0}>
+        <DropdownHeaderTitle hasValue={selection.length > 0} textColor={textColor || 'rbga(255,255,255,0.4)'}>
           {!multiSelect && (
             <p>{selection.length > 0 ? selection[0].value : title}</p>
           )}
@@ -72,7 +74,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             selection.length > 0 ? selection.map((item) => <SelectedItems key={item.key}>{item.value}</SelectedItems>) : <p>{title}</p>
           )}
         </DropdownHeaderTitle>
-        <DropdownHeaderAction open={open}>
+        <DropdownHeaderAction open={open} arrowColor={arrowColor}>
           <FaChevronDown className="chevron" size={14} />
         </DropdownHeaderAction>
       </DropdownHeader>

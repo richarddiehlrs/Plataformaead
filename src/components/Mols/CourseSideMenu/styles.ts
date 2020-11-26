@@ -1,21 +1,25 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+interface ContainerProps {
+  customType?: string;
+}
+
+export const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  background: #242a39;
+  background: ${(props) => (props.customType === 'recordedClasses' ? 'rgba(0,0,0,0.01)' : '#242a39')};
 
   font-family: 'Raleway';
   color: #e7eaf2;
 
-  width: 460px;
+  width: 480px;
   height: 100%;
 
   padding: 0 20px;
 
-  > h3{
+  h3{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,24 +68,6 @@ export const CustomHeading = styled.div`
   margin-bottom: 40px;
   margin-top: 20px;
 
-  .custom-heading-content{
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    margin-right: auto;
-
-    color: #ffd35c;
-    font-size: 18px;
-
-    p{
-      &:nth-child(3){
-        margin-top: 20px;
-        margin-left: auto;
-
-      }
-    }
-  }
 `;
 
 export const Content = styled.div`

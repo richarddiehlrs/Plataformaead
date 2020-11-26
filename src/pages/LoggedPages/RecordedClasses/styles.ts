@@ -3,7 +3,7 @@ import Button from 'components/Atoms/Button';
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: row-reverse;
+  /* flex-direction: row-reverse; */
   align-items: center;
 
   height: 88vh;
@@ -31,59 +31,20 @@ export const VideoContainer = styled.div`
   margin-bottom: auto;
 `;
 
-export const OptionsContainer = styled.div`
+export const AnnotationsContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 80px 300px;
+  flex-direction: column;
+  padding: 32px 128px;
 
   width: 100%;
   height: 70%;
 
+  overflow: scroll;
+
   background: rgba(0,0,0,0.04);
-`;
 
-export const LiveClasses = styled.div`
-  width: 260px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-
-  font-family: 'Roboto';
-  color: #fff;
-
-  padding: 24px;
-
-  svg{
-    margin-bottom: 20px;
-  }
-  strong{
-    font-size: 32px;
-  }
-  p{
-    font-size: 20px;
-  }
-`;
-
-export const Doubts = styled.div`
-  width: 260px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-
-  font-family: 'Roboto';
-  color: #fff;
-
-  padding: 24px;
-
-  svg{
-    margin-bottom: 20px;
-  }
-  strong{
-    font-size: 32px;
-  }
-  p{
-    font-size: 20px;
+  &::-webkit-scrollbar-thumb {
+    background: rgb(254,212,74) !important;
   }
 `;
 

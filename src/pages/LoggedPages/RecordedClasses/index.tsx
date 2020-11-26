@@ -1,13 +1,14 @@
 import React from 'react';
-import { FiCamera } from 'react-icons/fi';
-import { FaRegQuestionCircle } from 'react-icons/fa';
+// import { FiCamera } from 'react-icons/fi';
+// import { FaRegQuestionCircle } from 'react-icons/fa';
 
 import VimeoComponent from 'components/Atoms/VimeoComponent';
-import Separator from 'components/Atoms/Separator';
+// import Separator from 'components/Atoms/Separator';
+import AnnotationCard from 'components/Atoms/AnnotationCard';
 import CourseSideMenu from 'components/Mols/CourseSideMenu';
 
 import {
-  Container, Content, VideoContainer, OptionsContainer, LiveClasses, Doubts, StyledButton,
+  Container, Content, VideoContainer, AnnotationsContainer,
 } from './styles';
 
 const RecordedClasses: React.FC = () => {
@@ -20,21 +21,17 @@ const RecordedClasses: React.FC = () => {
         <VideoContainer>
           <VimeoComponent />
         </VideoContainer>
-        <OptionsContainer>
-          <LiveClasses>
-            <FiCamera size={26} />
-            <strong>Aula</strong>
-            <p>ao vivo</p>
-            <StyledButton>ASSISTIR</StyledButton>
-          </LiveClasses>
-          <Separator type="vertical" customColor="rgba(187,187,187)" customHeight={100} />
-          <Doubts>
-            <FaRegQuestionCircle size={26} />
-            <strong>Plantão</strong>
-            <p>de dúvidas</p>
-            <StyledButton>ACESSAR</StyledButton>
-          </Doubts>
-        </OptionsContainer>
+        <AnnotationsContainer className="hasVerticalScroll">
+          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+        </AnnotationsContainer>
       </Content>
     </Container>
   );

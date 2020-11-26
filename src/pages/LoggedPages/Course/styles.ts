@@ -29,7 +29,7 @@ export const VideoContainer = styled.div`
   margin-bottom: auto;
 `;
 
-export const AnotationsContainer = styled.div`
+export const AnnotationsContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 32px 128px;
