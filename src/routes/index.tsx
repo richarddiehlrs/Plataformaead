@@ -12,8 +12,9 @@ import Landing from 'pages/NonLoggedPages/Landing';
 // Pages Logged
 import Courses from 'pages/LoggedPages/Courses';
 import Course from 'pages/LoggedPages/Course';
-import LiveClasses from 'pages/LoggedPages/LiveClasses';
 import CategoryCourses from 'pages/LoggedPages/CategoryCourses';
+import LiveClasses from 'pages/LoggedPages/LiveClasses';
+import RecordedClasses from 'pages/LoggedPages/RecordedClasses';
 
 import Route from './Route';
 
@@ -24,7 +25,7 @@ const Routes: React.FC = () => {
   const HeaderTabs = useMemo(() => [
     { key: 'courses', value: 'Cursos' },
     { key: 'liveclasses', value: 'Aulas ao vivo' },
-    { key: 'gravadas', value: 'Aulas gravadas' },
+    { key: 'recordedclasses', value: 'Aulas gravadas' },
     { key: 'plantao', value: 'Plantão de dúvidas' },
     { key: 'mensagens', value: 'Mensagens' },
   ], []);
@@ -35,9 +36,10 @@ const Routes: React.FC = () => {
       <Switch>
         <Route path="/" exact component={Landing} />
         <Route path="/courses" component={Courses} isPrivate />
-        <Route path="/categorycourses/:categoryId/:categoryName" component={CategoryCourses} isPrivate />
         <Route path="/course/:courseid" component={Course} isPrivate />
+        <Route path="/categorycourses/:categoryId/:categoryName" component={CategoryCourses} isPrivate />
         <Route path="/liveclasses" component={LiveClasses} isPrivate />
+        <Route path="/recordedclasses" component={RecordedClasses} isPrivate />
       </Switch>
     </>
   );

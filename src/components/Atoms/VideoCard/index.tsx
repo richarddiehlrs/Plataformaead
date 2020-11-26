@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiChevronRight } from 'react-icons/fi';
+import { FiChevronRight, FiCheck } from 'react-icons/fi';
 
 import ExercisePreviewCard from 'components/Atoms/ExercisePreviewCard';
 
@@ -9,14 +9,20 @@ import {
 
 interface VideoCardProsp{
   isWatching?: boolean;
+  alreadyWatched?: boolean;
   exercisePreviewActive?: boolean;
 }
 
-const VideoCard: React.FC<VideoCardProsp> = ({ isWatching = false, exercisePreviewActive = false }) => (
+const VideoCard: React.FC<VideoCardProsp> = ({
+  isWatching = false,
+  alreadyWatched = false,
+  exercisePreviewActive = false,
+}) => (
   <Container>
     <VideoCardWrapper>
       <SelectedIconContainer>
         {isWatching && (<FiChevronRight size={20} />)}
+        {alreadyWatched && (<FiCheck size={20} color="#ffd35c" style={{ marginRight: 4 }} />)}
       </SelectedIconContainer>
       <img src="https://kanto.legiaodosherois.com.br/w760-h398-gnw-cfill-q80/wp-content/uploads/2020/03/legiao_nY1sQCx90KB2dGLcWrM354mIJfFaHApgNwO7qlUzZk.jpg.jpeg" alt="thumb" />
       <VideoInfo>
