@@ -9,8 +9,13 @@ const spinTransition = {
   easeIn: 0.2,
 };
 
-const Loading: React.FC = () => (
-  <Container>
+interface LoadingProps{
+  customColors?: Array<string>;
+  size?: number;
+}
+
+const Loading: React.FC<LoadingProps> = ({ customColors = [], size = 0 }) => (
+  <Container customColors={customColors} size={size}>
     <motion.span animate={{ rotate: 360 }} transition={spinTransition} />
   </Container>
 );

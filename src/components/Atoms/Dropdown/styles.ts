@@ -7,6 +7,10 @@ interface DropdownHeaderActionProps {
   arrowColor?: string;
 }
 
+interface DropdownHeaderProps {
+  isLoading: boolean;
+}
+
 export const DropdownWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -17,14 +21,13 @@ export const DropdownWrapper = styled.div`
   font-family: 'Raleway';
 `;
 
-export const DropdownHeader = styled.div`
+export const DropdownHeader = styled.div<DropdownHeaderProps>`
   background-color: transparent;
   border-radius: 4px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
   width: 100%;
   padding: 0 8px;
 
@@ -32,9 +35,17 @@ export const DropdownHeader = styled.div`
 
   transition: border-color 0.4s, box-shadow 0.4s;
 
-  &:hover{
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.2);
-  }
+  ${(props) => (props.isLoading ? css`
+    pointer-events: none;
+    opacity: 0.4;
+    `
+    : css`
+      &:hover{
+        cursor: pointer;
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.2);
+      }
+  `)}
+
 `;
 
 export const DropdownHeaderTitle = styled.div<DropdownHeaderActionProps>`

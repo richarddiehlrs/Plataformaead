@@ -3,6 +3,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import api from 'services/api';
 import { useAuth } from 'hooks/auth';
 import CourseSeason from 'models/CourseSeason';
+import CourseSeasonMovie from 'models/CourseSeasonMovie';
 
 import VimeoComponent from 'components/Atoms/VimeoComponent';
 import AnnotationCard from 'components/Atoms/AnnotationCard';
@@ -13,27 +14,35 @@ import {
 } from './styles';
 
 const RecordedClasses: React.FC = () => {
-  const [courseSeasons, setCourseSeasons] = useState<CourseSeason[]>([]);
-  const [firstSeason, setFirstSeason] = useState<CourseSeason>();
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedSeason, setSelectedSeason] = useState({ key: '', value: '' });
+
+  const [firstSeason, setFirstSeason] = useState<CourseSeason>();
+  const [courseSeasons, setCourseSeasons] = useState<CourseSeason[]>([]);
+  const [courseSeasonMovies, setCourseSeasonMovies] = useState<CourseSeasonMovie[]>([]);
 
   const { user } = useAuth();
 
   const getSeasonInfo = useCallback((item) => {
-    // console.log(item.value);
     setSelectedSeason(item);
 
     if (item.key !== '') {
-      api.get(`/course/season/movie?courseid=Programação&seasonid=${item.key}&userid=${user.userid}`).then((response) => {
+      // console.log(item.value);
+      setIsLoading(true);
+      api.get<CourseSeasonMovie[]>(`/course/season/movie?courseid=Programação&seasonid=${item.key}&userid=${user.userid}`).then((response) => {
         console.log(response.data);
+        setCourseSeasonMovies(response.data);
+        setIsLoading(false);
       });
     }
   }, [user.userid]);
 
   useEffect(() => {
+    setIsLoading(true);
     api.get<CourseSeason[]>('/course/season?courseid=Programação').then((response) => {
       setCourseSeasons(response.data);
       setFirstSeason(response.data.find((courseSeason) => courseSeason.position === 0));
+      setIsLoading(false);
     });
   }, []);
 
@@ -46,10 +55,12 @@ const RecordedClasses: React.FC = () => {
         ))}
         firstItem={firstSeason && { key: firstSeason.title, value: firstSeason.seasonid }}
         onDropDownChange={(item) => getSeasonInfo(item)}
+        isLoading={isLoading}
+        videos={courseSeasonMovies}
       />
       <Content>
         <VideoContainer>
-          <VimeoComponent />
+          <VimeoComponent url={courseSeasonMovies[0] && courseSeasonMovies[0].url} />
         </VideoContainer>
         <AnnotationsContainer className="hasVerticalScroll">
           <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />

@@ -2,6 +2,8 @@ import React from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 
+import CourseSeasonMovie from 'models/CourseSeasonMovie';
+
 import VideoCard from 'components/Atoms/VideoCard';
 import Dropdown from 'components/Atoms/Dropdown';
 // import ProgressBar from 'components/Atoms/ProgressBar';
@@ -20,6 +22,8 @@ interface CourseSideMenuProps {
   customType?: string;
   verticalDropDownOptions?: Array<DropdownValues>;
   firstItem?: DropdownValues;
+  isLoading?: boolean;
+  videos?: Array<CourseSeasonMovie>;
   onDropDownChange?(item: any): void;
 }
 
@@ -28,6 +32,8 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = (
     customType,
     verticalDropDownOptions = [{ key: '', value: '' }],
     firstItem = { key: '', value: '' },
+    isLoading = false,
+    videos = [],
     onDropDownChange = () => console.log('default'),
   },
 ) => {
@@ -74,6 +80,7 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = (
                 title="Selecionar aula"
                 items={verticalDropDownOptions}
                 defaultValue={firstItem}
+                isLoading={isLoading}
                 onChange={onDropDownChange}
               />
             </>
@@ -85,13 +92,17 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = (
                 textColor="#ffd35c"
                 items={verticalDropDownOptions}
                 defaultValue={firstItem}
+                isLoading={isLoading}
                 onChange={onDropDownChange}
               />
             </>
           )}
         </FilterContainer>
         <VideosScrollContainer className="hasVerticalScroll">
-          <VideoCard alreadyWatched />
+          {videos.map((video) => (
+            <VideoCard key={video.courseid_seasonid_movieid} video={video} />
+          ))}
+          {/* <VideoCard alreadyWatched />
           <VideoCard alreadyWatched />
           <VideoCard alreadyWatched />
           <VideoCard isWatching exercisePreviewActive />
@@ -101,7 +112,7 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = (
           <VideoCard />
           <VideoCard />
           <VideoCard />
-          <VideoCard />
+          <VideoCard /> */}
         </VideosScrollContainer>
       </Content>
     </Container>

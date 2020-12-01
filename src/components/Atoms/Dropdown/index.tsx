@@ -1,7 +1,9 @@
 import React, {
-  useState, useCallback, useRef, useEffect,
+  useState, useCallback, useRef, useEffect, useMemo,
 } from 'react';
 import { FaChevronDown, FaRegDotCircle } from 'react-icons/fa';
+
+import Loading from 'components/Atoms/Loading';
 
 import {
   DropdownWrapper,
@@ -20,23 +22,33 @@ interface Item {
 interface DropdownProps {
   title: string;
   items: Array<Item>;
-  defaultValue?: Item;
   multiSelect?: boolean;
   textColor?: string;
+  defaultValue?: Item;
   arrowColor?: string;
+  isLoading?: boolean;
   onChange?(item: Item | Array<Item>): void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
-  title, items = [],
+  title,
+  items = [],
   multiSelect = false,
   textColor,
-  arrowColor,
   defaultValue,
+  arrowColor,
+  isLoading = false,
   onChange = () => console.log('default'),
 }) => {
   const [open, setOpen] = useState(false);
   const [selection, setSelection] = useState<Item[]>([{ key: '', value: '' }]);
+
+  const firstSelectedItem = useMemo<Item>(() => {
+    if (defaultValue && selection[0] && selection[0].key === '') {
+      return (defaultValue);
+    }
+    return { key: '', value: '' };
+  }, [defaultValue, selection]);
 
   const dropdownContentWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -66,14 +78,16 @@ const Dropdown: React.FC<DropdownProps> = ({
     setOpen(false);
   }, [multiSelect, selection, onChange]);
 
-  const isItemSelected = useCallback((item: Item) => selection.find((current) => current.key === item.key), [selection]);
+  const isItemSelected = useCallback((item: Item) => (
+    selection.find((current) => current.key === item.key)
+  ), [selection]);
 
   useEffect(() => {
-    if (selection[0].key === '' && defaultValue) {
-      setSelection([defaultValue]);
-      // onChange(defaultValue);
+    if (firstSelectedItem.key !== '' && firstSelectedItem.key !== selection[0].key) {
+      setSelection([firstSelectedItem]);
+      onChange(firstSelectedItem);
     }
-  }, [defaultValue, selection]);
+  }, [firstSelectedItem, onChange, selection]);
 
   return (
     <DropdownWrapper ref={dropdownContentWrapperRef}>
@@ -82,13 +96,19 @@ const Dropdown: React.FC<DropdownProps> = ({
         role="button"
         onKeyPress={() => setOpen(!open)}
         onClick={() => setOpen(!open)}
+        isLoading={isLoading}
       >
         <DropdownHeaderTitle hasValue={selection.length > 0} textColor={textColor || 'rbga(255,255,255,0.4)'}>
-          {!multiSelect && (
+          {!isLoading && !multiSelect && (
             <p>{selection.length > 0 ? selection[0].value : title}</p>
           )}
-          {multiSelect && (
+          {!isLoading && multiSelect && (
             selection.length > 0 ? selection.map((item) => <SelectedItems key={item.key}>{item.value}</SelectedItems>) : <p>{title}</p>
+          )}
+          {isLoading && (
+            !multiSelect && (
+              <div><Loading size={1} /></div>
+            )
           )}
         </DropdownHeaderTitle>
         <DropdownHeaderAction open={open} arrowColor={arrowColor}>

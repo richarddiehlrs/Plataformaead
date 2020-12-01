@@ -1,14 +1,31 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface ContainerProps {
+  size?: number;
+  customColors?: Array<string>;
+}
+
+export const Container = styled.div<ContainerProps>`
 position: relative;
-width: 3rem;
-height: 3rem;
+
+
+${(props) => (props.size !== 0 ? css`
+  width: ${props.size}rem;
+  height: ${props.size}rem;
+` : css`
+  width: 3rem;
+  height: 3rem;
+`)}
 
 span{
   display: block;
-  width: 3rem;
-  height: 3rem;
+  ${(props) => (props.size !== 0 ? css`
+    width: ${props.size}rem;
+    height: ${props.size}rem;
+` : css`
+    width: 3rem;
+    height: 3rem;
+`)}
 
   border: 0.2rem solid #e9e9e9;
   border-top: 0.2rem solid #fc9003;

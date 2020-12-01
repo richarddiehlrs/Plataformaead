@@ -9,6 +9,7 @@ export default interface CourseSeasonMovie {
   courseid: string;
   seasonid: string;
   url: string;
+  thumb: string;
   videotype: string;
   videoduration: string;
   exerciseshortmessage: string;
@@ -16,4 +17,4 @@ export default interface CourseSeasonMovie {
   courseseasonmovieuser: CourseSeasonMovieUser;
   notes: Array<Notes>;
   exercises: [];
-};
+}
