@@ -30,7 +30,7 @@ const RecordedClasses: React.FC = () => {
       // console.log(item.value);
       setIsLoading(true);
       api.get<CourseSeasonMovie[]>(`/course/season/movie?courseid=Programação&seasonid=${item.key}&userid=${user.userid}`).then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setCourseSeasonMovies(response.data);
         setIsLoading(false);
       });

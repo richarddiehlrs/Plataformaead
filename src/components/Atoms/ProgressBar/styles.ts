@@ -1,13 +1,18 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface ContainerProps {
   at: number;
+  customHeight: number;
 }
 
 export const Container = styled.div<ContainerProps>`
   width: 100%;
-  height: 8px;
 
+  ${(props) => (props.customHeight ? css`
+    height:${props.customHeight}px;
+  ` : css`
+    height:8px;
+  `)}
   margin-top: 14px;
 
   border-radius: 12px;

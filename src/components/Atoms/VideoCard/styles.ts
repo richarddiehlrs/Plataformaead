@@ -56,6 +56,29 @@ export const SelectedIconContainer = styled.div`
   }
 `;
 
+export const Thumb = styled.div`
+  position: relative;
+`;
+
+export const Time = styled.div`
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+
+  p{
+    font-size: 12px;
+    padding: 4px;
+    background: rgba(0,0,0,0.3);
+    z-index:2;
+  }
+`;
+
+export const StyledProgressBar = styled.div`
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+`;
+
 export const VideoInfo = styled.div`
   display: flex;
   flex-direction: column;
