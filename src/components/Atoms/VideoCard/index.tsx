@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FiChevronRight, FiCheck } from 'react-icons/fi';
 
 import CourseSeasonMovie from 'models/CourseSeasonMovie';
@@ -15,6 +15,7 @@ interface VideoCardProsp{
   alreadyWatched?: boolean;
   exercisePreviewActive?: boolean;
   video: CourseSeasonMovie;
+  onSelect(position: number): void;
 }
 
 const VideoCard: React.FC<VideoCardProsp> = ({
@@ -22,13 +23,18 @@ const VideoCard: React.FC<VideoCardProsp> = ({
   alreadyWatched = false,
   exercisePreviewActive = false,
   video,
+  onSelect,
 }) => {
+  // const [localIsWatching, setLocalIsWatching] = useState(false);
+  const [localAlreadyWatched, setLocalAlreadyWatched] = useState(false);
+
   const videoProgress = useMemo(() => {
     const videoDuration = video.videoduration;
     const timeWatched = video.courseseasonmovieuser.videowatched;
 
     let vdHours; let vdMinutes; let vdSeconds;
     let totalSeconds;
+    let progress = 0;
 
     const [twHours, twMinutes, twSeconds] = timeWatched.split(':');
     const secondsWatched = (Number(twHours) * 60 * 60) + Number(twMinutes) * 60 + Number(twSeconds);
@@ -36,19 +42,21 @@ const VideoCard: React.FC<VideoCardProsp> = ({
     if (videoDuration.split(':').length > 2) {
       [vdHours, vdMinutes, vdSeconds] = videoDuration.split(':');
       totalSeconds = Number(vdHours) * 60 * 60 + Number(vdMinutes) * 60 + Number(vdSeconds);
-      return Math.round(((secondsWatched * 100) / totalSeconds));
+    } else {
+      [vdMinutes, vdSeconds] = videoDuration.split(':');
+      totalSeconds = Number(vdMinutes) * 60 + Number(vdSeconds);
     }
-    [vdMinutes, vdSeconds] = videoDuration.split(':');
-    totalSeconds = Number(vdMinutes) * 60 + Number(vdSeconds);
-    return Math.round(((secondsWatched * 100) / totalSeconds));
+    progress = Math.round(((secondsWatched * 100) / totalSeconds));
+    progress >= 98 && setLocalAlreadyWatched(true);
+    return progress;
   }, [video]);
 
   return (
     <Container>
-      <VideoCardWrapper>
+      <VideoCardWrapper onClick={() => { onSelect(video.position); }}>
         <SelectedIconContainer>
-          {isWatching && (<FiChevronRight size={22} />)}
-          {alreadyWatched && (
+          {(isWatching) && (<FiChevronRight size={22} />)}
+          {(alreadyWatched || localAlreadyWatched) && (
             <div className="checked-container">
               <FiCheck className="checked" size={22} color="#ffd35c" style={{ fontWeight: 'bolder' }} />
             </div>

@@ -7,6 +7,7 @@ export const Container = styled.div`
   justify-content: center;
 
   margin-bottom: 16px;
+
 `;
 
 export const VideoCardWrapper = styled.div`
@@ -28,9 +29,10 @@ export const VideoCardWrapper = styled.div`
   }
 
   &:hover{
-    /* box-shadow: inset 0 0 8px rgba(0,0,0,.8); */
+    box-shadow: 8px 8px 8px rgba(0,0,0,.02);
     cursor: pointer;
   }
+
 `;
 
 export const SelectedIconContainer = styled.div`

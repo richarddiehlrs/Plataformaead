@@ -24,7 +24,9 @@ interface CourseSideMenuProps {
   firstItem?: DropdownValues;
   isLoading?: boolean;
   videos?: Array<CourseSeasonMovie>;
+  selectedPosition?: number;
   onDropDownChange?(item: any): void;
+  onVideoChange?(position: number): void;
 }
 
 const CourseSideMenu: React.FC<CourseSideMenuProps> = (
@@ -34,7 +36,9 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = (
     firstItem = { key: '', value: '' },
     isLoading = false,
     videos = [],
+    selectedPosition = 0,
     onDropDownChange = () => console.log('default'),
+    onVideoChange = () => console.log('default'),
   },
 ) => {
   const { goBack } = useHistory();
@@ -100,19 +104,15 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = (
         </FilterContainer>
         <VideosScrollContainer className="hasVerticalScroll">
           {videos.map((video) => (
-            <VideoCard key={video.courseid_seasonid_movieid} video={video} />
+            <VideoCard key={video.courseid_seasonid_movieid} video={video} onSelect={onVideoChange} isWatching={video.position === selectedPosition} />
           ))}
-          {/* <VideoCard alreadyWatched />
+          {/*
+          <VideoCard alreadyWatched />
           <VideoCard alreadyWatched />
           <VideoCard alreadyWatched />
           <VideoCard isWatching exercisePreviewActive />
           <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard /> */}
+          */}
         </VideosScrollContainer>
       </Content>
     </Container>

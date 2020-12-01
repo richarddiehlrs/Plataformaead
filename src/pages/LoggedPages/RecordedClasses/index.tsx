@@ -15,22 +15,21 @@ import {
 
 const RecordedClasses: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedSeason, setSelectedSeason] = useState({ key: '', value: '' });
+  // const [selectedSeason, setSelectedSeason] = useState({ key: '', value: '' });
 
   const [firstSeason, setFirstSeason] = useState<CourseSeason>();
   const [courseSeasons, setCourseSeasons] = useState<CourseSeason[]>([]);
   const [courseSeasonMovies, setCourseSeasonMovies] = useState<CourseSeasonMovie[]>([]);
+  const [selectedCourseSeasonMoviePosition, setSelectedCourseSeasonMoviePosition] = useState(0);
 
   const { user } = useAuth();
 
   const getSeasonInfo = useCallback((item) => {
-    setSelectedSeason(item);
+    // setSelectedSeason(item);
 
     if (item.key !== '') {
-      // console.log(item.value);
       setIsLoading(true);
       api.get<CourseSeasonMovie[]>(`/course/season/movie?courseid=Programação&seasonid=${item.key}&userid=${user.userid}`).then((response) => {
-        // console.log(response.data);
         setCourseSeasonMovies(response.data);
         setIsLoading(false);
       });
@@ -55,12 +54,14 @@ const RecordedClasses: React.FC = () => {
         ))}
         firstItem={firstSeason && { key: firstSeason.title, value: firstSeason.seasonid }}
         onDropDownChange={(item) => getSeasonInfo(item)}
+        onVideoChange={setSelectedCourseSeasonMoviePosition}
+        selectedPosition={selectedCourseSeasonMoviePosition}
         isLoading={isLoading}
         videos={courseSeasonMovies}
       />
       <Content>
         <VideoContainer>
-          <VimeoComponent url={courseSeasonMovies[0] && courseSeasonMovies[0].url} />
+          <VimeoComponent url={courseSeasonMovies[selectedCourseSeasonMoviePosition] && courseSeasonMovies[selectedCourseSeasonMoviePosition].url} />
         </VideoContainer>
         <AnnotationsContainer className="hasVerticalScroll">
           <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
