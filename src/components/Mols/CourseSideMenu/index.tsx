@@ -11,11 +11,26 @@ import {
   Container, Heading, CustomHeading, Content, FilterContainer, VideosScrollContainer,
 } from './styles';
 
-interface CourseSideMenuProps {
-  customType?: string;
+interface DropdownValues{
+  key: string;
+  value: string;
 }
 
-const CourseSideMenu: React.FC<CourseSideMenuProps> = ({ customType }) => {
+interface CourseSideMenuProps {
+  customType?: string;
+  verticalDropDownOptions?: Array<DropdownValues>;
+  firstItem?: DropdownValues;
+  onDropDownChange?(item: any): void;
+}
+
+const CourseSideMenu: React.FC<CourseSideMenuProps> = (
+  {
+    customType,
+    verticalDropDownOptions = [{ key: '', value: '' }],
+    firstItem = { key: '', value: '' },
+    onDropDownChange = () => console.log('default'),
+  },
+) => {
   const { goBack } = useHistory();
 
   return (
@@ -57,9 +72,9 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = ({ customType }) => {
               <p>Selecione para alterar</p>
               <Dropdown
                 title="Selecionar aula"
-                items={[
-                  { key: 'Java', value: 'java' },
-                  { key: 'C', value: 'c' }]}
+                items={verticalDropDownOptions}
+                defaultValue={firstItem}
+                onChange={onDropDownChange}
               />
             </>
           ) : (
@@ -68,9 +83,9 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = ({ customType }) => {
                 title="Escolha"
                 arrowColor="#ffd35c"
                 textColor="#ffd35c"
-                items={[
-                  { key: 'Java', value: 'java' },
-                  { key: 'C', value: 'c' }]}
+                items={verticalDropDownOptions}
+                defaultValue={firstItem}
+                onChange={onDropDownChange}
               />
             </>
           )}

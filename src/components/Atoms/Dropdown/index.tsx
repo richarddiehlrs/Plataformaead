@@ -1,5 +1,5 @@
 import React, {
-  useState, useCallback, useRef,
+  useState, useCallback, useRef, useEffect,
 } from 'react';
 import { FaChevronDown, FaRegDotCircle } from 'react-icons/fa';
 
@@ -20,16 +20,23 @@ interface Item {
 interface DropdownProps {
   title: string;
   items: Array<Item>;
+  defaultValue?: Item;
   multiSelect?: boolean;
   textColor?: string;
   arrowColor?: string;
+  onChange?(item: Item | Array<Item>): void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
-  title, items = [], multiSelect = false, textColor, arrowColor,
+  title, items = [],
+  multiSelect = false,
+  textColor,
+  arrowColor,
+  defaultValue,
+  onChange = () => console.log('default'),
 }) => {
   const [open, setOpen] = useState(false);
-  const [selection, setSelection] = useState<Item[]>([]);
+  const [selection, setSelection] = useState<Item[]>([{ key: '', value: '' }]);
 
   const dropdownContentWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -45,18 +52,28 @@ const Dropdown: React.FC<DropdownProps> = ({
     if (!selection.some((current) => current.key === item.key)) {
       if (!multiSelect) {
         setSelection([item]);
+        onChange(item);
       } else {
         setSelection([...selection, item]);
+        onChange([...selection, item]);
       }
     } else {
       let selectionAfterRemoval = selection;
       selectionAfterRemoval = selectionAfterRemoval.filter((current) => current.key !== item.key);
       setSelection([...selectionAfterRemoval]);
+      onChange(selectionAfterRemoval);
     }
     setOpen(false);
-  }, [multiSelect, selection]);
+  }, [multiSelect, selection, onChange]);
 
   const isItemSelected = useCallback((item: Item) => selection.find((current) => current.key === item.key), [selection]);
+
+  useEffect(() => {
+    if (selection[0].key === '' && defaultValue) {
+      setSelection([defaultValue]);
+      // onChange(defaultValue);
+    }
+  }, [defaultValue, selection]);
 
   return (
     <DropdownWrapper ref={dropdownContentWrapperRef}>
