@@ -83,11 +83,11 @@ const Dropdown: React.FC<DropdownProps> = ({
   ), [selection]);
 
   useEffect(() => {
-    if (firstSelectedItem.key !== '' && firstSelectedItem.key !== selection[0].key) {
+    if (defaultValue && firstSelectedItem.key !== '' && firstSelectedItem.key !== selection[0].key) {
       setSelection([firstSelectedItem]);
       onChange(firstSelectedItem);
     }
-  }, [firstSelectedItem, onChange, selection]);
+  }, [firstSelectedItem, onChange, selection, defaultValue]);
 
   return (
     <DropdownWrapper ref={dropdownContentWrapperRef}>
@@ -118,7 +118,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       {open && (
         <ItemsList>
             {items.map((item) => (
-              <li key={item.key}>
+              <li key={`${item.key}-${item.value}`}>
                 <button type="button" onClick={() => handleOnClick(item)}>
                   <span>{item.value}</span>
                   <span>{isItemSelected(item) && <FaRegDotCircle size={10} />}</span>

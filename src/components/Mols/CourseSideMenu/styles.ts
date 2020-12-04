@@ -1,7 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface ContainerProps {
   customType?: string;
+}
+
+interface HorizontalSelectContainerProps {
+  isLoading: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -63,11 +67,23 @@ export const CustomHeading = styled.div`
   flex-direction: column;
   margin-right: auto;
 
-  width: 70%;
+  width: 100%;
   padding: 10px;
   margin-bottom: 40px;
   margin-top: 20px;
 
+  p{
+    margin-bottom: 8px;
+  }
+`;
+
+export const HorizontalSelectContainer = styled.div<HorizontalSelectContainerProps>`
+  width: 100%;
+
+  ${(props) => props.isLoading && css`
+    pointer-events: none;
+    opacity: 0.5;
+  `}
 `;
 
 export const Content = styled.div`
@@ -76,6 +92,7 @@ export const Content = styled.div`
   padding: 16px 4px;
 
   width: 96%;
+  height: 100%;
 
   overflow: scroll;
 `;

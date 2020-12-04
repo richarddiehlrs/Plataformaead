@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { FiChevronRight, FiCheck } from 'react-icons/fi';
 
-import CourseSeasonMovie from 'models/CourseSeasonMovie';
+// import CourseSeasonMovie from 'models/CourseSeasonMovie';
+import { SchoolLevelSubjectSeasonClasses } from 'models/SchoolModels';
 
 import ExercisePreviewCard from 'components/Atoms/ExercisePreviewCard';
 import ProgressBar from 'components/Atoms/ProgressBar';
@@ -10,15 +11,15 @@ import {
   Container, VideoCardWrapper, SelectedIconContainer, Thumb, Time, StyledProgressBar, VideoInfo,
 } from './styles';
 
-interface VideoCardProsp{
+interface VideoCardProps{
   isWatching?: boolean;
   alreadyWatched?: boolean;
   exercisePreviewActive?: boolean;
-  video: CourseSeasonMovie;
+  video: SchoolLevelSubjectSeasonClasses;
   onSelect(position: number): void;
 }
 
-const VideoCard: React.FC<VideoCardProsp> = ({
+const VideoCard: React.FC<VideoCardProps> = ({
   isWatching = false,
   alreadyWatched = false,
   exercisePreviewActive = false,
@@ -28,28 +29,29 @@ const VideoCard: React.FC<VideoCardProsp> = ({
   // const [localIsWatching, setLocalIsWatching] = useState(false);
   const [localAlreadyWatched, setLocalAlreadyWatched] = useState(false);
 
-  const videoProgress = useMemo(() => {
-    const videoDuration = video.videoduration;
-    const timeWatched = video.courseseasonmovieuser.videowatched;
+  const videoProgress = useMemo(() =>
+  // const videoDuration = video.videoduration;
+  // const timeWatched = video.courseseasonmovieuser.videowatched;
 
-    let vdHours; let vdMinutes; let vdSeconds;
-    let totalSeconds;
-    let progress = 0;
+  // let vdHours; let vdMinutes; let vdSeconds;
+  // let totalSeconds;
+  // let progress = 0;
 
-    const [twHours, twMinutes, twSeconds] = timeWatched.split(':');
-    const secondsWatched = (Number(twHours) * 60 * 60) + Number(twMinutes) * 60 + Number(twSeconds);
+  // const [twHours, twMinutes, twSeconds] = timeWatched.split(':');
+  // const secondsWatched = (Number(twHours) * 60 * 60) + Number(twMinutes) * 60 + Number(twSeconds);
 
-    if (videoDuration.split(':').length > 2) {
-      [vdHours, vdMinutes, vdSeconds] = videoDuration.split(':');
-      totalSeconds = Number(vdHours) * 60 * 60 + Number(vdMinutes) * 60 + Number(vdSeconds);
-    } else {
-      [vdMinutes, vdSeconds] = videoDuration.split(':');
-      totalSeconds = Number(vdMinutes) * 60 + Number(vdSeconds);
-    }
-    progress = Math.round(((secondsWatched * 100) / totalSeconds));
-    progress >= 98 && setLocalAlreadyWatched(true);
-    return progress;
-  }, [video]);
+    // if (videoDuration.split(':').length > 2) {
+    //   [vdHours, vdMinutes, vdSeconds] = videoDuration.split(':');
+    //   totalSeconds = Number(vdHours) * 60 * 60 + Number(vdMinutes) * 60 + Number(vdSeconds);
+    // } else {
+    //   [vdMinutes, vdSeconds] = videoDuration.split(':');
+    //   totalSeconds = Number(vdMinutes) * 60 + Number(vdSeconds);
+    // }
+    // progress = Math.round(((secondsWatched * 100) / totalSeconds));
+    // progress >= 98 && setLocalAlreadyWatched(true);
+    // return progress;
+    10,
+  []);
 
   return (
     <Container>
@@ -63,7 +65,7 @@ const VideoCard: React.FC<VideoCardProsp> = ({
           )}
         </SelectedIconContainer>
         <Thumb>
-          <img src={video.thumb} alt={video.courseid_seasonid_movieid} />
+          <img src={video.thumb} alt={video.classid} />
           <Time><p>{video.videoduration}</p></Time>
           <StyledProgressBar>
             <ProgressBar at={videoProgress} customHeight={4} />
@@ -75,7 +77,7 @@ const VideoCard: React.FC<VideoCardProsp> = ({
         </VideoInfo>
       </VideoCardWrapper>
       {exercisePreviewActive && (
-      <ExercisePreviewCard />
+        <ExercisePreviewCard />
       )}
     </Container>
   );

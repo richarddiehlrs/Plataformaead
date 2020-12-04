@@ -49,4 +49,29 @@ export default createGlobalStyle`
     }
   }
 
+  .hasHorizontalScroll{
+    overflow-y: hidden !important;
+    scrollbar-width: thin !important;
+
+    &::-webkit-scrollbar {
+      height: 12px !important;
+      display: unset;
+      /* max-width: 10px !important; */
+    }
+    &::-webkit-scrollbar-track {
+      background: #9198aa;
+      border-radius: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #161a21;
+      border-radius: 8px;
+      /* border: 3px solid transparent;
+      background-clip: content-box; */
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: #303236;
+      width: 1px !important;
+    }
+  }
+
 `;
