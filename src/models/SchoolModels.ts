@@ -16,6 +16,16 @@ export interface SchoolLevelSubject{
   schoollevelsubjectseasonclasses: Array<any>;
 }
 
+export default interface schoollevelsubjectseasonclassuser {
+  courseid_seasonid_movieid_userid: string;
+  movieid: string;
+  courseid: string;
+  seasonid: string;
+  userid: string;
+  videostatus: string;
+  videowatched: string;
+}
+
 export interface SchoolLevelSubjectSeasonClasses{
   classid: string;
   description: string;
@@ -32,4 +42,5 @@ export interface SchoolLevelSubjectSeasonClasses{
   url: string;
   videoduration: string;
   videotype: string;
+  schoollevelsubjectseasonclassuser: schoollevelsubjectseasonclassuser;
 }

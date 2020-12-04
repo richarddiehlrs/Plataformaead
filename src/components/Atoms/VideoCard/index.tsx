@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FiChevronRight, FiCheck } from 'react-icons/fi';
 
 // import CourseSeasonMovie from 'models/CourseSeasonMovie';
@@ -26,38 +26,40 @@ const VideoCard: React.FC<VideoCardProps> = ({
   video,
   onSelect,
 }) => {
-  // const [localIsWatching, setLocalIsWatching] = useState(false);
+  const [localAlreadyWatched, setLocalAlreadyWatched] = useState(false);
 
-  const videoProgress = useMemo(() =>
-  // const videoDuration = video.videoduration;
-  // const timeWatched = video.courseseasonmovieuser.videowatched;
+  const videoProgress = useMemo(() => {
+    const videoDuration = video.videoduration;
+    if (video && video.schoollevelsubjectseasonclassuser && video.schoollevelsubjectseasonclassuser.videowatched) {
+      const timeWatched = video.schoollevelsubjectseasonclassuser.videowatched;
+      let vdHours; let vdMinutes; let vdSeconds;
+      let totalSeconds;
+      let progress = 0;
 
-  // let vdHours; let vdMinutes; let vdSeconds;
-  // let totalSeconds;
-  // let progress = 0;
+      const [twHours, twMinutes, twSeconds] = timeWatched.split(':');
+      const secondsWatched = (Number(twHours) * 60 * 60) + Number(twMinutes) * 60 + Number(twSeconds);
 
-  // const [twHours, twMinutes, twSeconds] = timeWatched.split(':');
-  // const secondsWatched = (Number(twHours) * 60 * 60) + Number(twMinutes) * 60 + Number(twSeconds);
-
-    // if (videoDuration.split(':').length > 2) {
-    //   [vdHours, vdMinutes, vdSeconds] = videoDuration.split(':');
-    //   totalSeconds = Number(vdHours) * 60 * 60 + Number(vdMinutes) * 60 + Number(vdSeconds);
-    // } else {
-    //   [vdMinutes, vdSeconds] = videoDuration.split(':');
-    //   totalSeconds = Number(vdMinutes) * 60 + Number(vdSeconds);
-    // }
-    // progress = Math.round(((secondsWatched * 100) / totalSeconds));
-    // progress >= 98 && setLocalAlreadyWatched(true);
-    // return progress;
-    10,
-  []);
+      if (videoDuration.split(':').length > 2) {
+        [vdHours, vdMinutes, vdSeconds] = videoDuration.split(':');
+        totalSeconds = Number(vdHours) * 60 * 60 + Number(vdMinutes) * 60 + Number(vdSeconds);
+      } else {
+        [vdMinutes, vdSeconds] = videoDuration.split(':');
+        totalSeconds = Number(vdMinutes) * 60 + Number(vdSeconds);
+      }
+      progress = Math.round(((secondsWatched * 100) / totalSeconds));
+      progress >= 98 && setLocalAlreadyWatched(true);
+      return progress;
+    }
+    return 2;
+  },
+  [video]);
 
   return (
     <Container>
       <VideoCardWrapper onClick={() => { onSelect(video.position); }}>
         <SelectedIconContainer>
           {(isWatching) && (<FiChevronRight size={22} />)}
-          {(alreadyWatched) && (
+          {(alreadyWatched || localAlreadyWatched) && (
             <div className="checked-container">
               <FiCheck className="checked" size={22} color="#ffd35c" style={{ fontWeight: 'bolder' }} />
             </div>
