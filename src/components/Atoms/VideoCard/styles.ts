@@ -7,6 +7,7 @@ export const Container = styled.div`
   justify-content: center;
 
   margin-bottom: 16px;
+
 `;
 
 export const VideoCardWrapper = styled.div`
@@ -28,12 +29,14 @@ export const VideoCardWrapper = styled.div`
   }
 
   &:hover{
-    /* box-shadow: inset 0 0 8px rgba(0,0,0,.8); */
+    box-shadow: 8px 8px 8px rgba(0,0,0,.02);
     cursor: pointer;
   }
+
 `;
 
 export const SelectedIconContainer = styled.div`
+  position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -43,6 +46,39 @@ export const SelectedIconContainer = styled.div`
 
   padding: 0;
   margin: 0;
+
+  .checked-container{
+    position: absolute;
+    display: flex;
+
+    top: 14px;
+    left: 20px;
+
+    z-index: 3;
+  }
+`;
+
+export const Thumb = styled.div`
+  position: relative;
+`;
+
+export const Time = styled.div`
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+
+  p{
+    font-size: 12px;
+    padding: 4px;
+    background: rgba(0,0,0,0.3);
+    z-index:2;
+  }
+`;
+
+export const StyledProgressBar = styled.div`
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
 `;
 
 export const VideoInfo = styled.div`

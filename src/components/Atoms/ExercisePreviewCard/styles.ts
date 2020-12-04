@@ -18,6 +18,10 @@ export const Container = styled.div`
 export const Content = styled.div`
   background: #1c202a;
   padding: 12px;
+
+  p{
+    font-size: 14px;
+  }
 `;
 
 export const StyledButton = styled(Button)`
@@ -25,7 +29,7 @@ export const StyledButton = styled(Button)`
   right: 0;
   bottom: -16px;
 
-  width: 54%;
+  width: 58%;
   height: 24px;
 
   font-size: 12px;

@@ -3,6 +3,7 @@ import { shade } from 'polished';
 
 interface ContainerProps {
   enabled?: boolean;
+  contrast?: boolean;
 }
 
 export const Container = styled.button<ContainerProps>`
@@ -36,4 +37,9 @@ export const Container = styled.button<ContainerProps>`
       opacity: 0.4;
       pointer-events: none;
     `}
+
+  ${(props) => props.contrast && css`
+    background: rgba(255, 211, 92,0.3);
+    border: solid 2px #ffd35c;
+  `}
 `;

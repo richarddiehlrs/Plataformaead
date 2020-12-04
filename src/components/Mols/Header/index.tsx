@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 
 import { useHistory, useLocation } from 'react-router-dom';
@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({
   const handleChangeTab = useCallback((tab: string) => {
     changeTab(tab);
 
-    if (pathname !== '/courses') {
+    if (pathname !== `/${tab}`) {
       push({
         pathname: `/${tab}`,
         state: { tab },
@@ -47,6 +47,11 @@ const Header: React.FC<HeaderProps> = ({
   const handleSignOut = useCallback(() => {
     signOut();
   }, [signOut]);
+
+  useEffect(() => {
+    const tab = pathname.replace('/', '');
+    changeTab(tab);
+  }, [changeTab, pathname]);
 
   return (
     <>

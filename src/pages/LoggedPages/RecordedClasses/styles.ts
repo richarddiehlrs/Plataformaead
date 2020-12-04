@@ -1,7 +1,9 @@
 import styled from 'styled-components';
+import Button from 'components/Atoms/Button';
 
 export const Container = styled.div`
   display: flex;
+  /* flex-direction: row-reverse; */
   align-items: center;
 
   height: 88vh;
@@ -44,4 +46,10 @@ export const AnnotationsContainer = styled.div`
   &::-webkit-scrollbar-thumb {
     background: rgb(254,212,74) !important;
   }
+`;
+
+export const StyledButton = styled(Button)`
+  width: 190px;
+  height: 24%;
+
 `;

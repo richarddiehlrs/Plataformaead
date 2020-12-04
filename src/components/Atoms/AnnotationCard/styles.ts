@@ -25,10 +25,7 @@ export const Container = styled.div`
   &:hover{
     background: ${shade(0.4, '#535a6c')};
     transform: scaleX(1.05) scaleY(1.05);
-
-    cursor: pointer;
   }
-
 `;
 
 export const OptionsWrapper = styled.div`
@@ -38,24 +35,25 @@ export const OptionsWrapper = styled.div`
   top: 0;
   right: 0;
 
-
   .edit{
-    color: #000;
-    transition: 0.4s;
+    width: 20px;
+    margin-right: 12px;
+    transition: .4s;
 
     &:hover{
       cursor: pointer;
-      color: ${shade(0.2, '#000')}
+      opacity: 0.2;
     }
   }
 
   .remove{
     color: #fbfdfa;
     transition: 0.4s;
+    width: 20px;
 
     &:hover{
       cursor: pointer;
-      color: ${shade(0.4, '#fbfdfa')}
+      opacity: 0.2;
     }
   }
 `;
