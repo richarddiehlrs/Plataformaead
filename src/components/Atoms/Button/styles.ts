@@ -51,13 +51,13 @@ export const Container = styled.button<ContainerProps>`
   
   @keyframes shimmer2 {
     0%{
-      background:rgba(255, 211, 92,0.2);
+      background:rgba(255, 211, 92,0.4);
     }
     50%{
-      background:rgba(255, 211, 92,0.7);
+      background:rgba(255, 211, 92,0.8);
     }
     100%{
-      background:rgba(255, 211, 92,0.2);
+      background:rgba(255, 211, 92,0.4);
     }
   }
 `;
