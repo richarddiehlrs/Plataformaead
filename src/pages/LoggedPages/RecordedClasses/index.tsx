@@ -31,6 +31,7 @@ const RecordedClasses: React.FC = () => {
 
   const getSchoolLevelSubjectSeasonInfo = useCallback(async (item) => {
     setVideos([]);
+    setSelectedCourseSeasonMoviePosition(0);
     try {
       const response = await api.get<SchoolLevelSubjectSeasonClasses[]>(`/school/level/subject/season/class?schoolid=${user.schoolid}&levelid=${selectedSchoolLevel.key}&subjectid=${selectedSchoolSubject.key}&seasonid=${item.key}&userid=${user.userid}`);
       setVideos(response.data);
@@ -55,6 +56,8 @@ const RecordedClasses: React.FC = () => {
   const getSchoolSubjects = useCallback(async (item) => {
     setIsLoading(true);
     setVideos([]);
+    setSchoolLevelSubjects([]);
+    setSchoolLevelSubjectSeasons([]);
 
     try {
       const response = await api.get<SchoolLevelSubject[]>(`/school/level/subject?schoolid=${user.schoolid}&levelid=${item.key}`);
@@ -71,11 +74,13 @@ const RecordedClasses: React.FC = () => {
     try {
       const response = await api.get<SchoolLevel[]>(`/school/level?schoolid=${user.schoolid}`);
       setSchoolLevels(response.data);
+      const mySchoolItem = response.data.find((item) => item.levelid === user.levelid);
+      getSchoolSubjects({ key: mySchoolItem?.levelid, value: mySchoolItem?.title });
     } catch (err) {
       console.log(err.message);
     }
     setIsLoading(false);
-  }, [user.schoolid]);
+  }, [user, getSchoolSubjects]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -93,9 +98,9 @@ const RecordedClasses: React.FC = () => {
             { key: schoolLevelSubject.title, value: schoolLevelSubject.subjectid }
           ))}
         subjectSeasonOptions={schoolLevelSubjectSeasons
-            && schoolLevelSubjectSeasons.map((schoolLevelSubjectSeason) => (
-              { key: schoolLevelSubjectSeason.seasonid, value: schoolLevelSubjectSeason.title }
-            ))}
+          && schoolLevelSubjectSeasons.map((schoolLevelSubjectSeason) => (
+            { key: schoolLevelSubjectSeason.seasonid, value: schoolLevelSubjectSeason.title }
+          ))}
         selectedPosition={selectedCourseSeasonMoviePosition}
         selectedSchoolLevel={selectedSchoolLevel.key}
         isLoading={isLoading}

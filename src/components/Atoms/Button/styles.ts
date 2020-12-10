@@ -4,6 +4,7 @@ import { shade } from 'polished';
 interface ContainerProps {
   enabled?: boolean;
   contrast?: boolean;
+  shimmer?: boolean;
 }
 
 export const Container = styled.button<ContainerProps>`
@@ -42,4 +43,21 @@ export const Container = styled.button<ContainerProps>`
     background: rgba(255, 211, 92,0.3);
     border: solid 2px #ffd35c;
   `}
+
+
+  ${(props) => props.shimmer && css`
+    animation: shimmer2 2s ease-in-out infinite;
+  `}
+  
+  @keyframes shimmer2 {
+    0%{
+      background:rgba(255, 211, 92,0.2);
+    }
+    50%{
+      background:rgba(255, 211, 92,0.7);
+    }
+    100%{
+      background:rgba(255, 211, 92,0.2);
+    }
+  }
 `;

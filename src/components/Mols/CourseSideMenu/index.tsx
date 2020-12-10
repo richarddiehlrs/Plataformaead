@@ -65,6 +65,7 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = (
   },
 ) => {
   const { goBack } = useHistory();
+  console.log(firstItem);
 
   return (
     <Container customType={customType}>
@@ -130,17 +131,19 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = (
                   isLoading={isLoading}
                   onChange={onSubjectChange}
                 />
-                <p style={{ marginTop: 12 }}>Selecione a aula</p>
                 {subjectSeasonOptions.length > 0 && (
-                  <Dropdown
-                    title="Escolha a aula"
-                    arrowColor="#ffd35c"
-                    textColor="#ffd35c"
-                    items={subjectSeasonOptions}
-                    defaultValue={isLoading ? { key: '', value: '' } : subjectSeasonOptions[0]}
-                    isLoading={isLoading}
-                    onChange={onSubjectSeasonChange}
-                  />
+                  <>
+                    <p style={{ marginTop: 12 }}>Selecione a aula</p>
+                    <Dropdown
+                      title="Escolha a aula"
+                      arrowColor="#ffd35c"
+                      textColor="#ffd35c"
+                      items={subjectSeasonOptions}
+                      defaultValue={isLoading ? { key: '', value: '' } : subjectSeasonOptions[0]}
+                      isLoading={isLoading}
+                      onChange={onSubjectSeasonChange}
+                    />
+                  </>
                 )}
               </>
               )}
@@ -148,7 +151,7 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = (
           )}
         </FilterContainer>
         <VideosScrollContainer className="hasVerticalScroll">
-          {videos.length > 0 && videos.map((video) => (
+          {videos.length > 0 && !isLoading && videos.map((video) => (
             <VideoCard
               key={video.classid}
               video={video}
