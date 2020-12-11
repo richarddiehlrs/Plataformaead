@@ -6,6 +6,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
   enabled?: boolean;
   contrast?: boolean;
+  shimmer?: boolean;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -13,9 +14,10 @@ const Button: React.FC<ButtonProps> = ({
   loading,
   enabled = true,
   contrast = false,
+  shimmer = false,
   ...rest
 }) => (
-  <Container type="button" enabled={enabled} contrast={contrast} {...rest}>
+  <Container type="button" enabled={enabled} contrast={contrast} shimmer={shimmer} {...rest}>
     {loading ? 'Carregando...' : children}
   </Container>
 );

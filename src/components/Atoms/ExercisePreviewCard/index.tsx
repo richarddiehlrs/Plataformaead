@@ -3,12 +3,16 @@ import { FaChevronRight } from 'react-icons/fa';
 
 import { Container, Content, StyledButton } from './styles';
 
-const ExercisePreviewCard: React.FC = () => (
+interface ExercisePreviewCardProps {
+  description: string;
+}
+
+const ExercisePreviewCard: React.FC<ExercisePreviewCardProps> = ({ description = '' }) => (
   <Container>
     <p>TAREFA</p>
     <Content>
       <p>
-        Criar 10 perguntas diretas e 10 indiretas. Logo em seguida criar...
+        {`${description}...`}
       </p>
     </Content>
     <StyledButton>
