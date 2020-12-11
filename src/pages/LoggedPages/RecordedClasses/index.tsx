@@ -116,7 +116,10 @@ const RecordedClasses: React.FC = () => {
       />
       <Content>
         <VideoContainer>
-          <VimeoComponent url={videos[selectedVideoPosition]
+          <VimeoComponent
+            large={videos[selectedVideoPosition]
+            && videos[selectedVideoPosition].notes.length < 1}
+            url={videos[selectedVideoPosition]
             && videos[selectedVideoPosition].url}
           />
         </VideoContainer>

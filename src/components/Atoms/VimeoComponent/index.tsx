@@ -5,9 +5,10 @@ import { Container } from './styles';
 
 interface ViemoComponentProps {
   url?: string;
+  large?: boolean;
 }
 
-const VimeoComponent: React.FC<ViemoComponentProps> = ({ url }) => {
+const VimeoComponent: React.FC<ViemoComponentProps> = ({ url, large = false }) => {
   const showCurrentTime = useCallback((info: any) => { }, []);
 
   const handleEndVideo = useCallback((info: any) => { }, []);
@@ -15,7 +16,7 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({ url }) => {
   const handleProgressVideo = useCallback((info: any) => { }, []);
 
   return (
-    <Container>
+    <Container large={large}>
       {url && (
         <Vimeo
           video={url || ' '}
@@ -24,7 +25,7 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({ url }) => {
           onTimeUpdate={(info) => handleProgressVideo(info)}
           start={0}
           style={{
-            width: '50%',
+            width: '100%',
           }}
           responsive
         />

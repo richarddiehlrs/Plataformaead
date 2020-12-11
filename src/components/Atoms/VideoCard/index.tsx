@@ -51,7 +51,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
       progress >= 98 && setLocalAlreadyWatched(true);
       return progress;
     }
-    return 2;
+    return 0;
   },
   [video]);
 

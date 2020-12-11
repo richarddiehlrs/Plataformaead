@@ -43,6 +43,8 @@ export const AnnotationsContainer = styled.div<AnnotationsContainerProps>`
   width: 100%;
   height: 70%;
 
+  transition: height .4s;
+
   ${(props) => !props.hasNotes && css`
     height: 30%;
   `}
