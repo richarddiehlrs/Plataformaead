@@ -21,6 +21,10 @@ export const Content = styled.div`
 
   p{
     font-size: 14px;
+    white-space: nowrap; 
+    width: 240px; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
   }
 `;
 

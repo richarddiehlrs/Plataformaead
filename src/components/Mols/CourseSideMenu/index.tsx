@@ -65,8 +65,6 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = (
   },
 ) => {
   const { goBack } = useHistory();
-  console.log(firstItem);
-
   return (
     <Container customType={customType}>
       <Heading>
@@ -157,6 +155,7 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = (
               video={video}
               onSelect={onVideoChange}
               isWatching={video.position === selectedPosition}
+              exercisePreviewActive={video.exerciseshortmessage !== ' '}
             />
           ))}
           {videos.length < 1 && hasLevelIdSelected && hasSubjectSelected && (

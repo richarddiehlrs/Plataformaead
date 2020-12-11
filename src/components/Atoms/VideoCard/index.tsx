@@ -27,6 +27,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
   onSelect,
 }) => {
   const [localAlreadyWatched, setLocalAlreadyWatched] = useState(false);
+  console.log(video);
 
   const videoProgress = useMemo(() => {
     const videoDuration = video.videoduration;
@@ -78,7 +79,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
         </VideoInfo>
       </VideoCardWrapper>
       {exercisePreviewActive && (
-        <ExercisePreviewCard />
+        <ExercisePreviewCard description={video.exerciseshortmessage} />
       )}
     </Container>
   );

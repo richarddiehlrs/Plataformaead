@@ -1,5 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from 'components/Atoms/Button';
+
+interface AnnotationsContainerProps{
+  hasNotes: boolean;
+}
 
 export const Container = styled.div`
   display: flex;
@@ -31,13 +35,17 @@ export const VideoContainer = styled.div`
   margin-bottom: auto;
 `;
 
-export const AnnotationsContainer = styled.div`
+export const AnnotationsContainer = styled.div<AnnotationsContainerProps>`
   display: flex;
   flex-direction: column;
   padding: 32px 128px;
 
   width: 100%;
   height: 70%;
+
+  ${(props) => !props.hasNotes && css`
+    height: 30%;
+  `}
 
   overflow: scroll;
 

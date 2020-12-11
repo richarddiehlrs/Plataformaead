@@ -106,7 +106,8 @@ const RecordedClasses: React.FC = () => {
         isLoading={isLoading}
         hasLevelIdSelected={selectedSchoolLevel.key !== ''}
         hasSubjectSelected={schoolLevelSubjectSeasons.length > 0}
-        firstItem={schoolLevelSubjects[0] && { key: schoolLevelSubjects[0].title, value: schoolLevelSubjects[0].subjectid }}
+        firstItem={schoolLevelSubjects[0]
+          && { key: schoolLevelSubjects[0].title, value: schoolLevelSubjects[0].subjectid }}
         videos={videos && videos}
         onLevelIdChange={(item) => getSchoolSubjects(item)}
         onSubjectChange={(item) => getSchoolLevelSubjectSeason(item)}
@@ -115,18 +116,24 @@ const RecordedClasses: React.FC = () => {
       />
       <Content>
         <VideoContainer>
-          <VimeoComponent url={videos[selectedCourseSeasonMoviePosition] && videos[selectedCourseSeasonMoviePosition].url} />
+          <VimeoComponent url={videos[selectedCourseSeasonMoviePosition]
+            && videos[selectedCourseSeasonMoviePosition].url}
+          />
         </VideoContainer>
-        <AnnotationsContainer className="hasVerticalScroll">
-          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
-          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
-          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
-          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
-          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
-          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
-          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
-          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
-          <AnnotationCard time="00:16" description="No início, olhar o pronome do exemplo" />
+        <AnnotationsContainer
+          className="hasVerticalScroll"
+          hasNotes={videos[selectedCourseSeasonMoviePosition]
+            && videos[selectedCourseSeasonMoviePosition].notes.length > 0}
+        >
+          {videos[selectedCourseSeasonMoviePosition]
+          && videos[selectedCourseSeasonMoviePosition].notes.length > 0
+          && videos[selectedCourseSeasonMoviePosition].notes.map((note) => (
+            <AnnotationCard
+              key={note.schoolid_levelid_subjectid_seasonid_classid_userid_noteid}
+              time={note.noteid}
+              description={note.message}
+            />
+          ))}
         </AnnotationsContainer>
       </Content>
     </Container>
