@@ -12,28 +12,16 @@ interface ViemoComponentProps {
 }
 
 const VimeoComponent: React.FC<ViemoComponentProps> = ({ url, large = false, video }) => {
-  const videoProgress = useMemo(() => {
+  const timeToStart = useMemo(() => {
     if (video) {
-      const videoDuration = video.videoduration;
-      if (video && video.schoollevelsubjectseasonclassuser
+      if (video.schoollevelsubjectseasonclassuser
         && video.schoollevelsubjectseasonclassuser.videowatched) {
         const timeWatched = video.schoollevelsubjectseasonclassuser.videowatched;
-        let vdHours; let vdMinutes; let vdSeconds;
-        let totalSeconds;
-        let progress = 0;
-
         const [twHours, twMinutes, twSeconds] = timeWatched.split(':');
-        const secondsWatched = (Number(twHours) * 60 * 60) + Number(twMinutes) * 60 + Number(twSeconds);
 
-        if (videoDuration.split(':').length > 2) {
-          [vdHours, vdMinutes, vdSeconds] = videoDuration.split(':');
-          totalSeconds = Number(vdHours) * 60 * 60 + Number(vdMinutes) * 60 + Number(vdSeconds);
-        } else {
-          [vdMinutes, vdSeconds] = videoDuration.split(':');
-          totalSeconds = Number(vdMinutes) * 60 + Number(vdSeconds);
-        }
-        progress = Math.round(((secondsWatched * 100) / totalSeconds));
-        return progress;
+        const totalSeconds = Number(twHours) * 60 * 60 + Number(twMinutes) * 60 + Number(twSeconds);
+
+        return totalSeconds;
       }
     }
     return 0;
@@ -54,7 +42,7 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({ url, large = false, vid
           onPause={(info) => showCurrentTime(info)}
           onEnd={(info) => handleEndVideo(info)}
           onTimeUpdate={(info) => handleProgressVideo(info)}
-          start={videoProgress || 0}
+          start={timeToStart || 0}
           style={{
             width: '100%',
           }}
