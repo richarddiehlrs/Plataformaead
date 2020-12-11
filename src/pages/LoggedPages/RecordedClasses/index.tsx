@@ -25,13 +25,13 @@ const RecordedClasses: React.FC = () => {
   const [schoolLevelSubjectSeasons, setSchoolLevelSubjectSeasons] = useState<SchoolLevelSubject[]>([]);
 
   const [videos, setVideos] = useState<SchoolLevelSubjectSeasonClasses[]>([]);
-  const [selectedCourseSeasonMoviePosition, setSelectedCourseSeasonMoviePosition] = useState(0);
+  const [selectedVideoPosition, setSelectedVideoPosition] = useState(0);
 
   const { user } = useAuth();
 
   const getSchoolLevelSubjectSeasonInfo = useCallback(async (item) => {
     setVideos([]);
-    setSelectedCourseSeasonMoviePosition(0);
+    setSelectedVideoPosition(0);
     try {
       const response = await api.get<SchoolLevelSubjectSeasonClasses[]>(`/school/level/subject/season/class?schoolid=${user.schoolid}&levelid=${selectedSchoolLevel.key}&subjectid=${selectedSchoolSubject.key}&seasonid=${item.key}&userid=${user.userid}`);
       setVideos(response.data);
@@ -101,7 +101,7 @@ const RecordedClasses: React.FC = () => {
           && schoolLevelSubjectSeasons.map((schoolLevelSubjectSeason) => (
             { key: schoolLevelSubjectSeason.seasonid, value: schoolLevelSubjectSeason.title }
           ))}
-        selectedPosition={selectedCourseSeasonMoviePosition}
+        selectedPosition={selectedVideoPosition}
         selectedSchoolLevel={selectedSchoolLevel.key}
         isLoading={isLoading}
         hasLevelIdSelected={selectedSchoolLevel.key !== ''}
@@ -112,22 +112,22 @@ const RecordedClasses: React.FC = () => {
         onLevelIdChange={(item) => getSchoolSubjects(item)}
         onSubjectChange={(item) => getSchoolLevelSubjectSeason(item)}
         onSubjectSeasonChange={(item) => getSchoolLevelSubjectSeasonInfo(item)}
-        onVideoChange={setSelectedCourseSeasonMoviePosition}
+        onVideoChange={setSelectedVideoPosition}
       />
       <Content>
         <VideoContainer>
-          <VimeoComponent url={videos[selectedCourseSeasonMoviePosition]
-            && videos[selectedCourseSeasonMoviePosition].url}
+          <VimeoComponent url={videos[selectedVideoPosition]
+            && videos[selectedVideoPosition].url}
           />
         </VideoContainer>
         <AnnotationsContainer
           className="hasVerticalScroll"
-          hasNotes={videos[selectedCourseSeasonMoviePosition]
-            && videos[selectedCourseSeasonMoviePosition].notes.length > 0}
+          hasNotes={videos[selectedVideoPosition]
+            && videos[selectedVideoPosition].notes.length > 0}
         >
-          {videos[selectedCourseSeasonMoviePosition]
-          && videos[selectedCourseSeasonMoviePosition].notes.length > 0
-          && videos[selectedCourseSeasonMoviePosition].notes.map((note) => (
+          {videos[selectedVideoPosition]
+          && videos[selectedVideoPosition].notes.length > 0
+          && videos[selectedVideoPosition].notes.map((note) => (
             <AnnotationCard
               key={note.schoolid_levelid_subjectid_seasonid_classid_userid_noteid}
               time={note.noteid}
