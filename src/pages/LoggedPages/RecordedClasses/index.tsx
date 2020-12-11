@@ -121,6 +121,7 @@ const RecordedClasses: React.FC = () => {
             && videos[selectedVideoPosition].notes.length < 1}
             url={videos[selectedVideoPosition]
             && videos[selectedVideoPosition].url}
+            video={videos[selectedVideoPosition]}
           />
         </VideoContainer>
         <AnnotationsContainer

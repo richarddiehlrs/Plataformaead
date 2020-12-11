@@ -27,11 +27,11 @@ const VideoCard: React.FC<VideoCardProps> = ({
   onSelect,
 }) => {
   const [localAlreadyWatched, setLocalAlreadyWatched] = useState(false);
-  console.log(video);
 
   const videoProgress = useMemo(() => {
     const videoDuration = video.videoduration;
-    if (video && video.schoollevelsubjectseasonclassuser && video.schoollevelsubjectseasonclassuser.videowatched) {
+    if (video && video.schoollevelsubjectseasonclassuser
+      && video.schoollevelsubjectseasonclassuser.videowatched) {
       const timeWatched = video.schoollevelsubjectseasonclassuser.videowatched;
       let vdHours; let vdMinutes; let vdSeconds;
       let totalSeconds;
