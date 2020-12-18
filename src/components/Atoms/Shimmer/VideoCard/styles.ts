@@ -28,9 +28,11 @@ export const VideoInfo = styled.div`
   margin-left: 12px;
 `;
 
-export const Title = styled(Skeleton)`
+export const Title = styled(Skeleton)<DescriptionProps>`
   width: 220px;
   height: 20px;
+
+  ${(props) => (props.size ? css`width: ${props.size}px` : css`width: 100px`)}
 `;
 
 export const Description = styled(Skeleton)<DescriptionProps>`

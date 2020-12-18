@@ -56,8 +56,7 @@ export const Heading = styled.div`
   color: #E9EAED;
 
   img{
-    width: 300px;
-    height: 160px;
+    width: 100%;
     object-fit: cover;
     margin-bottom: 12px;
   }

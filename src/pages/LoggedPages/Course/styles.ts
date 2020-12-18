@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface AnnotationsContainerProps{
+  hasNotes: boolean;
+}
+
 export const Container = styled.div`
   display: flex;
   align-items: center;
@@ -19,7 +23,7 @@ export const Content = styled.div`
 `;
 
 export const VideoContainer = styled.div`
-  display: flex;
+  display: flex;  
   justify-content: center;
   align-items: center;
 
@@ -29,7 +33,7 @@ export const VideoContainer = styled.div`
   margin-bottom: auto;
 `;
 
-export const AnnotationsContainer = styled.div`
+export const AnnotationsContainer = styled.div<AnnotationsContainerProps>`
   display: flex;
   flex-direction: column;
   padding: 32px 128px;

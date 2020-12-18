@@ -30,7 +30,8 @@ const HorizontalSelect: React.FC<HorizontalSelectProps> = ({
   const { user } = useAuth();
 
   useEffect(() => {
-    if (selectedValue === user.levelid && selectContainerRef.current && selectContainerRef.current.scrollLeft < 10) {
+    if (selectedValue === user.levelid
+        && selectContainerRef.current && selectContainerRef.current.scrollLeft < 10) {
       const selectedPosition = selectedButtonOptionRef.current?.getBoundingClientRect();
       if (selectedPosition) {
         selectContainerRef.current?.scrollTo(0, 0);
