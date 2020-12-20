@@ -40,16 +40,16 @@ export const Container = styled.button<ContainerProps>`
     `}
 
   ${(props) => props.contrast && css`
-    background: rgba(255, 211, 92,0.3);
+    background: rgba(255, 211, 92,0.4);
     border: solid 2px #ffd35c;
   `}
 
 
   ${(props) => props.shimmer && css`
-    animation: shimmer2 2s ease-in-out infinite;
+    animation: buttonShimmer 2s ease-in-out infinite;
   `}
   
-  @keyframes shimmer2 {
+  @keyframes buttonShimmer {
     0%{
       background:rgba(255, 211, 92,0.4);
     }

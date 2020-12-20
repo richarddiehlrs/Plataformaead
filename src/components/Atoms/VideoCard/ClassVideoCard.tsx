@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { FiChevronRight, FiCheck } from 'react-icons/fi';
 
-// import CourseSeasonMovie from 'models/CourseSeasonMovie';
 import { SchoolLevelSubjectSeasonClasses } from 'models/SchoolModels';
 
 import ExercisePreviewCard from 'components/Atoms/ExercisePreviewCard';
@@ -11,7 +10,7 @@ import {
   Container, VideoCardWrapper, SelectedIconContainer, Thumb, Time, StyledProgressBar, VideoInfo,
 } from './styles';
 
-interface VideoCardProps{
+interface VideoCardProps {
   isWatching?: boolean;
   alreadyWatched?: boolean;
   exercisePreviewActive?: boolean;

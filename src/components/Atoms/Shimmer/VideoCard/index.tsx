@@ -4,14 +4,18 @@ import {
   Container, Thumb, Title, Description, VideoInfo,
 } from './styles';
 
-const VideoCard: React.FC = () => (
+interface VideoCardProps{
+  type?: string;
+}
+
+const VideoCard: React.FC<VideoCardProps> = ({ type = 'normal' }) => (
   <Container>
     <Thumb />
     <VideoInfo>
-      <Title />
-      <Description size={60} />
-      <Description size={100} />
-      <Description size={80} />
+      <Title size={type === 'small' ? 130 : 220} />
+      <Description size={type === 'small' ? 60 : 60} />
+      <Description size={type === 'small' ? 50 : 100} />
+      <Description size={type === 'small' ? 95 : 80} />
     </VideoInfo>
   </Container>
 );

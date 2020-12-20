@@ -9,9 +9,13 @@ interface ViemoComponentProps {
   url?: string;
   large?: boolean;
   video?: SchoolLevelSubjectSeasonClasses;
+  onPause?(info: any): void;
+  onFinish?(info: any): void;
 }
 
-const VimeoComponent: React.FC<ViemoComponentProps> = ({ url, large = false, video }) => {
+const VimeoComponent: React.FC<ViemoComponentProps> = ({
+  url, large = false, video, onPause, onFinish,
+}) => {
   const timeToStart = useMemo(() => {
     if (video) {
       if (video.schoollevelsubjectseasonclassuser
@@ -28,7 +32,11 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({ url, large = false, vid
   },
   [video]);
 
-  const showCurrentTime = useCallback((info: any) => { }, []);
+  const autoPlay = useMemo(() => timeToStart > 0, [timeToStart]);
+
+  const handlePauseVideo = useCallback(async (info: any) => {
+    console.log(info);
+  }, []);
 
   const handleEndVideo = useCallback((info: any) => { }, []);
 
@@ -36,17 +44,32 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({ url, large = false, vid
 
   return (
     <Container large={large}>
-      {url && (
+      {url && autoPlay && (
         <Vimeo
           video={url || ' '}
-          onPause={(info) => showCurrentTime(info)}
-          onEnd={(info) => handleEndVideo(info)}
-          onTimeUpdate={(info) => handleProgressVideo(info)}
-          start={timeToStart || 0}
+          onPause={onPause || ((info) => handlePauseVideo(info))}
+          onEnd={onFinish || ((info) => handleProgressVideo(info))}
+          onTimeUpdate={handleProgressVideo}
+          start={timeToStart}
           style={{
             width: '100%',
           }}
           responsive
+          autoplay
+        />
+      )}
+      {url && !autoPlay && (
+        <Vimeo
+          video={url || ' '}
+          onPause={onPause || ((info) => handlePauseVideo(info))}
+          onEnd={onFinish || ((info) => handleEndVideo(info))}
+          onTimeUpdate={handleProgressVideo}
+          start={timeToStart}
+          style={{
+            width: '100%',
+          }}
+          responsive
+          autoplay={false}
         />
       )}
     </Container>

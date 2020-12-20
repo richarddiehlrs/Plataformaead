@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import api from 'services/api';
+import { convertSecondsToHoursMinutesSeconds } from 'utils/functions';
 import { useAuth } from 'hooks/auth';
-// import CourseSeason from 'models/CourseSeason';
-// import CourseSeasonMovie from 'models/CourseSeasonMovie';
 import { SchoolLevel, SchoolLevelSubject, SchoolLevelSubjectSeasonClasses } from 'models/SchoolModels';
 
-import VimeoComponent from 'components/Atoms/VimeoComponent';
+import VimeoComponent from 'components/Atoms/VimeoComponent/ClassVimeoComponent';
 import AnnotationCard from 'components/Atoms/AnnotationCard';
-import CourseSideMenu from 'components/Mols/CourseSideMenu';
+import RecordedClassesSideMenu from 'components/Mols/RecordedClassesSideMenu';
 
 import {
   Container, Content, VideoContainer, AnnotationsContainer,
@@ -82,6 +81,26 @@ const RecordedClasses: React.FC = () => {
     setIsLoading(false);
   }, [user, getSchoolSubjects]);
 
+  const handlePauseVideo = useCallback(async (info) => {
+    const response = await api.post('https://hdinsfdwwa.execute-api.sa-east-1.amazonaws.com/prod/school/level/subject/season/class/user', {
+      classid: videos[selectedVideoPosition].classid,
+      seasonid: videos[selectedVideoPosition].seasonid,
+      levelid: videos[selectedVideoPosition].levelid,
+      subjectid: videos[selectedVideoPosition].subjectid,
+      schoolid: videos[selectedVideoPosition].schoolid,
+      userid: user.userid,
+      videowatched: convertSecondsToHoursMinutesSeconds(info.seconds),
+      videostatus: 'watching',
+      exercisestatus: ' ',
+    });
+
+    console.log(response.data);
+  }, [videos, selectedVideoPosition, user.userid]);
+
+  const handleFinishVideo = useCallback((info) => {
+    handlePauseVideo(info);
+  }, [handlePauseVideo]);
+
   useEffect(() => {
     setIsLoading(true);
     getSchoolLevels();
@@ -90,8 +109,7 @@ const RecordedClasses: React.FC = () => {
 
   return (
     <Container>
-      <CourseSideMenu
-        customType="recordedClasses"
+      <RecordedClassesSideMenu
         levelIdOptions={schoolLevels}
         subjectOptions={schoolLevelSubjects
           && schoolLevelSubjects.map((schoolLevelSubject) => (
@@ -122,6 +140,8 @@ const RecordedClasses: React.FC = () => {
             url={videos[selectedVideoPosition]
             && videos[selectedVideoPosition].url}
             video={videos[selectedVideoPosition]}
+            onPause={handlePauseVideo}
+            onFinish={handleFinishVideo}
           />
         </VideoContainer>
         <AnnotationsContainer
