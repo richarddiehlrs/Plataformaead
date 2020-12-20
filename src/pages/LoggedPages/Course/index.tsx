@@ -75,7 +75,7 @@ const Course: React.FC = () => {
       videowatched: convertSecondsToHoursMinutesSeconds(info.seconds),
       exercisestatus: ' ',
     };
-    console.log(a);
+    // console.log(a);
 
     // console.log(response.data);
     // [courseSeasonMovies, selectedVideoPosition, user.userid]

@@ -55,9 +55,17 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = (
             <FiArrowLeft size={16} onClick={goBack} />
             {courseDetails?.title}
           </h3>
-          <img src={courseDetails?.thumburl} alt="thumb" />
+          {isLoading ? (
+            <p>salve</p>
+          ) : (
+            <img src={courseDetails?.thumburl} alt="thumb" />
+          )}
           <Separator customWidth={40} customColor="#000" type="horizontal" />
-          <p>{courseDetails?.description}</p>
+          {isLoading ? (
+            <p>salve</p>
+          ) : (
+            <p>{courseDetails?.description}</p>
+          )}
         </>
       </Heading>
       <Content>
