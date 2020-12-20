@@ -26,7 +26,7 @@ const Course: React.FC = () => {
   const [courseSeasons, setCourseSeasons] = useState<CourseSeason[]>([]);
   const [courseSeasonMovies, setCourseSeasonMovies] = useState<CourseSeasonMovie[]>([]);
 
-  const [selectedSeason, setSelectedSeason] = useState({ key: '', value: '' });
+  // const [selectedSeason, setSelectedSeason] = useState({ key: '', value: '' });
 
   const { user } = useAuth();
   const params = useParams();
@@ -48,25 +48,14 @@ const Course: React.FC = () => {
 
   const getSeasonMovies = useCallback(async (item: any) => {
     setIsLoading(true);
-    setSelectedSeason(item);
+    // setSelectedSeason(item);
     const response = await api.get<CourseSeasonMovie[]>(`https://hdinsfdwwa.execute-api.sa-east-1.amazonaws.com/prod/course/season/movie?courseid=${courseid}&seasonid=${item.key}&userid=${user.userid}`);
     setCourseSeasonMovies(response.data);
     setIsLoading(false);
   }, [courseid, user]);
 
   const handlePauseVideo = useCallback(async (info) => {
-    // const response = await api.post('https://hdinsfdwwa.execute-api.sa-east-1.amazonaws.com/prod/course/season/movie/user', {
-    //   classid: courseSeasonMovies[selectedVideoPosition].classid,
-    //   seasonid: courseSeasonMovies[selectedVideoPosition].seasonid,
-    //   levelid: courseSeasonMovies[selectedVideoPosition].levelid,
-    //   subjectid: courseSeasonMovies[selectedVideoPosition].subjectid,
-    //   schoolid: courseSeasonMovies[selectedVideoPosition].schoolid,
-    //   userid: user.userid,
-    //   videowatched: convertSecondsToHoursMinutesSeconds(info.seconds),
-    //   videostatus: 'watching' ou 'completed',
-    //   exercisestatus: ' ',
-    // });
-    const a = {
+    const body = {
       courseid: courseSeasonMovies[selectedVideoPosition].courseid,
       seasonid: courseSeasonMovies[selectedVideoPosition].seasonid,
       movieid: courseSeasonMovies[selectedVideoPosition].movieid,
@@ -75,10 +64,9 @@ const Course: React.FC = () => {
       videowatched: convertSecondsToHoursMinutesSeconds(info.seconds),
       exercisestatus: ' ',
     };
-    // console.log(a);
+    const response = await api.post('https://hdinsfdwwa.execute-api.sa-east-1.amazonaws.com/prod/course/season/movie/user', body);
 
-    // console.log(response.data);
-    // [courseSeasonMovies, selectedVideoPosition, user.userid]
+    console.log(response.data);
   }, [courseSeasonMovies, selectedVideoPosition, user]);
 
   const handleFinishVideo = useCallback((info) => {

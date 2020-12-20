@@ -15,6 +15,8 @@ import {
   Content,
   FilterContainer,
   VideosScrollContainer,
+  ShimmerMovieBanner,
+  ShimmerMovieTitle,
 } from './styles';
 
 interface SelectItems {
@@ -56,13 +58,13 @@ const CourseSideMenu: React.FC<CourseSideMenuProps> = (
             {courseDetails?.title}
           </h3>
           {isLoading ? (
-            <p>salve</p>
+            <ShimmerMovieBanner />
           ) : (
             <img src={courseDetails?.thumburl} alt="thumb" />
           )}
           <Separator customWidth={40} customColor="#000" type="horizontal" />
           {isLoading ? (
-            <p>salve</p>
+            <ShimmerMovieTitle />
           ) : (
             <p>{courseDetails?.description}</p>
           )}

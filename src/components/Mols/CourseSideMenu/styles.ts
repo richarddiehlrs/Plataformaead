@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import Skeleton from 'components/Skeleton';
 
 interface ContainerProps {
   customType?: string;
@@ -116,4 +117,16 @@ export const VideosScrollContainer = styled.div`
   overflow: scroll;
 
   padding: 0 8px;
+`;
+
+export const ShimmerMovieBanner = styled(Skeleton)`
+width: 320px;
+height: 160px;
+margin-bottom: 12px;
+`;
+
+export const ShimmerMovieTitle = styled(Skeleton)`
+width: 100px;
+height: 20px;
+margin-top: 12px;
 `;
