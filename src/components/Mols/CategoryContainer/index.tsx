@@ -3,7 +3,7 @@ import { FiChevronRight } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import AwesomeSlider from 'react-awesome-slider';
 
-import CategoryInterface from 'models/Category';
+import { Category as CategoryInterface } from 'models/AuthModels';
 
 import CourseContainer from 'components/Mols/CourseContainer';
 import ShimmerCategoryContainer from 'components/Mols/Shimmer/CategoryContainer';

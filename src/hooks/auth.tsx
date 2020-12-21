@@ -2,8 +2,8 @@ import React, {
   createContext, useCallback, useState, useContext, useMemo,
 } from 'react';
 
-import UserInterface from 'models/User';
-import SchoolInterface from 'models/School';
+import { User as UserInterface } from 'models/AuthModels';
+import { School } from 'models/SchoolModels';
 import api from 'services/api';
 
 interface AuthContextData {
@@ -25,7 +25,7 @@ interface UserLoginData {
 
 interface LoginRequestData {
   user: UserInterface;
-  school: SchoolInterface;
+  school: School;
 }
 
 // interface MovieTypeView {

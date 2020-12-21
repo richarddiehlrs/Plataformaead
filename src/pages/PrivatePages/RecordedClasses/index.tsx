@@ -7,7 +7,7 @@ import { SchoolLevel, SchoolLevelSubject, SchoolLevelSubjectSeasonClasses } from
 
 import VimeoComponent from 'components/Atoms/VimeoComponent/ClassVimeoComponent';
 import AnnotationCard from 'components/Atoms/AnnotationCard';
-import RecordedClassesSideMenu from 'components/Mols/RecordedClassesSideMenu';
+import RecordedClassesSideMenu from 'components/Mols/SideMenus/RecordedClassesSideMenu';
 
 import {
   Container, Content, VideoContainer, AnnotationsContainer,

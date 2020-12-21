@@ -1,3 +1,9 @@
+export interface School {
+  schoolid: string;
+  name: string;
+  city: string;
+}
+
 export interface SchoolLevel{
   schoolid: string;
   levelid: string;
@@ -24,7 +30,7 @@ export default interface schoollevelsubjectseasonclassuser {
   userid: string;
   videostatus: string;
   videowatched: string;
-};
+}
 
 export interface ClassesNotes {
   classid: string

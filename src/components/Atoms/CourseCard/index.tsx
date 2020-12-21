@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CourseInterface from 'models/Course';
+import { Course as CourseInterface } from 'models/CourseModels';
 
 import { Link } from 'react-router-dom';
 

@@ -1,10 +1,12 @@
 import React from 'react';
 
+import LiveClassesSideMenu from 'components/Mols/SideMenus/LiveClassesSideMenu';
+
 import { Container } from './styles';
 
 const AoVivo: React.FC = () => (
   <Container>
-    <p>Aulas ao vivo</p>
+    <LiveClassesSideMenu />
   </Container>
 );
 

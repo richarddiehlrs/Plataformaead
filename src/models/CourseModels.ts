@@ -1,5 +1,4 @@
-import Notes from './Notes';
-import CourseSeasonMovieUser from './CourseSeasonMovieUser';
+import { Notes } from './AuthModels';
 
 export interface CourseSeason {
     courseid: string;
@@ -9,6 +8,16 @@ export interface CourseSeason {
     seasonid: string;
     title: string;
 }
+
+export interface CourseSeasonMovieUser {
+    courseid_seasonid_movieid_userid: string;
+    movieid: string;
+    courseid: string;
+    seasonid: string;
+    userid: string;
+    videostatus: string;
+    videowatched: string;
+  }
 
 export interface CourseSeasonMovie {
     courseid: string;
