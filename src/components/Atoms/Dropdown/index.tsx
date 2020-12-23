@@ -24,9 +24,12 @@ interface DropdownProps {
   items: Array<Item>;
   multiSelect?: boolean;
   textColor?: string;
-  defaultValue?: Item;
   arrowColor?: string;
+  backgroundCollor?: string;
+  customRadius?: number;
+  defaultValue?: Item;
   isLoading?: boolean;
+  size?: string;
   onChange?(item: Item | Array<Item>): void;
 }
 
@@ -35,9 +38,12 @@ const Dropdown: React.FC<DropdownProps> = ({
   items = [],
   multiSelect = false,
   textColor,
-  defaultValue,
   arrowColor,
+  backgroundCollor,
+  customRadius,
+  defaultValue,
   isLoading = false,
+  size = '',
   onChange = () => console.log('default'),
 }) => {
   const [open, setOpen] = useState(false);
@@ -97,6 +103,8 @@ const Dropdown: React.FC<DropdownProps> = ({
         onKeyPress={() => setOpen(!open)}
         onClick={() => setOpen(!open)}
         isLoading={isLoading}
+        backgroundColor={backgroundCollor && backgroundCollor}
+        customRadius={customRadius && customRadius}
       >
         <DropdownHeaderTitle hasValue={selection.length > 0} textColor={textColor || 'rbga(255,255,255,0.4)'}>
           {!isLoading && !multiSelect && (
@@ -116,7 +124,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         </DropdownHeaderAction>
       </DropdownHeader>
       {open && (
-        <ItemsList>
+        <ItemsList size={size}>
             {items.map((item) => (
               <li key={`${item.key}-${item.value}`}>
                 <button type="button" onClick={() => handleOnClick(item)}>

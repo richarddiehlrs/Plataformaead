@@ -62,3 +62,27 @@ export interface SchoolLevelSubjectSeasonClasses{
   videotype: string;
   schoollevelsubjectseasonclassuser: schoollevelsubjectseasonclassuser;
 }
+
+export interface SchoolLiveLevelSubjectClasses{
+  schoolid: string;
+  levelid: string;
+  subjectid: string;
+  classid: string;
+  title: string;
+  description: string;
+  url: string;
+  videotype: string;
+  thumb: string;
+  videoduration: string;
+  filter: string;
+}
+
+export interface SchoolLiveClasses {
+  schoolid: string;
+  levelid: string;
+  subjectid: string;
+  title: string;
+  description: string;
+  position: 0;
+  schoollivelevelsubjectclasses: Array<SchoolLiveLevelSubjectClasses>;
+}

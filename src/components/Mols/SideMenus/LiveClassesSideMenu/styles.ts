@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Button from 'components/Atoms/Button';
 
 export const Container = styled.div`
     display: flex;
@@ -6,7 +7,8 @@ export const Container = styled.div`
     padding: 20px 16px 0px 80px;
     margin: 0 20px 0 20px;
 
-    width: 24%;
+    width: 460px;
+    /* width: 24%; */
     height: 100%;
 
     border: solid 1px red;
@@ -22,9 +24,41 @@ export const Heading = styled.header`
 `;
 
 export const LiveVideosList = styled.div`
+    display: flex;
+    flex-direction: column;
     height: 40%;
 
-    border: solid 1px blue;
+    margin-top: 24px;
+
+    font-family: 'Roboto';
+
+    h4{
+        color: #fff;
+        font-weight: normal;
+    }
+    p{
+        margin-left: 20px;
+        margin-top: 6px;
+        color: #ffd35c;
+    }
+    /* border: solid 0.2px blue; */
+`;
+
+export const LiveVideoItem = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 16px;
+`;
+
+export const StyledButton = styled(Button)`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 28%;
+    height: 40px;
 `;
 
 export const Content = styled.div`
@@ -34,20 +68,25 @@ export const Content = styled.div`
 
     width: 100%;
     height: 100%;
-
 `;
 
 export const FilterContainer = styled.div`
     display: flex;
     flex-direction: column;
 
-    width: 80%;
+    width: 40%;
 
     margin-bottom: 32px;
-    margin-top: 16px;
+    margin-top: 32px;
+    margin-right: auto;
 
     > p{
         margin-bottom: 12px;
+        color: #fff;
+    }
+
+    .date-selection{
+        margin-top: 16px;
     }
 `;
 

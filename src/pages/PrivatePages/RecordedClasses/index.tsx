@@ -82,7 +82,7 @@ const RecordedClasses: React.FC = () => {
   }, [user, getSchoolSubjects]);
 
   const handlePauseVideo = useCallback(async (info) => {
-    const response = await api.post('https://hdinsfdwwa.execute-api.sa-east-1.amazonaws.com/prod/school/level/subject/season/class/user', {
+    const response = await api.post('/school/level/subject/season/class/user', {
       classid: videos[selectedVideoPosition].classid,
       seasonid: videos[selectedVideoPosition].seasonid,
       levelid: videos[selectedVideoPosition].levelid,

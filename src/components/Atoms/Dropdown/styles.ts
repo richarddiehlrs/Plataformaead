@@ -9,6 +9,12 @@ interface DropdownHeaderActionProps {
 
 interface DropdownHeaderProps {
   isLoading: boolean;
+  backgroundColor?: string;
+  customRadius?: number;
+}
+
+interface DropDownItemListProps{
+  size: string;
 }
 
 export const DropdownWrapper = styled.div`
@@ -22,8 +28,9 @@ export const DropdownWrapper = styled.div`
 `;
 
 export const DropdownHeader = styled.div<DropdownHeaderProps>`
-  background-color: transparent;
+  background-color: ${(props) => (props.backgroundColor ? props.backgroundColor : 'transparent')};
   border-radius: 4px;
+  border-radius: ${(props) => (props.customRadius ? `${props.customRadius}px` : '4px')};
 
   display: flex;
   justify-content: space-between;
@@ -35,17 +42,17 @@ export const DropdownHeader = styled.div<DropdownHeaderProps>`
 
   transition: border-color 0.4s, box-shadow 0.4s;
 
-  ${(props) => (props.isLoading ? css`
+  ${(props) => props.isLoading && css`
     pointer-events: none;
     opacity: 0.4;
-    `
-    : css`
-      &:hover{
-        cursor: pointer;
-        box-shadow: 0 .125rem .25rem rgba(0,0,0,.2);
-      }
-  `)}
+  `}
 
+  ${(props) => !props.isLoading && css`
+    &:hover{
+      cursor: pointer;
+      box-shadow: 0 .125rem .25rem rgba(0,0,0,.2);
+    }
+  `}
 `;
 
 export const DropdownHeaderTitle = styled.div<DropdownHeaderActionProps>`
@@ -56,10 +63,16 @@ export const DropdownHeaderTitle = styled.div<DropdownHeaderActionProps>`
   p{
     font-size: 14px;
     font-weight: bold;
-    ${(props) => (props.hasValue
-    ? (css`color: ${props.textColor ? props.textColor : '#fff'}; opacity: 1;`)
-    : (css`color: #fff; opacity: 0.5;`))
-}
+
+    ${(props) => props.hasValue && css`
+      color: ${props.textColor ? props.textColor : '#fff'}; 
+      opacity: 1;
+    `};
+
+    ${(props) => !props.hasValue && css`
+      color: #fff; 
+      opacity: 0.5;
+    `};
   }
 `;
 
@@ -80,9 +93,14 @@ export const DropdownHeaderAction = styled.div<DropdownHeaderActionProps>`
   `}
 `;
 
-export const ItemsList = styled.ul`
+export const ItemsList = styled.ul<DropDownItemListProps>`
   position: absolute;
   z-index: 999;
+
+  ${(props) => props.size === 'small' && css`
+    overflow-y: scroll;
+    max-height: 340px;
+  `}
 
 
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
