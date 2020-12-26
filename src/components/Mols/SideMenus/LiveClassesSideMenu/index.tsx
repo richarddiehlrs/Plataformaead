@@ -23,6 +23,7 @@ interface LiveClassesSideMenu {
   isLoading?: boolean;
   onClassChange(video: SchoolLiveClasses): void;
   onLiveClassChange(item: any): void;
+  onFilterChage(item: any): void;
 }
 
 const LiveClassesSideMenu: React.FC<LiveClassesSideMenu> = ({
@@ -35,6 +36,7 @@ const LiveClassesSideMenu: React.FC<LiveClassesSideMenu> = ({
   isLoading = false,
   onClassChange,
   onLiveClassChange,
+  onFilterChage,
 }) => {
   const handleOpenLiveClass = useCallback((url: string) => {
     window.open(url, '_blank');
@@ -94,7 +96,7 @@ const LiveClassesSideMenu: React.FC<LiveClassesSideMenu> = ({
               items={filters ? filters.map((filter) => ({ key: filter, value: filter })) : [{ key: '1', value: '1' }]}
               isLoading={false}
               size="small"
-              onChange={(item) => onLiveClassChange(item)}
+              onChange={(item) => onFilterChage(item)}
             />
           </div>
         </FilterContainer>

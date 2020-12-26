@@ -18,6 +18,7 @@ const AoVivo: React.FC = () => {
 
   const [schoolLiveClassesSubject, setSchoolLiveClassesSubject] = useState<SchoolLiveSubjects[]>([]);
   const [recordedLiveClasses, setRecordedLiveClasses] = useState<SchoolLiveClasses[]>([]);
+  const [filteredRecordedLiveClasses, setFilteredRecordedLiveClasses] = useState<SchoolLiveClasses[]>([]);
   const [liveClasses, setLiveClasses] = useState<SchoolLiveClasses[]>([]);
 
   const { user } = useAuth();
@@ -53,6 +54,12 @@ const AoVivo: React.FC = () => {
     setSelectedVideo(video);
   }, [setSelectedVideo]);
 
+  const handleFilter = useCallback((item: any) => {
+    const filteredVideos = recordedLiveClasses.filter((recordedLiveClass) => (
+      recordedLiveClass.filter === item.key) && recordedLiveClass);
+    setFilteredRecordedLiveClasses(filteredVideos);
+  }, [recordedLiveClasses, setRecordedLiveClasses]);
+
   const filters = useMemo(() => {
     const items = recordedLiveClasses.map((item) => (item.filter));
     const noRepeatedItems: Array<string> = [];
@@ -70,7 +77,7 @@ const AoVivo: React.FC = () => {
     <Container>
       <LiveClassesSideMenu
         schoolLiveClassesSubjects={schoolLiveClassesSubject}
-        recordedLiveClasses={recordedLiveClasses}
+        recordedLiveClasses={filteredRecordedLiveClasses.length > 0 ? filteredRecordedLiveClasses : recordedLiveClasses}
         liveClasses={liveClasses}
         filters={filters}
         selectedSubjectPosition={selectedSubjectPosition}
@@ -78,6 +85,7 @@ const AoVivo: React.FC = () => {
         isLoading={isLoading}
         onClassChange={handleSelectVideo}
         onLiveClassChange={handleChangeLiveClass}
+        onFilterChage={handleFilter}
       />
       <VideoContainer>
         <VimeoComponent
