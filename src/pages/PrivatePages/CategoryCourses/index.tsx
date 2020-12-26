@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import api from 'services/api';
-import CourseInterface from 'models/Course';
+import { Course as CourseInterface } from 'models/CourseModels';
 import { useAuth } from 'hooks/auth';
 
 import CourseCard from 'components/Atoms/CourseCard';

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 import { useAuth } from 'hooks/auth';
 import api from 'services/api';
-import CategoryInterface from 'models/Category';
+import { Category as CategoryInterface } from 'models/AuthModels';
 
 import CategoryContainer from 'components/Mols/CategoryContainer';
 

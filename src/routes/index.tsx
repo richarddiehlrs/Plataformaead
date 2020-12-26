@@ -8,13 +8,13 @@ import { useAuth } from 'hooks/auth';
 import Header from 'components/Mols/Header';
 
 // Pages Non Logged
-import Landing from 'pages/NonLoggedPages/Landing';
+import Landing from 'pages/PublicPages/Landing';
 // Pages Logged
-import Courses from 'pages/LoggedPages/Courses';
-import Course from 'pages/LoggedPages/Course';
-import CategoryCourses from 'pages/LoggedPages/CategoryCourses';
-import LiveClasses from 'pages/LoggedPages/LiveClasses';
-import RecordedClasses from 'pages/LoggedPages/RecordedClasses';
+import Courses from 'pages/PrivatePages/Courses';
+import Course from 'pages/PrivatePages/Course';
+import CategoryCourses from 'pages/PrivatePages/CategoryCourses';
+import LiveClasses from 'pages/PrivatePages/LiveClasses';
+import RecordedClasses from 'pages/PrivatePages/RecordedClasses';
 
 import Route from './Route';
 

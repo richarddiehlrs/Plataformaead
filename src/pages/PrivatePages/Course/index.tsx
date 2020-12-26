@@ -8,7 +8,7 @@ import { CourseSeason, CourseSeasonMovie, Course as CourseModel } from 'models/C
 
 import AnnotationCard from 'components/Atoms/AnnotationCard';
 import VimeoComponent from 'components/Atoms/VimeoComponent/CourseVimeoComponent';
-import CourseSideMenu from 'components/Mols/CourseSideMenu';
+import CourseSideMenu from 'components/Mols/SideMenus/CourseSideMenu';
 
 import {
   Container, Content, VideoContainer, AnnotationsContainer,

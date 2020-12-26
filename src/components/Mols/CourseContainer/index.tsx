@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import CourseCard from 'components/Atoms/CourseCard';
 import ShimmerCourseCard from 'components/Atoms/Shimmer/CourseCard';
 
-import CourseInterface from 'models/Course';
+import { Course as CourseInterface } from 'models/CourseModels';
 
 import { Container } from './styles';
 

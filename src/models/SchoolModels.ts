@@ -1,3 +1,9 @@
+export interface School {
+  schoolid: string;
+  name: string;
+  city: string;
+}
+
 export interface SchoolLevel{
   schoolid: string;
   levelid: string;
@@ -55,4 +61,26 @@ export interface SchoolLevelSubjectSeasonClasses{
   videoduration: string;
   videotype: string;
   schoollevelsubjectseasonclassuser: schoollevelsubjectseasonclassuser;
+}
+
+export interface SchoolLiveSubjects {
+  description: string;
+  position: number;
+  schoolid: string;
+  subjectid: string;
+  title: string;
+}
+
+export interface SchoolLiveClasses{
+  classid: string;
+  description: string;
+  filter: string;
+  levelid: string;
+  schoolid: string;
+  subjectid: string;
+  thumb: string;
+  title: string;
+  url: string;
+  videoduration: string;
+  videotype: string;
 }
