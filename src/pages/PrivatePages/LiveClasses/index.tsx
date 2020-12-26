@@ -39,6 +39,7 @@ const AoVivo: React.FC = () => {
   }, [user]);
 
   const handleChangeLiveClass = useCallback((item: any) => {
+    setFilteredRecordedLiveClasses([]);
     getRecordedLiveClasses(item.value);
     setSelectedSubjectPosition(Number(item.key));
   }, [getRecordedLiveClasses]);
@@ -58,7 +59,7 @@ const AoVivo: React.FC = () => {
     const filteredVideos = recordedLiveClasses.filter((recordedLiveClass) => (
       recordedLiveClass.filter === item.key) && recordedLiveClass);
     setFilteredRecordedLiveClasses(filteredVideos);
-  }, [recordedLiveClasses, setRecordedLiveClasses]);
+  }, [recordedLiveClasses]);
 
   const filters = useMemo(() => {
     const items = recordedLiveClasses.map((item) => (item.filter));
@@ -77,7 +78,8 @@ const AoVivo: React.FC = () => {
     <Container>
       <LiveClassesSideMenu
         schoolLiveClassesSubjects={schoolLiveClassesSubject}
-        recordedLiveClasses={filteredRecordedLiveClasses.length > 0 ? filteredRecordedLiveClasses : recordedLiveClasses}
+        recordedLiveClasses={filteredRecordedLiveClasses.length > 0
+          ? filteredRecordedLiveClasses : recordedLiveClasses}
         liveClasses={liveClasses}
         filters={filters}
         selectedSubjectPosition={selectedSubjectPosition}

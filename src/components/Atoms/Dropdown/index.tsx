@@ -30,6 +30,7 @@ interface DropdownProps {
   defaultValue?: Item;
   customHeight?: number,
   isLoading?: boolean;
+  placeholder?: boolean;
   size?: string;
   onChange?(item: Item | Array<Item>): void;
 }
@@ -44,6 +45,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   customRadius,
   customHeight,
   defaultValue,
+  placeholder = false,
   isLoading = false,
   size = '',
   onChange = () => console.log('default'),
@@ -56,12 +58,14 @@ const Dropdown: React.FC<DropdownProps> = ({
       return (defaultValue);
     }
     return { key: '', value: '' };
+    // return {} as Item;
   }, [defaultValue, selection]);
 
   const dropdownContentWrapperRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: MouseEvent): void => {
-    if (dropdownContentWrapperRef.current && !dropdownContentWrapperRef.current.contains(event.target as Node)) {
+    if (dropdownContentWrapperRef.current
+      && !dropdownContentWrapperRef.current.contains(event.target as Node)) {
       setOpen(false);
     }
   };
@@ -95,7 +99,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       setSelection([firstSelectedItem]);
       onChange(firstSelectedItem);
     }
-  }, [firstSelectedItem, onChange, selection, defaultValue]);
+  }, [firstSelectedItem, onChange, selection, defaultValue, placeholder]);
 
   return (
     <DropdownWrapper ref={dropdownContentWrapperRef}>
@@ -109,9 +113,11 @@ const Dropdown: React.FC<DropdownProps> = ({
         customHeight={customHeight && customHeight}
         customRadius={customRadius && customRadius}
       >
-        <DropdownHeaderTitle hasValue={selection.length > 0} textColor={textColor || 'rbga(255,255,255,0.4)'}>
+        <DropdownHeaderTitle hasValue={selection.length > 0 && selection[0].key !== ''} textColor={textColor || 'rbga(255,255,255,0.4)'}>
           {!isLoading && !multiSelect && (
-            <p>{selection.length > 0 ? selection[0].value : title}</p>
+            <>
+              <p>{selection.length > 0 && selection[0].key !== '' ? selection[0].value : `${title}`}</p>
+            </>
           )}
           {!isLoading && multiSelect && (
             selection.length > 0 ? selection.map((item) => <SelectedItems key={item.key}>{item.value}</SelectedItems>) : <p>{title}</p>

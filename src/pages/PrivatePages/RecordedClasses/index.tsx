@@ -82,7 +82,7 @@ const RecordedClasses: React.FC = () => {
   }, [user, getSchoolSubjects]);
 
   const handlePauseVideo = useCallback(async (info) => {
-    const response = await api.post('/school/level/subject/season/class/user', {
+    await api.post('/school/level/subject/season/class/user', {
       classid: videos[selectedVideoPosition].classid,
       seasonid: videos[selectedVideoPosition].seasonid,
       levelid: videos[selectedVideoPosition].levelid,
@@ -93,8 +93,6 @@ const RecordedClasses: React.FC = () => {
       videostatus: 'watching',
       exercisestatus: ' ',
     });
-
-    console.log(response.data);
   }, [videos, selectedVideoPosition, user.userid]);
 
   const handleFinishVideo = useCallback((info) => {

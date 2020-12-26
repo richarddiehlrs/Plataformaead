@@ -73,8 +73,9 @@ const LiveClassesSideMenu: React.FC<LiveClassesSideMenu> = ({
               title="Escolha a matéria"
               arrowColor="#ffd35c"
               textColor="#ffd35c"
-              items={schoolLiveClassesSubjects ? schoolLiveClassesSubjects.map((schoolLiveClassSubject) => (
-                { key: `${schoolLiveClassSubject.position}`, value: schoolLiveClassSubject.title }))
+              items={schoolLiveClassesSubjects
+                ? schoolLiveClassesSubjects.map((schoolLiveClassSubject) => (
+                  { key: `${schoolLiveClassSubject.position}`, value: schoolLiveClassSubject.title }))
                 : [{ key: '1', value: '1' }]}
               defaultValue={schoolLiveClassesSubjects
                 && schoolLiveClassesSubjects[0] ? { key: `${schoolLiveClassesSubjects[0].position}`, value: schoolLiveClassesSubjects[0].subjectid }
@@ -85,19 +86,21 @@ const LiveClassesSideMenu: React.FC<LiveClassesSideMenu> = ({
             />
           </div>
           <div className="date-selection">
-            <p>Selecione uma data</p>
-            <Dropdown
-              title="Selecione uma data"
-              arrowColor="#ffff"
-              textColor="#ffff"
-              backgroundCollor="#171a21"
-              customHeight={40}
-              customRadius={30}
-              items={filters ? filters.map((filter) => ({ key: filter, value: filter })) : [{ key: '1', value: '1' }]}
-              isLoading={false}
-              size="small"
-              onChange={(item) => onFilterChage(item)}
-            />
+            <p>Filtre por datas</p>
+            {!isLoading && (
+              <Dropdown
+                title="Selecione uma data"
+                arrowColor="#ffff"
+                textColor="#ffff"
+                backgroundCollor="#171a21"
+                customHeight={40}
+                customRadius={30}
+                items={filters ? filters.map((filter) => ({ key: filter, value: filter })) : [{ key: '1', value: '1' }]}
+                isLoading={false}
+                size="small"
+                onChange={(item) => onFilterChage(item)}
+              />
+            )}
           </div>
         </FilterContainer>
         <VideosScrollContainer className="hasVerticalScroll">
