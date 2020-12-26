@@ -30,7 +30,7 @@ export default interface schoollevelsubjectseasonclassuser {
   userid: string;
   videostatus: string;
   videowatched: string;
-}
+};
 
 export interface ClassesNotes {
   classid: string
@@ -63,26 +63,24 @@ export interface SchoolLevelSubjectSeasonClasses{
   schoollevelsubjectseasonclassuser: schoollevelsubjectseasonclassuser;
 }
 
-export interface SchoolLiveLevelSubjectClasses{
-  schoolid: string;
-  levelid: string;
-  subjectid: string;
-  classid: string;
-  title: string;
+export interface SchoolLiveSubjects {
   description: string;
-  url: string;
-  videotype: string;
-  thumb: string;
-  videoduration: string;
-  filter: string;
+  position: number;
+  schoolid: string;
+  subjectid: string;
+  title: string;
 }
 
-export interface SchoolLiveClasses {
-  schoolid: string;
-  levelid: string;
-  subjectid: string;
-  title: string;
+export interface SchoolLiveClasses{
+  classid: string;
   description: string;
-  position: 0;
-  schoollivelevelsubjectclasses: Array<SchoolLiveLevelSubjectClasses>;
+  filter: string;
+  levelid: string;
+  schoolid: string;
+  subjectid: string;
+  thumb: string;
+  title: string;
+  url: string;
+  videoduration: string;
+  videotype: string;
 }

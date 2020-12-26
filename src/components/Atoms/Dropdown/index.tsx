@@ -28,6 +28,7 @@ interface DropdownProps {
   backgroundCollor?: string;
   customRadius?: number;
   defaultValue?: Item;
+  customHeight?: number,
   isLoading?: boolean;
   size?: string;
   onChange?(item: Item | Array<Item>): void;
@@ -41,6 +42,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   arrowColor,
   backgroundCollor,
   customRadius,
+  customHeight,
   defaultValue,
   isLoading = false,
   size = '',
@@ -104,6 +106,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         onClick={() => setOpen(!open)}
         isLoading={isLoading}
         backgroundColor={backgroundCollor && backgroundCollor}
+        customHeight={customHeight && customHeight}
         customRadius={customRadius && customRadius}
       >
         <DropdownHeaderTitle hasValue={selection.length > 0} textColor={textColor || 'rbga(255,255,255,0.4)'}>

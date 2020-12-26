@@ -1,43 +1,93 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {
+  useEffect, useState, useMemo, useCallback,
+} from 'react';
 
 import api from 'services/api';
-import { SchoolLiveClasses } from 'models/SchoolModels';
+import { useAuth } from 'hooks/auth';
+import { SchoolLiveSubjects, SchoolLiveClasses } from 'models/SchoolModels';
 
 import VimeoComponent from 'components/Atoms/VimeoComponent/LiveClassVimeoComponent';
 import LiveClassesSideMenu from 'components/Mols/SideMenus/LiveClassesSideMenu';
 
-import { Container } from './styles';
+import { Container, VideoContainer } from './styles';
 
 const AoVivo: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedPosition, setSelectedPosition] = useState(0);
+  const [selectedSubjectPosition, setSelectedSubjectPosition] = useState(0);
+  const [selectedVideo, setSelectedVideo] = useState<SchoolLiveClasses>({} as SchoolLiveClasses);
 
-  const [schoolLiveClasses, setSchoolLiveClasses] = useState<SchoolLiveClasses[]>([]);
+  const [schoolLiveClassesSubject, setSchoolLiveClassesSubject] = useState<SchoolLiveSubjects[]>([]);
+  const [recordedLiveClasses, setRecordedLiveClasses] = useState<SchoolLiveClasses[]>([]);
+  const [liveClasses, setLiveClasses] = useState<SchoolLiveClasses[]>([]);
 
-  const handleChangeLiveClass = useCallback((item: any) => {
-    setSelectedPosition(Number(item.key));
-    console.log(item);
-  }, []);
+  const { user } = useAuth();
 
   const getLiveClasses = useCallback(async () => {
     setIsLoading(true);
-    const response = await api.get<SchoolLiveClasses[]>('/school/live/level/subject/class?schoolid=ObjetivoMogiGuaçu&levelid=1EM');
-    setSchoolLiveClasses(response.data);
+    const response = await api.get<SchoolLiveClasses[]>(`/school/live/level/subject/class?schoolid=${user.schoolid}&levelid=${user.levelid}&subjectid=AoVivo`);
+    setLiveClasses(response.data);
     setIsLoading(false);
-  }, []);
+  }, [user]);
+
+  const getRecordedLiveClasses = useCallback(async (subjectid: string) => {
+    setIsLoading(true);
+    const response = await api.get<SchoolLiveClasses[]>(`/school/live/level/subject/class?schoolid=${user.schoolid}&levelid=${user.levelid}&subjectid=${subjectid}`);
+    setSelectedVideo(response.data[0]);
+    setRecordedLiveClasses(response.data);
+    setIsLoading(false);
+  }, [user]);
+
+  const handleChangeLiveClass = useCallback((item: any) => {
+    getRecordedLiveClasses(item.value);
+    setSelectedSubjectPosition(Number(item.key));
+  }, [getRecordedLiveClasses]);
+
+  const getLiveClassesSubject = useCallback(async () => {
+    setIsLoading(true);
+    const response = await api.get<SchoolLiveSubjects[]>(`/school/live/level/subject?schoolid=${user.schoolid}&levelid=${user.levelid}`);
+    setSchoolLiveClassesSubject(response.data);
+    setIsLoading(false);
+  }, [user]);
+
+  const handleSelectVideo = useCallback((video: SchoolLiveClasses) => {
+    setSelectedVideo(video);
+  }, [setSelectedVideo]);
+
+  const filters = useMemo(() => {
+    const items = recordedLiveClasses.map((item) => (item.filter));
+    const noRepeatedItems: Array<string> = [];
+    items.map((item) => !noRepeatedItems.includes(item) && noRepeatedItems.push(item));
+
+    return noRepeatedItems;
+  }, [recordedLiveClasses]);
 
   useEffect(() => {
+    getLiveClassesSubject();
     getLiveClasses();
-  }, [getLiveClasses]);
+  }, [getLiveClassesSubject, getLiveClasses]);
 
   return (
     <Container>
       <LiveClassesSideMenu
-        schoolLiveClasses={schoolLiveClasses}
-        onLiveClassChange={handleChangeLiveClass}
-        selectedPosition={selectedPosition}
+        schoolLiveClassesSubjects={schoolLiveClassesSubject}
+        recordedLiveClasses={recordedLiveClasses}
+        liveClasses={liveClasses}
+        filters={filters}
+        selectedSubjectPosition={selectedSubjectPosition}
+        selectedVideoPostition={selectedVideo.classid}
         isLoading={isLoading}
+        onClassChange={handleSelectVideo}
+        onLiveClassChange={handleChangeLiveClass}
       />
+      <VideoContainer>
+        <VimeoComponent
+          large
+          url={selectedVideo.url}
+          video={selectedVideo}
+          onPause={(info) => console.log(info)}
+          onFinish={(info) => console.log(info)}
+        />
+      </VideoContainer>
     </Container>
   );
 };

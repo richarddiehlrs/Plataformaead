@@ -1,14 +1,14 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import Vimeo from '@u-wave/react-vimeo';
 
-import { SchoolLiveLevelSubjectClasses } from 'models/SchoolModels';
+import { SchoolLiveClasses } from 'models/SchoolModels';
 
 import { Container } from './styles';
 
 interface ViemoComponentProps {
   url?: string;
   large?: boolean;
-  video?: SchoolLiveLevelSubjectClasses;
+  video?: SchoolLiveClasses;
   onPause?(info: any): void;
   onFinish?(info: any): void;
 }

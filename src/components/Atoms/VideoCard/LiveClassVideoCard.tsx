@@ -1,9 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import { FiChevronRight, FiCheck } from 'react-icons/fi';
 
-import { SchoolLiveLevelSubjectClasses } from 'models/SchoolModels';
+import { SchoolLiveClasses } from 'models/SchoolModels';
 
-import ExercisePreviewCard from 'components/Atoms/ExercisePreviewCard';
 import ProgressBar from 'components/Atoms/ProgressBar';
 
 import {
@@ -14,45 +13,39 @@ interface VideoCardProps {
   isWatching?: boolean;
   alreadyWatched?: boolean;
   exercisePreviewActive?: boolean;
-  video: SchoolLiveLevelSubjectClasses;
-  onSelect(position: number): void;
+  video: SchoolLiveClasses;
+  onSelect(video: SchoolLiveClasses): void;
 }
 
 const VideoCard: React.FC<VideoCardProps> = ({
   isWatching = false,
   alreadyWatched = false,
-  exercisePreviewActive = false,
   video,
   onSelect,
-}) => {
-  const [localAlreadyWatched, setLocalAlreadyWatched] = useState(false);
-
-  return (
-    <Container>
-      {/* <VideoCardWrapper onClick={() => { onSelect(video.position); }}> */}
-      <VideoCardWrapper onClick={() => console.log('oi')}>
-        <SelectedIconContainer>
-          {(isWatching) && (<FiChevronRight size={22} />)}
-          {(alreadyWatched || localAlreadyWatched) && (
-            <div className="checked-container">
-              <FiCheck className="checked" size={22} color="#ffd35c" style={{ fontWeight: 'bolder' }} />
-            </div>
-          )}
-        </SelectedIconContainer>
-        <Thumb>
-          <img src={video.thumb} alt={video.classid} />
-          <Time><p>{video.videoduration}</p></Time>
-          <StyledProgressBar>
-            <ProgressBar at={0} customHeight={4} />
-          </StyledProgressBar>
-        </Thumb>
-        <VideoInfo>
-          <h3>{video.title}</h3>
-          <p>{video.description}</p>
-        </VideoInfo>
-      </VideoCardWrapper>
-    </Container>
-  );
-};
+}) => (
+  <Container>
+    <VideoCardWrapper onClick={() => onSelect(video)}>
+      <SelectedIconContainer>
+        {(isWatching) && (<FiChevronRight size={22} />)}
+        {(alreadyWatched) && (
+        <div className="checked-container">
+          <FiCheck className="checked" size={22} color="#ffd35c" style={{ fontWeight: 'bolder' }} />
+        </div>
+        )}
+      </SelectedIconContainer>
+      <Thumb>
+        <img src={video.thumb} alt={video.classid} />
+        <Time><p>{video.videoduration}</p></Time>
+        <StyledProgressBar>
+          <ProgressBar at={0} customHeight={4} />
+        </StyledProgressBar>
+      </Thumb>
+      <VideoInfo>
+        <h3>{video.title}</h3>
+        <p>{video.description}</p>
+      </VideoInfo>
+    </VideoCardWrapper>
+  </Container>
+);
 
 export default VideoCard;

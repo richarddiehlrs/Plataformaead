@@ -11,6 +11,7 @@ interface DropdownHeaderProps {
   isLoading: boolean;
   backgroundColor?: string;
   customRadius?: number;
+  customHeight?: number;
 }
 
 interface DropDownItemListProps{
@@ -36,11 +37,16 @@ export const DropdownHeader = styled.div<DropdownHeaderProps>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  height: ${(props) => props.customHeight && `${props.customHeight}px`};
   padding: 0 8px;
 
   border: solid 0.6px inherit;
 
   transition: border-color 0.4s, box-shadow 0.4s;
+
+  ${(props) => props.customHeight && css`
+    padding: 16px;
+  `};
 
   ${(props) => props.isLoading && css`
     pointer-events: none;

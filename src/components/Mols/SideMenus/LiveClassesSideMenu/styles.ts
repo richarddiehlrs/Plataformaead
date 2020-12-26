@@ -4,14 +4,12 @@ import Button from 'components/Atoms/Button';
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 20px 16px 0px 80px;
+    padding: 20px 16px 0px 60px;
     margin: 0 20px 0 20px;
 
-    width: 460px;
-    /* width: 24%; */
+    width: 480px;
     height: 100%;
 
-    border: solid 1px red;
 `;
 
 export const Heading = styled.header`
@@ -26,7 +24,7 @@ export const Heading = styled.header`
 export const LiveVideosList = styled.div`
     display: flex;
     flex-direction: column;
-    height: 40%;
+    height: 36%;
 
     margin-top: 24px;
 
@@ -41,7 +39,6 @@ export const LiveVideosList = styled.div`
         margin-top: 6px;
         color: #ffd35c;
     }
-    /* border: solid 0.2px blue; */
 `;
 
 export const LiveVideoItem = styled.div`
@@ -50,6 +47,10 @@ export const LiveVideoItem = styled.div`
     justify-content: space-between;
 
     margin-bottom: 16px;
+    
+    p{
+        max-width: 140px;
+    }
 `;
 
 export const StyledButton = styled(Button)`
@@ -57,8 +58,36 @@ export const StyledButton = styled(Button)`
     align-items: center;
     justify-content: space-between;
 
-    width: 28%;
+    width: 90px;
     height: 40px;
+
+    svg{
+        color: red;
+        animation: liveButton 2s ease-in-out infinite alternate;
+        width: 20px;
+        margin-left: 4px;
+    }
+    
+    /* @keyframes liveButton{
+        from{
+            text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+        }
+        to{
+            text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+        } */
+    }
+    @keyframes liveButton {
+        0%{
+            color: #353536;
+        }
+        50%{
+            color: red;
+            font-weight: bolder;
+        }
+        100%{
+            color: #353536;
+        }
+    }
 `;
 
 export const Content = styled.div`
@@ -67,14 +96,14 @@ export const Content = styled.div`
     align-items: center;
 
     width: 100%;
-    height: 100%;
+    max-height: 64%;
 `;
 
 export const FilterContainer = styled.div`
     display: flex;
     flex-direction: column;
 
-    width: 40%;
+    width: 50%;
 
     margin-bottom: 32px;
     margin-top: 32px;
@@ -87,6 +116,15 @@ export const FilterContainer = styled.div`
 
     .date-selection{
         margin-top: 16px;
+        > p{
+            color: #fff;
+        }
+    }
+
+    .subject-selection{
+        > p{
+            color: #fff;
+        }
     }
 `;
 
@@ -96,9 +134,8 @@ export const VideosScrollContainer = styled.div`
     overflow: scroll;
 
     width: 100%;
-    height: 74%;
+
+    height: 380px;
 
     padding: 0 8px;
-
-    border: solid aquamarine;
 `;
