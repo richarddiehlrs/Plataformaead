@@ -96,6 +96,7 @@ const LiveClassesSideMenu: React.FC<LiveClassesSideMenu> = ({
                 customHeight={40}
                 customRadius={30}
                 items={filters ? filters.map((filter) => ({ key: filter, value: filter })) : [{ key: '1', value: '1' }]}
+                defaultValue={filters && { key: filters[0], value: filters[0] }}
                 isLoading={false}
                 size="small"
                 onChange={(item) => onFilterChage(item)}
