@@ -120,7 +120,10 @@ const Dropdown: React.FC<DropdownProps> = ({
             </>
           )}
           {!isLoading && multiSelect && (
-            selection.length > 0 ? selection.map((item) => <SelectedItems key={item.key}>{item.value}</SelectedItems>) : <p>{title}</p>
+            selection.length > 0 ? selection.map(
+              (item) => <SelectedItems key={item.key}>{item.value}</SelectedItems>,
+            )
+              : <p>{title}</p>
           )}
           {isLoading && (
             !multiSelect && (
