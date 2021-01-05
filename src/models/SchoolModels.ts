@@ -30,7 +30,7 @@ export default interface schoollevelsubjectseasonclassuser {
   userid: string;
   videostatus: string;
   videowatched: string;
-};
+}
 
 export interface ClassesNotes {
   classid: string
