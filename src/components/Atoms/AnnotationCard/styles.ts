@@ -36,7 +36,7 @@ export const OptionsWrapper = styled.div`
   right: 0;
 
   .edit{
-    width: 20px;
+    width: 22px;
     margin-right: 12px;
     transition: .4s;
 
@@ -56,4 +56,10 @@ export const OptionsWrapper = styled.div`
       opacity: 0.2;
     }
   }
+`;
+
+export const StyledButton = styled.button`
+  background: transparent;
+  border: none;
+
 `;

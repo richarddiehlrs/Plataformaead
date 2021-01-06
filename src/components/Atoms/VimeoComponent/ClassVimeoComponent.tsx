@@ -39,16 +39,12 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({
 
   const handlePauseVideo = useCallback(async (info: any) => {
     if (isMounted) {
-      console.log(info);
-      console.log('pause');
       onPause ? onPause(info) : console.log('info');
     }
   }, [onPause, isMounted]);
 
   const handleEndVideo = useCallback((info: any) => {
     if (isMounted) {
-      console.log(info);
-      console.log('finish');
       onFinish ? onFinish(info) : console.log('end');
     }
   }, [onFinish, isMounted]);

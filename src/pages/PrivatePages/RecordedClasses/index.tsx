@@ -1,12 +1,14 @@
 import React, {
-  useEffect, useState, useCallback, useRef,
+  useEffect, useState, useCallback, useRef, useMemo,
 } from 'react';
 import { CancelTokenSource } from 'axios';
 
 import { convertSecondsToHoursMinutesSeconds } from 'utils/functions';
 import api from 'services/api';
 import { useAuth } from 'hooks/auth';
-import { SchoolLevel, SchoolLevelSubject, SchoolLevelSubjectSeasonClasses } from 'models/SchoolModels';
+import {
+  SchoolLevel, SchoolLevelSubject, SchoolLevelSubjectSeasonClasses, ClassesNotes,
+} from 'models/SchoolModels';
 
 import VimeoComponent from 'components/Atoms/VimeoComponent/ClassVimeoComponent';
 import AnnotationCard from 'components/Atoms/AnnotationCard';
@@ -25,6 +27,8 @@ const RecordedClasses: React.FC = () => {
   const [schoolLevelSubjectSeasons, setSchoolLevelSubjectSeasons] = useState<SchoolLevelSubject[]>([]);
   const [videos, setVideos] = useState<SchoolLevelSubjectSeasonClasses[]>([]);
 
+  const [notes, setNotes] = useState<ClassesNotes[]>([]);
+
   const [selectedSchoolLevel, setSelectedSchoolLevel] = useState({ key: '', value: '' });
   const [selectedSchoolSubject, setSelectedSchoolSubject] = useState({ key: '', value: '' });
 
@@ -37,6 +41,14 @@ const RecordedClasses: React.FC = () => {
   const cancelSubjectsReq = useRef<CancelTokenSource>({} as CancelTokenSource);
   const cancelSubejectSeasonReq = useRef<CancelTokenSource>({} as CancelTokenSource);
   const cancelSubjectSeasonInfoReq = useRef<CancelTokenSource>({} as CancelTokenSource);
+
+  useMemo(() => {
+    if (videos[selectedVideoPosition] && videos[selectedVideoPosition].notes) {
+      setNotes(videos[selectedVideoPosition].notes);
+      return videos[selectedVideoPosition].notes;
+    }
+    return [];
+  }, [selectedVideoPosition, videos]);
 
   const getSchoolLevelSubjectSeasonInfo = useCallback(async (item) => {
     setVideos([]);
@@ -108,11 +120,9 @@ const RecordedClasses: React.FC = () => {
 
   const handlePauseVideo = useCallback(async (info) => {
     if (mounted) {
-      console.log(selectedVideoPosition);
-      console.log(previousVideoPosition);
-      const videoPosition = previousVideoPosition !== undefined ? previousVideoPosition : selectedVideoPosition;
-      const response = await api.post('/school/level/subject/season/class/user', {
-        // classid: videos[selectedVideoPosition].classid,
+      const videoPosition = previousVideoPosition
+      !== undefined ? previousVideoPosition : selectedVideoPosition;
+      await api.post('/school/level/subject/season/class/user', {
         classid: videos[videoPosition].classid,
         seasonid: videos[selectedVideoPosition].seasonid,
         levelid: videos[selectedVideoPosition].levelid,
@@ -124,24 +134,32 @@ const RecordedClasses: React.FC = () => {
         exercisestatus: ' ',
       });
       setPreviousVideoPosition(undefined);
-
-      console.log(response.data);
     }
   }, [videos, selectedVideoPosition, user.userid, mounted, previousVideoPosition]);
 
   const handleChangeVideo = useCallback(async (videoPosition) => {
-    // Promise.allSettled([promise]).then(([result]) => {
-    //   console.log('oii');
-    // });
     setPreviousVideoPosition(selectedVideoPosition);
     setSelectedVideoPosition(videoPosition);
-
-    console.log('change');
   }, [setSelectedVideoPosition, selectedVideoPosition]);
 
   const handleFinishVideo = useCallback((info) => {
     handlePauseVideo(info);
   }, [handlePauseVideo]);
+
+  const handleDeleteNote = useCallback(async (noteId: string, index: number) => {
+    await api.post('/school/level/subject/season/class/user/note/delete', {
+      classid: videos[selectedVideoPosition].classid,
+      seasonid: videos[selectedVideoPosition].seasonid,
+      levelid: videos[selectedVideoPosition].levelid,
+      subjectid: videos[selectedVideoPosition].subjectid,
+      schoolid: user.schoolid,
+      noteid: noteId,
+      userid: user.userid,
+    });
+    const updatedNotes = notes.splice(index);
+    updatedNotes.splice(index, 1);
+    setNotes(updatedNotes);
+  }, [user, videos, selectedVideoPosition, notes]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -181,8 +199,7 @@ const RecordedClasses: React.FC = () => {
       <Content>
         <VideoContainer>
           <VimeoComponent
-            large={videos[selectedVideoPosition]
-            && videos[selectedVideoPosition].notes.length < 1}
+            large={notes.length < 1}
             url={videos[selectedVideoPosition]
             && videos[selectedVideoPosition].url}
             video={videos[selectedVideoPosition]}
@@ -192,16 +209,15 @@ const RecordedClasses: React.FC = () => {
         </VideoContainer>
         <AnnotationsContainer
           className="hasVerticalScroll"
-          hasNotes={videos[selectedVideoPosition]
-            && videos[selectedVideoPosition].notes.length > 0}
+          hasNotes={notes.length > 0}
         >
-          {videos[selectedVideoPosition]
-          && videos[selectedVideoPosition].notes.length > 0
-          && videos[selectedVideoPosition].notes.map((note) => (
+          {notes.length > 0 && notes.map((note, index) => (
             <AnnotationCard
               key={note.schoolid_levelid_subjectid_seasonid_classid_userid_noteid}
               time={note.noteid}
+              index={index}
               description={note.message}
+              onDelete={handleDeleteNote}
             />
           ))}
         </AnnotationsContainer>
