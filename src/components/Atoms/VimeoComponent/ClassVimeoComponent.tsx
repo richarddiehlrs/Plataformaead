@@ -1,7 +1,7 @@
 import React, {
-  useEffect, useCallback, useMemo, useState,
+  useEffect, useCallback, useMemo, useState, useRef,
 } from 'react';
-import Vimeo from '@u-wave/react-vimeo';
+import Vimeo, {} from '@u-wave/react-vimeo';
 
 import { SchoolLevelSubjectSeasonClasses } from 'models/SchoolModels';
 
@@ -19,6 +19,8 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({
   url, large = false, video, onPause, onFinish,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
+  const [activeProgress, setActiveProgress] = useState(0);
+
   const timeToStart = useMemo(() => {
     if (video) {
       if (video.schoollevelsubjectseasonclassuser
@@ -37,8 +39,11 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({
 
   const autoPlay = useMemo(() => timeToStart > 0, [timeToStart]);
 
+  const testing = useRef<Vimeo>(null);
+
   const handlePauseVideo = useCallback(async (info: any) => {
     if (isMounted) {
+      console.log('pause');
       onPause ? onPause(info) : console.log('info');
     }
   }, [onPause, isMounted]);
@@ -49,10 +54,18 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({
     }
   }, [onFinish, isMounted]);
 
-  const handleProgressVideo = useCallback((info: any) => { }, []);
+  const handleProgressVideo = useCallback((info: any) => {
+    if (activeProgress === 1) {
+      console.log(info);
+      setActiveProgress(0);
+    }
+  }, [activeProgress]);
 
   useEffect(() => {
     setIsMounted(true);
+    setInterval(() => {
+      setActiveProgress(1);
+    }, 5000);
 
     return () => setIsMounted(false);
   }, []);
@@ -60,37 +73,23 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({
   return (
     <Container large={large}>
       {url && (
-      <Vimeo
-        video={url || ' '}
-        onPause={((info) => handlePauseVideo(info))}
-        onEnd={((info) => handleEndVideo(info))}
-        onTimeUpdate={handleProgressVideo}
-        start={timeToStart}
-        style={{
-          width: '100%',
-        }}
-        responsive
-        autoplay={autoPlay}
-      />
-      )}
-      {/* {url && !autoPlay && (
         <>
-          {console.log('2')}
+          <button type="button" onClick={() => testing.current && console.log(testing.current)}>Teste</button>
           <Vimeo
             video={url || ' '}
             onPause={((info) => handlePauseVideo(info))}
             onEnd={((info) => handleEndVideo(info))}
-            onTimeUpdate={handleProgressVideo}
+            onTimeUpdate={(e) => handleProgressVideo(e)}
             start={timeToStart}
             style={{
               width: '100%',
             }}
             responsive
-            autoplay={false}
+            autoplay={autoPlay}
+            ref={testing}
           />
-
         </>
-      )} */}
+      )}
     </Container>
   );
 };
