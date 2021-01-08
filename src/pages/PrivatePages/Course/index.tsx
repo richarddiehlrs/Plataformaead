@@ -23,9 +23,10 @@ interface Params {
 
 const Course: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [courseDetails, setCourseDetails] = useState<CourseModel>();
+  const [isPlaying, setIsPlaying] = useState(true);
   const [selectedVideoPosition, setSelectedVideoPosition] = useState(0);
 
+  const [courseDetails, setCourseDetails] = useState<CourseModel>();
   const [courseSeasons, setCourseSeasons] = useState<CourseSeason[]>([]);
   const [courseSeasonMovies, setCourseSeasonMovies] = useState<CourseSeasonMovie[]>([]);
 
@@ -43,14 +44,14 @@ const Course: React.FC = () => {
 
   const getCourseDetails = useCallback(async () => {
     setIsLoading(true);
-    const response = await api.get<CourseModel>(`https://hdinsfdwwa.execute-api.sa-east-1.amazonaws.com/prod/course/info?courseid=${courseid}`);
+    const response = await api.get<CourseModel>(`/course/info?courseid=${courseid}`);
     setCourseDetails(response.data);
     setIsLoading(false);
   }, [courseid]);
 
   const getCourseSeasons = useCallback(async () => {
     setIsLoading(true);
-    const response = await api.get<CourseSeason[]>(`https://hdinsfdwwa.execute-api.sa-east-1.amazonaws.com/prod/course/season?courseid=${courseid}`);
+    const response = await api.get<CourseSeason[]>(`/course/season?courseid=${courseid}`);
     setCourseSeasons(response.data);
     setIsLoading(false);
   }, [courseid]);
@@ -58,7 +59,7 @@ const Course: React.FC = () => {
   const getSeasonMovies = useCallback(async (item: any) => {
     setIsLoading(true);
     // setSelectedSeason(item);
-    const response = await api.get<CourseSeasonMovie[]>(`https://hdinsfdwwa.execute-api.sa-east-1.amazonaws.com/prod/course/season/movie?courseid=${courseid}&seasonid=${item.key}&userid=${user.userid}`);
+    const response = await api.get<CourseSeasonMovie[]>(`/course/season/movie?courseid=${courseid}&seasonid=${item.key}&userid=${user.userid}`);
     setCourseSeasonMovies(response.data);
     setIsLoading(false);
   }, [courseid, user]);
@@ -75,7 +76,7 @@ const Course: React.FC = () => {
     };
     const response = await api.post('/prod/course/season/movie/user', body);
 
-    console.log(response.data);
+    console.log(`pause: ${response.data}`);
   }, [courseSeasonMovies, selectedVideoPosition, user]);
 
   const handleFinishVideo = useCallback((info) => {
@@ -114,8 +115,12 @@ const Course: React.FC = () => {
         videos={courseSeasonMovies || []}
         selectedPosition={selectedVideoPosition}
         isLoading={isLoading}
-        onSeasonChange={(item) => getSeasonMovies(item)}
-        onVideoChange={setSelectedVideoPosition}
+        onSeasonChange={(item) => {
+          setIsPlaying(!isPlaying); setTimeout(() => { getSeasonMovies(item); }, 200);
+        }}
+        onVideoChange={(e) => {
+          setIsPlaying(!isPlaying); setTimeout(() => { setSelectedVideoPosition(e); }, 200);
+        }}
       />
       <Content>
         <VideoContainer>
@@ -124,6 +129,8 @@ const Course: React.FC = () => {
             url={courseSeasonMovies[selectedVideoPosition]
               && courseSeasonMovies[selectedVideoPosition].url}
             video={courseSeasonMovies[selectedVideoPosition]}
+            isPlaying={isPlaying}
+            isLoading={isLoading}
             onPause={handlePauseVideo}
             onFinish={handleFinishVideo}
           />

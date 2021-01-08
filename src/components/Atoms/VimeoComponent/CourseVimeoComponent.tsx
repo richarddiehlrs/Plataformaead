@@ -1,5 +1,8 @@
-import React, { useCallback, useMemo } from 'react';
-import Vimeo from '@u-wave/react-vimeo';
+import React, {
+  useCallback, useMemo, useRef, useEffect,
+} from 'react';
+import ReactPlayer from 'react-player/vimeo';
+// import Vimeo from '@u-wave/react-vimeo';
 
 import { CourseSeasonMovie } from 'models/CourseModels';
 
@@ -9,13 +12,17 @@ interface ViemoComponentProps {
   url?: string;
   large?: boolean;
   video?: CourseSeasonMovie;
+  isPlaying?: boolean;
+  isLoading?: boolean;
   onPause?(info: any): void;
   onFinish?(info: any): void;
 }
 
 const VimeoComponent: React.FC<ViemoComponentProps> = ({
-  url, large = false, video, onPause, onFinish,
+  url, large = false, video, onPause, onFinish, isPlaying, isLoading,
 }) => {
+  const vimeoPlayerReff = useRef<any>(null);
+
   const timeToStart = useMemo(() => {
     if (video) {
       if (video.courseseasonmovieuser
@@ -34,42 +41,44 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({
 
   const autoPlay = useMemo(() => timeToStart > 0, [timeToStart]);
 
-  const handlePauseVideo = useCallback(async (info: any) => {
-    console.log(info);
-  }, []);
+  const handlePauseVideo = useCallback((info: any) => {
+    console.log('pause');
+    onPause ? onPause(info) : console.log('info');
+  }, [onPause]);
 
   const handleEndVideo = useCallback((info: any) => { }, []);
 
   const handleProgressVideo = useCallback((info: any) => { }, []);
 
+  useEffect(() => {
+    vimeoPlayerReff.current?.seekTo(timeToStart);
+  }, [timeToStart]);
+
   return (
     <Container large={large}>
-      {url && autoPlay && (
-        <Vimeo
-          video={url || ' '}
-          onPause={onPause || ((info) => handlePauseVideo(info))}
-          onEnd={onFinish || ((info) => handleProgressVideo(info))}
-          onTimeUpdate={handleProgressVideo}
+      {url && (
+        <ReactPlayer
+          url={url}
+          playing={isPlaying}
+          width="100%"
+          height="100%"
+          progressInterval={5000}
           start={timeToStart}
-          style={{
-            width: '100%',
+          autoPlay={autoPlay}
+          controls
+          config={{
+            vimeo: {
+              playerOptions: {
+                autopause: !autoPlay,
+                autoplay: autoPlay,
+              },
+              onSeek: timeToStart,
+            },
           }}
-          responsive
-          autoplay
-        />
-      )}
-      {url && !autoPlay && (
-        <Vimeo
-          video={url || ' '}
-          onPause={onPause || ((info) => handlePauseVideo(info))}
-          onEnd={onFinish || ((info) => handleEndVideo(info))}
-          onTimeUpdate={handleProgressVideo}
-          start={timeToStart}
-          style={{
-            width: '100%',
-          }}
-          responsive
-          autoplay={false}
+          ref={vimeoPlayerReff}
+          onPause={((info: any) => handlePauseVideo(info))}
+          onEnded={((info: any) => handleEndVideo(info))}
+          onProgress={(e: any) => handleProgressVideo(e)}
         />
       )}
     </Container>

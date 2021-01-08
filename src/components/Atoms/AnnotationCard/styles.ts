@@ -26,6 +26,24 @@ export const Container = styled.div`
     background: ${shade(0.4, '#535a6c')};
     transform: scaleX(1.05) scaleY(1.05);
   }
+
+  .edit-note{
+    width: 28%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .edit-button{
+    svg{
+      color:rgba(0, 232, 19);
+      transition: color 0.4s;
+      &:hover{
+        cursor: pointer;
+        color: rgba(0, 232, 19,0.2)
+      }
+    }
+  }
 `;
 
 export const OptionsWrapper = styled.div`
@@ -61,5 +79,10 @@ export const OptionsWrapper = styled.div`
 export const StyledButton = styled.button`
   background: transparent;
   border: none;
+`;
 
+export const StyledInput = styled.input`
+  background: rgba(83, 90, 108,0.5);
+  border: none;
+  color: #fff;
 `;

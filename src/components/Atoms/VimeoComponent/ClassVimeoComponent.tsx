@@ -1,26 +1,27 @@
 import React, {
-  useEffect, useCallback, useMemo, useState, useRef,
+  useEffect, useCallback, useMemo, useRef, Dispatch, SetStateAction,
 } from 'react';
-import Vimeo, {} from '@u-wave/react-vimeo';
+import ReactPlayer from 'react-player/vimeo';
 
 import { SchoolLevelSubjectSeasonClasses } from 'models/SchoolModels';
 
 import { Container } from './styles';
 
-interface ViemoComponentProps {
+interface VimeoComponentProps {
   url?: string;
   large?: boolean;
   video?: SchoolLevelSubjectSeasonClasses;
+  actualTime: { duration: number; percent: number; seconds: number; };
+  setActualTime: Dispatch<SetStateAction<{ duration: number; percent: number; seconds: number; }>>;
+  isLoading?: boolean;
+  isPlaying?: boolean;
   onPause?(info: any): void;
   onFinish?(info: any): void;
 }
 
-const VimeoComponent: React.FC<ViemoComponentProps> = ({
-  url, large = false, video, onPause, onFinish,
+const VimeoComponent: React.FC<VimeoComponentProps> = ({
+  url, large = false, video, actualTime, isLoading, isPlaying, setActualTime, onPause, onFinish,
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
-  const [activeProgress, setActiveProgress] = useState(0);
-
   const timeToStart = useMemo(() => {
     if (video) {
       if (video.schoollevelsubjectseasonclassuser
@@ -39,56 +40,49 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({
 
   const autoPlay = useMemo(() => timeToStart > 0, [timeToStart]);
 
-  const testing = useRef<Vimeo>(null);
+  const vimeoPlayerRef = useRef<any>(null);
 
-  const handlePauseVideo = useCallback(async (info: any) => {
-    if (isMounted) {
-      console.log('pause');
-      onPause ? onPause(info) : console.log('info');
-    }
-  }, [onPause, isMounted]);
+  const handlePauseVideo = useCallback((info: any) => {
+    console.log('pause');
+    onPause ? onPause(info) : console.log('info');
+  }, [onPause]);
 
   const handleEndVideo = useCallback((info: any) => {
-    if (isMounted) {
-      onFinish ? onFinish(info) : console.log('end');
-    }
-  }, [onFinish, isMounted]);
+    onFinish ? onFinish(info) : console.log('end');
+  }, [onFinish]);
 
   const handleProgressVideo = useCallback((info: any) => {
-    if (activeProgress === 1) {
-      console.log(info);
-      setActiveProgress(0);
-    }
-  }, [activeProgress]);
+    setActualTime(info);
+  }, [setActualTime]);
 
   useEffect(() => {
-    setIsMounted(true);
-    setInterval(() => {
-      setActiveProgress(1);
-    }, 5000);
-
-    return () => setIsMounted(false);
-  }, []);
+    vimeoPlayerRef.current?.seekTo(timeToStart);
+  }, [timeToStart]);
 
   return (
     <Container large={large}>
-      {url && (
-        <>
-          <button type="button" onClick={() => testing.current && console.log(testing.current)}>Teste</button>
-          <Vimeo
-            video={url || ' '}
-            onPause={((info) => handlePauseVideo(info))}
-            onEnd={((info) => handleEndVideo(info))}
-            onTimeUpdate={(e) => handleProgressVideo(e)}
-            start={timeToStart}
-            style={{
-              width: '100%',
-            }}
-            responsive
-            autoplay={autoPlay}
-            ref={testing}
-          />
-        </>
+      {url && !isLoading && (
+      <ReactPlayer
+        url={url}
+        playing={isPlaying}
+        width="100%"
+        height="100%"
+        progressInterval={5000}
+        start={timeToStart}
+        autoPlay={autoPlay}
+        controls
+        config={{
+          playerOptions: {
+            autopause: !autoPlay,
+            autoplay: autoPlay,
+          },
+          onSeek: timeToStart,
+        }}
+        ref={vimeoPlayerRef}
+        onPause={((info: any) => handlePauseVideo(info))}
+        onEnded={((info: any) => handleEndVideo(info))}
+        onProgress={(e: any) => handleProgressVideo(e)}
+      />
       )}
     </Container>
   );

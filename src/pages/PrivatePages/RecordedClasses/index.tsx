@@ -21,6 +21,7 @@ import {
 const RecordedClasses: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const [schoolLevels, setSchoolLevels] = useState<SchoolLevel[]>([]);
   const [schoolLevelSubjects, setSchoolLevelSubjects] = useState<SchoolLevelSubject[]>([]);
@@ -31,6 +32,11 @@ const RecordedClasses: React.FC = () => {
 
   const [selectedSchoolLevel, setSelectedSchoolLevel] = useState({ key: '', value: '' });
   const [selectedSchoolSubject, setSelectedSchoolSubject] = useState({ key: '', value: '' });
+  const [actualTime, setActualTime] = useState({
+    duration: 0,
+    percent: 0,
+    seconds: 0,
+  });
 
   const [selectedVideoPosition, setSelectedVideoPosition] = useState(0);
   const [previousVideoPosition, setPreviousVideoPosition] = useState<number>();
@@ -49,74 +55,6 @@ const RecordedClasses: React.FC = () => {
     }
     return [];
   }, [selectedVideoPosition, videos]);
-
-  const getSchoolLevelSubjectSeasonInfo = useCallback(async (item) => {
-    setVideos([]);
-    setSelectedVideoPosition(0);
-    try {
-      const response = await api.get<SchoolLevelSubjectSeasonClasses[]>(`/school/level/subject/season/class?schoolid=${user.schoolid}&levelid=${selectedSchoolLevel.key}&subjectid=${selectedSchoolSubject.key}&seasonid=${item.key}&userid=${user.userid}`, {
-        cancelToken: cancelSubjectSeasonInfoReq.current.token,
-      });
-      setVideos(response.data);
-    } catch (err) {
-      console.log(err.message);
-    }
-  }, [selectedSchoolLevel, user, selectedSchoolSubject, cancelSubjectSeasonInfoReq]);
-
-  const getSchoolLevelSubjectSeason = useCallback(async (item) => {
-    setVideos([]);
-    setSchoolLevelSubjectSeasons([]);
-
-    try {
-      const response = await api.get<SchoolLevelSubject[]>(`/school/level/subject/season?schoolid=${user.schoolid}&levelid=${selectedSchoolLevel.key}&subjectid=${item.key}`, {
-        cancelToken: cancelSubejectSeasonReq.current.token,
-      });
-      setSelectedSchoolSubject(item);
-      setSchoolLevelSubjectSeasons(response.data);
-    } catch (err) {
-      console.log(err.message);
-    }
-  }, [selectedSchoolLevel, user.schoolid, cancelSubejectSeasonReq]);
-
-  const getSchoolSubjects = useCallback(async (item) => {
-    // console.log(cancelSubjectSeasonInfoReq.current);
-    // console.log(cancelSubejectSeasonReq.current);
-
-    if (cancelSubejectSeasonReq.current !== null && cancelSubjectSeasonInfoReq.current !== null) {
-      // cancelSubejectSeasonReq.current.cancel();
-      // cancelSubjectSeasonInfoReq.current.cancel();
-    }
-    setIsLoading(true);
-    setVideos([]);
-    setSchoolLevelSubjects([]);
-    setSchoolLevelSubjectSeasons([]);
-
-    try {
-      const response = await api.get<SchoolLevelSubject[]>(`/school/level/subject?schoolid=${user.schoolid}&levelid=${item.key}`, {
-        cancelToken: cancelSubjectsReq.current.token,
-      });
-      setSelectedSchoolLevel(item);
-      setSchoolLevelSubjects(response.data);
-    } catch (err) {
-      console.log(err.message);
-    }
-    setIsLoading(false);
-  }, [user.schoolid, cancelSubjectsReq, cancelSubjectSeasonInfoReq, cancelSubejectSeasonReq]);
-
-  const getSchoolLevels = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await api.get<SchoolLevel[]>(`/school/level?schoolid=${user.schoolid}`, {
-        cancelToken: cancelLevelIdReq.current.token,
-      });
-      setSchoolLevels(response.data);
-      const mySchoolItem = response.data.find((item) => item.levelid === user.levelid);
-      getSchoolSubjects({ key: mySchoolItem?.levelid, value: mySchoolItem?.title });
-    } catch (err) {
-      console.log(err.message);
-    }
-    setIsLoading(false);
-  }, [user, getSchoolSubjects, cancelLevelIdReq]);
 
   const handlePauseVideo = useCallback(async (info) => {
     if (mounted) {
@@ -161,6 +99,95 @@ const RecordedClasses: React.FC = () => {
     setNotes(updatedNotes);
   }, [user, videos, selectedVideoPosition, notes]);
 
+  const handleEditNote = useCallback((text: string, index: number) => {
+    // console.log(text);
+    const updatedNotes = notes;
+    updatedNotes[index].message = text;
+
+    api.post('/school/level/subject/season/class/user/note', {
+      classid: updatedNotes[index].classid,
+      seasonid: updatedNotes[index].seasonid,
+      levelid: updatedNotes[index].levelid,
+      subjectid: updatedNotes[index].subjectid,
+      schoolid: updatedNotes[index].noteid,
+      message: text,
+      noteid: updatedNotes[index].noteid,
+      userid: updatedNotes[index].userid,
+    }).then((response) => {
+      console.log(response.data);
+      setNotes([...updatedNotes]);
+    });
+  }, [notes]);
+
+  const getSchoolLevelSubjectSeasonInfo = useCallback(async (item) => {
+    setVideos([]);
+    setSelectedVideoPosition(0);
+    try {
+      const response = await api.get<SchoolLevelSubjectSeasonClasses[]>(`/school/level/subject/season/class?schoolid=${user.schoolid}&levelid=${selectedSchoolLevel.key}&subjectid=${selectedSchoolSubject.key}&seasonid=${item.key}&userid=${user.userid}`, {
+        cancelToken: cancelSubjectSeasonInfoReq.current.token,
+      });
+      setVideos(response.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }, [selectedSchoolLevel, user, selectedSchoolSubject, cancelSubjectSeasonInfoReq]);
+
+  const getSchoolLevelSubjectSeason = useCallback(async (item) => {
+    setVideos([]);
+    setSchoolLevelSubjectSeasons([]);
+
+    try {
+      const response = await api.get<SchoolLevelSubject[]>(`/school/level/subject/season?schoolid=${user.schoolid}&levelid=${selectedSchoolLevel.key}&subjectid=${item.key}`, {
+        cancelToken: cancelSubejectSeasonReq.current.token,
+      });
+      setSelectedSchoolSubject(item);
+      setSchoolLevelSubjectSeasons(response.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }, [selectedSchoolLevel, user.schoolid, cancelSubejectSeasonReq]);
+
+  const getSchoolSubjects = useCallback(async (item) => {
+    // console.log(cancelSubjectSeasonInfoReq.current);
+    // console.log(cancelSubejectSeasonReq.current);
+    // handlePauseVideo(actualTime);
+    setIsLoading(true);
+
+    if (cancelSubejectSeasonReq.current !== null && cancelSubjectSeasonInfoReq.current !== null) {
+      // cancelSubejectSeasonReq.current.cancel();
+      // cancelSubjectSeasonInfoReq.current.cancel();
+    }
+    setVideos([]);
+    setSchoolLevelSubjects([]);
+    setSchoolLevelSubjectSeasons([]);
+
+    try {
+      const response = await api.get<SchoolLevelSubject[]>(`/school/level/subject?schoolid=${user.schoolid}&levelid=${item.key}`, {
+        cancelToken: cancelSubjectsReq.current.token,
+      });
+      setSelectedSchoolLevel(item);
+      setSchoolLevelSubjects(response.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+    setIsLoading(false);
+  }, [user.schoolid, cancelSubjectsReq, cancelSubjectSeasonInfoReq, cancelSubejectSeasonReq]);
+
+  const getSchoolLevels = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await api.get<SchoolLevel[]>(`/school/level?schoolid=${user.schoolid}`, {
+        cancelToken: cancelLevelIdReq.current.token,
+      });
+      setSchoolLevels(response.data);
+      const mySchoolItem = response.data.find((item) => item.levelid === user.levelid);
+      getSchoolSubjects({ key: mySchoolItem?.levelid, value: mySchoolItem?.title });
+    } catch (err) {
+      console.log(err.message);
+    }
+    setIsLoading(false);
+  }, [user, getSchoolSubjects, cancelLevelIdReq]);
+
   useEffect(() => {
     setIsLoading(true);
     setMounted(true);
@@ -191,21 +218,36 @@ const RecordedClasses: React.FC = () => {
         firstItem={schoolLevelSubjects[0]
           && { key: schoolLevelSubjects[0].title, value: schoolLevelSubjects[0].subjectid }}
         videos={videos && videos}
-        onLevelIdChange={(item) => getSchoolSubjects(item)}
-        onSubjectChange={(item) => getSchoolLevelSubjectSeason(item)}
-        onSubjectSeasonChange={(item) => getSchoolLevelSubjectSeasonInfo(item)}
-        onVideoChange={handleChangeVideo}
+        onLevelIdChange={(item) => {
+          setIsPlaying(!isPlaying); setTimeout(() => { getSchoolSubjects(item); }, 200);
+        }}
+        onSubjectChange={(item) => {
+          setIsPlaying(!isPlaying); setTimeout(() => { getSchoolLevelSubjectSeason(item); }, 200);
+        }}
+        onSubjectSeasonChange={(item) => {
+          setIsPlaying(!isPlaying); setTimeout(() => { getSchoolLevelSubjectSeasonInfo(item); }, 200);
+        }}
+        onVideoChange={(e) => {
+          setIsPlaying(!isPlaying); setTimeout(() => { handleChangeVideo(e); }, 200);
+        }}
       />
       <Content>
+        {/* <Button onClick={() => setIsPlaying(!isPlaying)}>Test</Button> */}
         <VideoContainer>
-          <VimeoComponent
-            large={notes.length < 1}
-            url={videos[selectedVideoPosition]
+          {videos.length > 0 && (
+            <VimeoComponent
+              large={notes.length < 1}
+              url={videos[selectedVideoPosition]
             && videos[selectedVideoPosition].url}
-            video={videos[selectedVideoPosition]}
-            onPause={handlePauseVideo}
-            onFinish={handleFinishVideo}
-          />
+              video={videos[selectedVideoPosition]}
+              actualTime={actualTime}
+              setActualTime={setActualTime}
+              onPause={handlePauseVideo}
+              onFinish={handleFinishVideo}
+              isLoading={isLoading}
+              isPlaying={isPlaying}
+            />
+          )}
         </VideoContainer>
         <AnnotationsContainer
           className="hasVerticalScroll"
@@ -218,6 +260,7 @@ const RecordedClasses: React.FC = () => {
               index={index}
               description={note.message}
               onDelete={handleDeleteNote}
+              onEdit={handleEditNote}
             />
           ))}
         </AnnotationsContainer>
