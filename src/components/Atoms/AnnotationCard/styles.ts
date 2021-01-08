@@ -30,7 +30,6 @@ export const Container = styled.div`
   .edit-note{
     width: 28%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
   }
 
@@ -38,6 +37,7 @@ export const Container = styled.div`
     svg{
       color:rgba(0, 232, 19);
       transition: color 0.4s;
+      margin-left: 12px;
       &:hover{
         cursor: pointer;
         color: rgba(0, 232, 19,0.2)

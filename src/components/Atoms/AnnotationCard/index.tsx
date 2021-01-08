@@ -7,6 +7,8 @@ import editIcon from 'assets/icons/editIcon.png';
 
 import { formatTime } from 'utils/functions';
 
+import Loading from 'components/Atoms/Loading';
+
 import {
   Container, OptionsWrapper, StyledButton, StyledInput,
 } from './styles';
@@ -15,12 +17,13 @@ interface AnotationCardProps {
   time: string;
   index: number;
   description: string;
+  isNoteLoading?: boolean;
   onDelete?(noteId: string, index: number): Promise<void>;
   onEdit?(text: string, index: number): void;
 }
 
 const AnnotationCard: React.FC<AnotationCardProps> = ({
-  time, index, description, onDelete, onEdit,
+  time, index, description, isNoteLoading = false, onDelete, onEdit,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [noteEditText, setNoteEditText] = useState('');
@@ -57,16 +60,25 @@ const AnnotationCard: React.FC<AnotationCardProps> = ({
           </StyledButton>
         </span>
       </OptionsWrapper>
+
       <h4>{formatTime(time)}</h4>
-      {!isEditing ? (
-        <p>{description}</p>
+      {!isNoteLoading ? (
+        <>
+          {!isEditing ? (
+            <>
+              <p>{description}</p>
+            </>
+          ) : (
+            <div className="edit-note">
+              <StyledInput type="text" onChange={(e) => setNoteEditText(e.target.value)} />
+              <StyledButton className="edit-button" onClick={() => handleEditNote('edit')}>
+                <FiCheckCircle size={20} />
+              </StyledButton>
+            </div>
+          )}
+        </>
       ) : (
-        <div className="edit-note">
-          <StyledInput type="text" onChange={(e) => setNoteEditText(e.target.value)} />
-          <StyledButton className="edit-button" onClick={() => handleEditNote('edit')}>
-            <FiCheckCircle size={20} />
-          </StyledButton>
-        </div>
+        <Loading size={2} type="ellipsis" />
       )}
     </Container>
   );

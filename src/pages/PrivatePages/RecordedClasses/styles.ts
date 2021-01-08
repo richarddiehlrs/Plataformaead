@@ -38,28 +38,46 @@ export const VideoContainer = styled.div`
 export const AnnotationsContainer = styled.div<AnnotationsContainerProps>`
   display: flex;
   flex-direction: column;
-  padding: 32px 128px;
+  position: relative;
 
   width: 100%;
-  height: 70%;
+  height: 40%;
 
   transition: height .4s;
 
   ${(props) => !props.hasNotes && css`
     height: 30%;
   `}
-
-  overflow: scroll;
-
   background: rgba(0,0,0,0.04);
+`;
 
-  &::-webkit-scrollbar-thumb {
-    background: rgb(254,212,74) !important;
-  }
+export const AddNoteWrapper = styled.div`
+  position: absolute;
+
+  width: 200px;
+  height: auto;
+
+  right: 0;
+  top: 0;
+
+  margin-top: -40px;
+  z-index: 2;
 `;
 
 export const StyledButton = styled(Button)`
   width: 190px;
-  height: 24%;
+  height: 40px;
+`;
 
+export const NotesWrapper = styled.div`
+  display: flex;
+  overflow: scroll; 
+  flex-direction: column;
+  padding: 32px 128px;
+
+  width: 100%;
+
+  &::-webkit-scrollbar-thumb {
+    background: rgb(254,212,74) !important;
+  }
 `;

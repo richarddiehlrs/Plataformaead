@@ -15,11 +15,12 @@ import AnnotationCard from 'components/Atoms/AnnotationCard';
 import RecordedClassesSideMenu from 'components/Mols/SideMenus/RecordedClassesSideMenu';
 
 import {
-  Container, Content, VideoContainer, AnnotationsContainer,
+  Container, Content, VideoContainer, AnnotationsContainer, AddNoteWrapper, StyledButton, NotesWrapper,
 } from './styles';
 
 const RecordedClasses: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isNoteLoading, setIsNoteLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
 
@@ -85,6 +86,7 @@ const RecordedClasses: React.FC = () => {
   }, [handlePauseVideo]);
 
   const handleDeleteNote = useCallback(async (noteId: string, index: number) => {
+    setIsNoteLoading(true);
     await api.post('/school/level/subject/season/class/user/note/delete', {
       classid: videos[selectedVideoPosition].classid,
       seasonid: videos[selectedVideoPosition].seasonid,
@@ -97,26 +99,28 @@ const RecordedClasses: React.FC = () => {
     const updatedNotes = notes.splice(index);
     updatedNotes.splice(index, 1);
     setNotes(updatedNotes);
+    setIsNoteLoading(false);
   }, [user, videos, selectedVideoPosition, notes]);
 
-  const handleEditNote = useCallback((text: string, index: number) => {
-    // console.log(text);
+  const handleEditNote = useCallback(async (text: string, index: number) => {
+    setIsNoteLoading(true);
     const updatedNotes = notes;
+
     updatedNotes[index].message = text;
 
-    api.post('/school/level/subject/season/class/user/note', {
+    const response = await api.post('/school/level/subject/season/class/user/note', {
       classid: updatedNotes[index].classid,
       seasonid: updatedNotes[index].seasonid,
       levelid: updatedNotes[index].levelid,
       subjectid: updatedNotes[index].subjectid,
-      schoolid: updatedNotes[index].noteid,
+      schoolid: updatedNotes[index].schoolid,
       message: text,
       noteid: updatedNotes[index].noteid,
       userid: updatedNotes[index].userid,
-    }).then((response) => {
-      console.log(response.data);
-      setNotes([...updatedNotes]);
     });
+    console.log(response.data);
+    setIsNoteLoading(false);
+    setNotes([...updatedNotes]);
   }, [notes]);
 
   const getSchoolLevelSubjectSeasonInfo = useCallback(async (item) => {
@@ -250,19 +254,25 @@ const RecordedClasses: React.FC = () => {
           )}
         </VideoContainer>
         <AnnotationsContainer
-          className="hasVerticalScroll"
           hasNotes={notes.length > 0}
         >
-          {notes.length > 0 && notes.map((note, index) => (
-            <AnnotationCard
-              key={note.schoolid_levelid_subjectid_seasonid_classid_userid_noteid}
-              time={note.noteid}
-              index={index}
-              description={note.message}
-              onDelete={handleDeleteNote}
-              onEdit={handleEditNote}
-            />
-          ))}
+          <AddNoteWrapper>
+            <StyledButton>Adicionar anotação</StyledButton>
+          </AddNoteWrapper>
+          <NotesWrapper className="hasVerticalScroll">
+            {notes.length > 0 && notes.map((note, index) => (
+              <AnnotationCard
+                key={note.schoolid_levelid_subjectid_seasonid_classid_userid_noteid}
+                time={note.noteid}
+                index={index}
+                description={note.message}
+                onDelete={handleDeleteNote}
+                onEdit={handleEditNote}
+                isNoteLoading={isNoteLoading}
+              />
+            ))}
+          </NotesWrapper>
+
         </AnnotationsContainer>
       </Content>
     </Container>

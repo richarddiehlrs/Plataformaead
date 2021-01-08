@@ -11,14 +11,13 @@ export const Container = styled.div<ContainerProps>`
 
   border-radius: 12px;
 
-  width: 50%;
+  width: 100%;
   height: 100%;
 
-  padding: 20px;
 
   transition: width .4s;
 
   ${(props) => props.large && css`
-    width: 80%;
+    width: 100%;
   `}
 `;

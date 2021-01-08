@@ -65,11 +65,11 @@ const VimeoComponent: React.FC<VimeoComponentProps> = ({
       <ReactPlayer
         url={url}
         playing={isPlaying}
-        width="100%"
-        height="100%"
         progressInterval={5000}
         start={timeToStart}
         autoPlay={autoPlay}
+        width="100%"
+        height="100%"
         controls
         config={{
           playerOptions: {
