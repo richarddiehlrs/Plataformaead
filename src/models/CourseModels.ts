@@ -44,5 +44,6 @@ export interface Course {
     thumburl: string;
     levelidlist: string;
     priority: number;
+    userprogress: number;
     currenttoprankingposition: number;
   }

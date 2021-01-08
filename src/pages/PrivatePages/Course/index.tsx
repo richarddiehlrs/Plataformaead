@@ -1,10 +1,13 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, {
+  useEffect, useCallback, useState,
+} from 'react';
 import { useParams } from 'react-router-dom';
 import { useAuth } from 'hooks/auth';
 
 import api from 'services/api';
 import { convertSecondsToHoursMinutesSeconds } from 'utils/functions';
 import { CourseSeason, CourseSeasonMovie, Course as CourseModel } from 'models/CourseModels';
+import { Notes } from 'models/AuthModels';
 
 import AnnotationCard from 'components/Atoms/AnnotationCard';
 import VimeoComponent from 'components/Atoms/VimeoComponent/CourseVimeoComponent';
@@ -20,28 +23,35 @@ interface Params {
 
 const Course: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [courseDetails, setCourseDetails] = useState<CourseModel>();
+  const [isPlaying, setIsPlaying] = useState(true);
   const [selectedVideoPosition, setSelectedVideoPosition] = useState(0);
 
+  const [courseDetails, setCourseDetails] = useState<CourseModel>();
   const [courseSeasons, setCourseSeasons] = useState<CourseSeason[]>([]);
   const [courseSeasonMovies, setCourseSeasonMovies] = useState<CourseSeasonMovie[]>([]);
 
-  // const [selectedSeason, setSelectedSeason] = useState({ key: '', value: '' });
+  const [notes, setNotes] = useState<Notes[]>([]);
 
   const { user } = useAuth();
   const params = useParams();
   const { courseid } = params as Params;
 
+  const stablishCourseSeasonMovieNotes = useCallback(() => {
+    if (courseSeasonMovies[selectedVideoPosition] && courseSeasonMovies[selectedVideoPosition].notes) {
+      setNotes(courseSeasonMovies[selectedVideoPosition].notes);
+    }
+  }, [courseSeasonMovies, selectedVideoPosition]);
+
   const getCourseDetails = useCallback(async () => {
     setIsLoading(true);
-    const response = await api.get<CourseModel>(`https://hdinsfdwwa.execute-api.sa-east-1.amazonaws.com/prod/course/info?courseid=${courseid}`);
+    const response = await api.get<CourseModel>(`/course/info?courseid=${courseid}`);
     setCourseDetails(response.data);
     setIsLoading(false);
   }, [courseid]);
 
   const getCourseSeasons = useCallback(async () => {
     setIsLoading(true);
-    const response = await api.get<CourseSeason[]>(`https://hdinsfdwwa.execute-api.sa-east-1.amazonaws.com/prod/course/season?courseid=${courseid}`);
+    const response = await api.get<CourseSeason[]>(`/course/season?courseid=${courseid}`);
     setCourseSeasons(response.data);
     setIsLoading(false);
   }, [courseid]);
@@ -49,7 +59,7 @@ const Course: React.FC = () => {
   const getSeasonMovies = useCallback(async (item: any) => {
     setIsLoading(true);
     // setSelectedSeason(item);
-    const response = await api.get<CourseSeasonMovie[]>(`https://hdinsfdwwa.execute-api.sa-east-1.amazonaws.com/prod/course/season/movie?courseid=${courseid}&seasonid=${item.key}&userid=${user.userid}`);
+    const response = await api.get<CourseSeasonMovie[]>(`/course/season/movie?courseid=${courseid}&seasonid=${item.key}&userid=${user.userid}`);
     setCourseSeasonMovies(response.data);
     setIsLoading(false);
   }, [courseid, user]);
@@ -64,19 +74,33 @@ const Course: React.FC = () => {
       videowatched: convertSecondsToHoursMinutesSeconds(info.seconds),
       exercisestatus: ' ',
     };
-    const response = await api.post('https://hdinsfdwwa.execute-api.sa-east-1.amazonaws.com/prod/course/season/movie/user', body);
+    const response = await api.post('/prod/course/season/movie/user', body);
 
-    console.log(response.data);
+    console.log(`pause: ${response.data}`);
   }, [courseSeasonMovies, selectedVideoPosition, user]);
 
   const handleFinishVideo = useCallback((info) => {
     handlePauseVideo(info);
   }, [handlePauseVideo]);
 
+  const handleDeleteNote = useCallback(async (noteId: string, index: number) => {
+    await api.post('/course/season/movie/user/note/delete', {
+      courseid: courseSeasonMovies[selectedVideoPosition].courseid,
+      seasonid: courseSeasonMovies[selectedVideoPosition].seasonid,
+      movieid: courseSeasonMovies[selectedVideoPosition].movieid,
+      noteid: noteId,
+      userid: user.userid,
+    });
+    const updatedNotes = notes.splice(index);
+    updatedNotes.splice(index, 1);
+    setNotes(updatedNotes);
+  }, [user, courseSeasonMovies, selectedVideoPosition, notes]);
+
   useEffect(() => {
     getCourseSeasons();
     getCourseDetails();
-  }, [getCourseSeasons, getCourseDetails]);
+    stablishCourseSeasonMovieNotes();
+  }, [getCourseSeasons, getCourseDetails, stablishCourseSeasonMovieNotes]);
 
   return (
     <Container>
@@ -91,17 +115,22 @@ const Course: React.FC = () => {
         videos={courseSeasonMovies || []}
         selectedPosition={selectedVideoPosition}
         isLoading={isLoading}
-        onSeasonChange={(item) => getSeasonMovies(item)}
-        onVideoChange={setSelectedVideoPosition}
+        onSeasonChange={(item) => {
+          setIsPlaying(!isPlaying); setTimeout(() => { getSeasonMovies(item); }, 200);
+        }}
+        onVideoChange={(e) => {
+          setIsPlaying(!isPlaying); setTimeout(() => { setSelectedVideoPosition(e); }, 200);
+        }}
       />
       <Content>
         <VideoContainer>
           <VimeoComponent
-            large={courseSeasonMovies[selectedVideoPosition]
-              && courseSeasonMovies[selectedVideoPosition].notes.length < 1}
+            large={notes.length < 1}
             url={courseSeasonMovies[selectedVideoPosition]
               && courseSeasonMovies[selectedVideoPosition].url}
             video={courseSeasonMovies[selectedVideoPosition]}
+            isPlaying={isPlaying}
+            isLoading={isLoading}
             onPause={handlePauseVideo}
             onFinish={handleFinishVideo}
           />
@@ -111,15 +140,15 @@ const Course: React.FC = () => {
           hasNotes={courseSeasonMovies[selectedVideoPosition]
             && courseSeasonMovies[selectedVideoPosition].notes.length > 0}
         >
-          {courseSeasonMovies[selectedVideoPosition]
-            && courseSeasonMovies[selectedVideoPosition].notes.length > 0
-            && courseSeasonMovies[selectedVideoPosition].notes.map((note) => (
-              <AnnotationCard
-                key={note.courseid_seasonid_movieid_userid_noteid}
-                time={note.noteid}
-                description={note.message}
-              />
-            ))}
+          {notes.length > 0 && notes.map((note, index) => (
+            <AnnotationCard
+              key={note.courseid_seasonid_movieid_userid_noteid}
+              time={note.noteid}
+              index={index}
+              description={note.message}
+              onDelete={handleDeleteNote}
+            />
+          ))}
         </AnnotationsContainer>
       </Content>
     </Container>

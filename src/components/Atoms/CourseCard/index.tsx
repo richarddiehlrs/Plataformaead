@@ -19,7 +19,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, courseViewType, customC
     <Link to={`/course/${course.courseid}`}>
       <Container type={courseViewType}>
         <img src={course.thumburl} alt={course.courseid} />
-        <ProgressBar at={60} />
+        <ProgressBar at={course.userprogress * 100} />
         <p>{course.title}</p>
       </Container>
     </Link>
