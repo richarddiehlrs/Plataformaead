@@ -101,6 +101,10 @@ const RecordedClasses: React.FC = () => {
 
   const handleDeleteNote = useCallback(async (noteId: string, index: number) => {
     setIsNoteLoading(true);
+
+    const updatedNotes = notes;
+    console.log(updatedNotes);
+
     await api.post('/school/level/subject/season/class/user/note/delete', {
       classid: videos[selectedVideoPosition].classid,
       seasonid: videos[selectedVideoPosition].seasonid,
@@ -110,8 +114,8 @@ const RecordedClasses: React.FC = () => {
       noteid: noteId,
       userid: user.userid,
     });
-    const updatedNotes = notes.splice(index);
     updatedNotes.splice(index, 1);
+    console.log(updatedNotes);
     setNotes(updatedNotes);
     setIsNoteLoading(false);
   }, [user, videos, selectedVideoPosition, notes]);
@@ -198,15 +202,7 @@ const RecordedClasses: React.FC = () => {
   }, [selectedSchoolLevel, user.schoolid, cancelSubejectSeasonReq]);
 
   const getSchoolSubjects = useCallback(async (item) => {
-    // console.log(cancelSubjectSeasonInfoReq.current);
-    // console.log(cancelSubejectSeasonReq.current);
-    // handlePauseVideo(actualTime);
     setIsLoading(true);
-
-    if (cancelSubejectSeasonReq.current !== null && cancelSubjectSeasonInfoReq.current !== null) {
-      // cancelSubejectSeasonReq.current.cancel();
-      // cancelSubjectSeasonInfoReq.current.cancel();
-    }
     setVideos([]);
     setSchoolLevelSubjects([]);
     setSchoolLevelSubjectSeasons([]);
@@ -221,7 +217,7 @@ const RecordedClasses: React.FC = () => {
       console.log(err.message);
     }
     setIsLoading(false);
-  }, [user.schoolid, cancelSubjectsReq, cancelSubjectSeasonInfoReq, cancelSubejectSeasonReq]);
+  }, [user.schoolid, cancelSubjectsReq]);
 
   const getSchoolLevels = useCallback(async () => {
     setIsLoading(true);
