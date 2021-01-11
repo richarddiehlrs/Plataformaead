@@ -14,8 +14,9 @@ import { Container, VideoContainer } from './styles';
 const AoVivo: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedSubjectPosition, setSelectedSubjectPosition] = useState(0);
-  const [selectedVideo, setSelectedVideo] = useState<SchoolLiveClasses>({} as SchoolLiveClasses);
+  const [firstFilter, setFirstFilter] = useState({ key: '', value: '' });
 
+  const [selectedVideo, setSelectedVideo] = useState<SchoolLiveClasses>({} as SchoolLiveClasses);
   const [schoolLiveClassesSubject, setSchoolLiveClassesSubject] = useState<SchoolLiveSubjects[]>([]);
   const [recordedLiveClasses, setRecordedLiveClasses] = useState<SchoolLiveClasses[]>([]);
   const [filteredRecordedLiveClasses, setFilteredRecordedLiveClasses] = useState<SchoolLiveClasses[]>([]);
@@ -34,6 +35,7 @@ const AoVivo: React.FC = () => {
     setIsLoading(true);
     const response = await api.get<SchoolLiveClasses[]>(`/school/live/level/subject/class?schoolid=${user.schoolid}&levelid=${user.levelid}&subjectid=${subjectid}`);
     setSelectedVideo(response.data[0]);
+    setFirstFilter({ key: response.data[0].filter, value: response.data[0].filter });
     setRecordedLiveClasses(response.data);
     setIsLoading(false);
   }, [user]);
@@ -82,6 +84,7 @@ const AoVivo: React.FC = () => {
           ? filteredRecordedLiveClasses : recordedLiveClasses}
         liveClasses={liveClasses}
         filters={filters}
+        firstFilter={firstFilter}
         selectedSubjectPosition={selectedSubjectPosition}
         selectedVideoPostition={selectedVideo.classid}
         isLoading={isLoading}
