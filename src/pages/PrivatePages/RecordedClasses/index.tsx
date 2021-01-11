@@ -149,15 +149,15 @@ const RecordedClasses: React.FC = () => {
     if (action === 'submitNote' && addNoteInputRef.current && addNoteInputRef.current.value !== null) {
       const updatedNotes = notes;
       const newNote = {
-        classid: notes[0].classid,
-        seasonid: notes[0].seasonid,
-        levelid: notes[0].levelid,
-        subjectid: notes[0].subjectid,
-        schoolid: notes[0].schoolid,
+        classid: videos[selectedVideoPosition].classid,
+        seasonid: videos[selectedVideoPosition].seasonid,
+        levelid: videos[selectedVideoPosition].levelid,
+        subjectid: videos[selectedVideoPosition].subjectid,
+        schoolid: videos[selectedVideoPosition].schoolid,
         message: addNoteInputRef.current.value,
         noteid: convertSecondsToHoursMinutesSeconds(actualTime.playedSeconds),
-        userid: notes[0].userid,
-        schoolid_levelid_subjectid_seasonid_classid_userid_noteid: `${notes[0].schoolid}_${notes[0].levelid}_${notes[0].subjectid}_${notes[0].seasonid}_${notes[0].classid}_${notes[0].userid}_${convertSecondsToHoursMinutesSeconds(actualTime.playedSeconds)}`,
+        userid: user.userid,
+        schoolid_levelid_subjectid_seasonid_classid_userid_noteid: `${videos[selectedVideoPosition].schoolid}_${videos[selectedVideoPosition].levelid}_${videos[selectedVideoPosition].subjectid}_${videos[selectedVideoPosition].seasonid}_${videos[selectedVideoPosition].classid}_${user.userid}_${convertSecondsToHoursMinutesSeconds(actualTime.playedSeconds)}`,
       };
       try {
         setIsAddingNote(true);
@@ -171,7 +171,7 @@ const RecordedClasses: React.FC = () => {
         console.log(err.message);
       }
     }
-  }, [showAddNote, isPlaying, actualTime, notes]);
+  }, [showAddNote, isPlaying, actualTime, notes, user, selectedVideoPosition, videos]);
 
   const getSchoolLevelSubjectSeasonInfo = useCallback(async (item) => {
     setVideos([]);
