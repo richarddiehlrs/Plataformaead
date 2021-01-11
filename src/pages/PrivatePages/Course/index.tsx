@@ -42,6 +42,21 @@ const Course: React.FC = () => {
     }
   }, [courseSeasonMovies, selectedVideoPosition]);
 
+  //  https://hdinsfdwwa.execute-api.sa-east-1.amazonaws.com/prod/prod/course/season/movie/user
+
+  /**
+      courseid: "Programação"
+      exercisestatus: " "
+      movieid: "Introdução"
+      seasonid: "Java"
+      userid: "thiago.kraetzer"
+      videostatus: "watching"
+      videowatched: "00:03:31"
+   *
+   *
+   *
+   */
+
   const getCourseDetails = useCallback(async () => {
     setIsLoading(true);
     const response = await api.get<CourseModel>(`/course/info?courseid=${courseid}`);
@@ -74,7 +89,7 @@ const Course: React.FC = () => {
       videowatched: convertSecondsToHoursMinutesSeconds(info.seconds),
       exercisestatus: ' ',
     };
-    const response = await api.post('/prod/course/season/movie/user', body);
+    const response = await api.post('/course/season/movie/user', body);
 
     console.log(`pause: ${response.data}`);
   }, [courseSeasonMovies, selectedVideoPosition, user]);
