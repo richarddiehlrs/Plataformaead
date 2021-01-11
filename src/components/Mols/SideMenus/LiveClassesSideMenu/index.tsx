@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { FiVideo } from 'react-icons/fi';
 
 import { SchoolLiveSubjects, SchoolLiveClasses } from 'models/SchoolModels';
@@ -38,6 +38,12 @@ const LiveClassesSideMenu: React.FC<LiveClassesSideMenu> = ({
   onLiveClassChange,
   onFilterChage,
 }) => {
+  const [firstFilter, setFirstFilter] = useState({ key: '', value: '' });
+
+  useMemo(() => {
+    filters && setFirstFilter({ key: filters[0], value: filters[0] });
+  }, [filters]);
+
   const handleOpenLiveClass = useCallback((url: string) => {
     window.open(url, '_blank');
   }, []);
@@ -96,7 +102,7 @@ const LiveClassesSideMenu: React.FC<LiveClassesSideMenu> = ({
                 customHeight={40}
                 customRadius={30}
                 items={filters ? filters.map((filter) => ({ key: filter, value: filter })) : [{ key: '1', value: '1' }]}
-                defaultValue={filters && { key: filters[0], value: filters[0] }}
+                defaultValue={firstFilter}
                 isLoading={false}
                 size="small"
                 onChange={(item) => onFilterChage(item)}

@@ -24,7 +24,7 @@ export const Heading = styled.header`
 export const LiveVideosList = styled.div`
     display: flex;
     flex-direction: column;
-    height: 36%;
+    height: 300px;
 
     margin-top: 24px;
 
