@@ -60,7 +60,7 @@ export const AddNoteWrapper = styled.div`
   right: 0;
   top: 0;
 
-  margin-top: -40px;
+  margin-top: -26px;
   z-index: 2;
 `;
 
