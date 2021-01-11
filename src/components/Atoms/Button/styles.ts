@@ -5,6 +5,7 @@ interface ContainerProps {
   enabled?: boolean;
   contrast?: boolean;
   shimmer?: boolean;
+  customStyle?: string;
 }
 
 export const Container = styled.button<ContainerProps>`
@@ -47,6 +48,12 @@ export const Container = styled.button<ContainerProps>`
 
   ${(props) => props.shimmer && css`
     animation: buttonShimmer 2s ease-in-out infinite;
+  `}
+
+  ${(props) => props.customStyle === 'success' && css`
+    background: #04b530;
+    color: #fff;
+    
   `}
   
   @keyframes buttonShimmer {

@@ -12,17 +12,35 @@ import {
 
 import VimeoComponent from 'components/Atoms/VimeoComponent/ClassVimeoComponent';
 import AnnotationCard from 'components/Atoms/AnnotationCard';
+import Loading from 'components/Atoms/Loading';
+import Button from 'components/Atoms/Button';
+import Modal from 'components/Mols/Modal';
 import RecordedClassesSideMenu from 'components/Mols/SideMenus/RecordedClassesSideMenu';
 
 import {
-  Container, Content, VideoContainer, AnnotationsContainer, AddNoteWrapper, StyledButton, NotesWrapper,
+  Container,
+  Content,
+  VideoContainer,
+  AnnotationsContainer,
+  AddNoteWrapper,
+  StyledButton,
+  NotesWrapper,
 } from './styles';
 
 const RecordedClasses: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isNoteLoading, setIsNoteLoading] = useState(false);
+  const [isAddingNote, setIsAddingNote] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [showAddNote, setShowAddNote] = useState(false);
+
+  const [actualTime, setActualTime] = useState({
+    playedSeconds: 0,
+    played: 0,
+    loadedSeconds: 0,
+    loaded: 0,
+  });
 
   const [schoolLevels, setSchoolLevels] = useState<SchoolLevel[]>([]);
   const [schoolLevelSubjects, setSchoolLevelSubjects] = useState<SchoolLevelSubject[]>([]);
@@ -33,11 +51,6 @@ const RecordedClasses: React.FC = () => {
 
   const [selectedSchoolLevel, setSelectedSchoolLevel] = useState({ key: '', value: '' });
   const [selectedSchoolSubject, setSelectedSchoolSubject] = useState({ key: '', value: '' });
-  const [actualTime, setActualTime] = useState({
-    duration: 0,
-    percent: 0,
-    seconds: 0,
-  });
 
   const [selectedVideoPosition, setSelectedVideoPosition] = useState(0);
   const [previousVideoPosition, setPreviousVideoPosition] = useState<number>();
@@ -48,6 +61,7 @@ const RecordedClasses: React.FC = () => {
   const cancelSubjectsReq = useRef<CancelTokenSource>({} as CancelTokenSource);
   const cancelSubejectSeasonReq = useRef<CancelTokenSource>({} as CancelTokenSource);
   const cancelSubjectSeasonInfoReq = useRef<CancelTokenSource>({} as CancelTokenSource);
+  const addNoteInputRef = useRef<HTMLInputElement>(null);
 
   useMemo(() => {
     if (videos[selectedVideoPosition] && videos[selectedVideoPosition].notes) {
@@ -68,13 +82,13 @@ const RecordedClasses: React.FC = () => {
         subjectid: videos[selectedVideoPosition].subjectid,
         schoolid: videos[selectedVideoPosition].schoolid,
         userid: user.userid,
-        videowatched: convertSecondsToHoursMinutesSeconds(info.seconds),
+        videowatched: convertSecondsToHoursMinutesSeconds(actualTime.playedSeconds),
         videostatus: 'watching',
         exercisestatus: ' ',
       });
       setPreviousVideoPosition(undefined);
     }
-  }, [videos, selectedVideoPosition, user.userid, mounted, previousVideoPosition]);
+  }, [videos, selectedVideoPosition, user.userid, mounted, previousVideoPosition, actualTime.playedSeconds]);
 
   const handleChangeVideo = useCallback(async (videoPosition) => {
     setPreviousVideoPosition(selectedVideoPosition);
@@ -87,6 +101,10 @@ const RecordedClasses: React.FC = () => {
 
   const handleDeleteNote = useCallback(async (noteId: string, index: number) => {
     setIsNoteLoading(true);
+
+    const updatedNotes = notes;
+    console.log(updatedNotes);
+
     await api.post('/school/level/subject/season/class/user/note/delete', {
       classid: videos[selectedVideoPosition].classid,
       seasonid: videos[selectedVideoPosition].seasonid,
@@ -96,8 +114,8 @@ const RecordedClasses: React.FC = () => {
       noteid: noteId,
       userid: user.userid,
     });
-    const updatedNotes = notes.splice(index);
     updatedNotes.splice(index, 1);
+    console.log(updatedNotes);
     setNotes(updatedNotes);
     setIsNoteLoading(false);
   }, [user, videos, selectedVideoPosition, notes]);
@@ -122,6 +140,38 @@ const RecordedClasses: React.FC = () => {
     setIsNoteLoading(false);
     setNotes([...updatedNotes]);
   }, [notes]);
+
+  const handleAddnote = useCallback(async (action: string) => {
+    if (action === 'openModal') {
+      setIsPlaying(!isPlaying);
+      setShowAddNote(!showAddNote);
+    }
+    if (action === 'submitNote' && addNoteInputRef.current && addNoteInputRef.current.value !== null) {
+      const updatedNotes = notes;
+      const newNote = {
+        classid: videos[selectedVideoPosition].classid,
+        seasonid: videos[selectedVideoPosition].seasonid,
+        levelid: videos[selectedVideoPosition].levelid,
+        subjectid: videos[selectedVideoPosition].subjectid,
+        schoolid: videos[selectedVideoPosition].schoolid,
+        message: addNoteInputRef.current.value,
+        noteid: convertSecondsToHoursMinutesSeconds(actualTime.playedSeconds),
+        userid: user.userid,
+        schoolid_levelid_subjectid_seasonid_classid_userid_noteid: `${videos[selectedVideoPosition].schoolid}_${videos[selectedVideoPosition].levelid}_${videos[selectedVideoPosition].subjectid}_${videos[selectedVideoPosition].seasonid}_${videos[selectedVideoPosition].classid}_${user.userid}_${convertSecondsToHoursMinutesSeconds(actualTime.playedSeconds)}`,
+      };
+      try {
+        setIsAddingNote(true);
+        const response = await api.post('/school/level/subject/season/class/user/note', newNote);
+        updatedNotes.push(newNote);
+        console.log(response.data);
+        setIsAddingNote(false);
+        setNotes(updatedNotes);
+        setShowAddNote(false);
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+  }, [showAddNote, isPlaying, actualTime, notes, user, selectedVideoPosition, videos]);
 
   const getSchoolLevelSubjectSeasonInfo = useCallback(async (item) => {
     setVideos([]);
@@ -152,15 +202,7 @@ const RecordedClasses: React.FC = () => {
   }, [selectedSchoolLevel, user.schoolid, cancelSubejectSeasonReq]);
 
   const getSchoolSubjects = useCallback(async (item) => {
-    // console.log(cancelSubjectSeasonInfoReq.current);
-    // console.log(cancelSubejectSeasonReq.current);
-    // handlePauseVideo(actualTime);
     setIsLoading(true);
-
-    if (cancelSubejectSeasonReq.current !== null && cancelSubjectSeasonInfoReq.current !== null) {
-      // cancelSubejectSeasonReq.current.cancel();
-      // cancelSubjectSeasonInfoReq.current.cancel();
-    }
     setVideos([]);
     setSchoolLevelSubjects([]);
     setSchoolLevelSubjectSeasons([]);
@@ -175,7 +217,7 @@ const RecordedClasses: React.FC = () => {
       console.log(err.message);
     }
     setIsLoading(false);
-  }, [user.schoolid, cancelSubjectsReq, cancelSubjectSeasonInfoReq, cancelSubejectSeasonReq]);
+  }, [user.schoolid, cancelSubjectsReq]);
 
   const getSchoolLevels = useCallback(async () => {
     setIsLoading(true);
@@ -204,6 +246,34 @@ const RecordedClasses: React.FC = () => {
 
   return (
     <Container>
+      {showAddNote && (
+        <Modal
+          onClose={() => setShowAddNote(false)}
+        >
+          <div className="add-note-container">
+            <div className="add-note-header">
+              <p>{`Anotação será adicionada no tempo: ${convertSecondsToHoursMinutesSeconds(actualTime.playedSeconds)}`}</p>
+            </div>
+            <div className="add-note-body">
+              <input type="text" ref={addNoteInputRef} />
+              <Button
+                style={{
+                  width: '100px',
+                  height: '40px',
+                  alignSelf: 'center',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                customStyle="success"
+                onClick={() => handleAddnote('submitNote')}
+              >
+                {isAddingNote ? <Loading size={2} type="ellipsis" /> : 'Concluir'}
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
       <RecordedClassesSideMenu
         levelIdOptions={schoolLevels}
         subjectOptions={schoolLevelSubjects
@@ -223,20 +293,27 @@ const RecordedClasses: React.FC = () => {
           && { key: schoolLevelSubjects[0].title, value: schoolLevelSubjects[0].subjectid }}
         videos={videos && videos}
         onLevelIdChange={(item) => {
-          setIsPlaying(!isPlaying); setTimeout(() => { getSchoolSubjects(item); }, 200);
+          setIsPlaying(!isPlaying); setTimeout(() => {
+            getSchoolSubjects(item);
+          }, 200);
         }}
         onSubjectChange={(item) => {
-          setIsPlaying(!isPlaying); setTimeout(() => { getSchoolLevelSubjectSeason(item); }, 200);
+          setIsPlaying(!isPlaying); setTimeout(() => {
+            getSchoolLevelSubjectSeason(item);
+          }, 200);
         }}
         onSubjectSeasonChange={(item) => {
-          setIsPlaying(!isPlaying); setTimeout(() => { getSchoolLevelSubjectSeasonInfo(item); }, 200);
+          setIsPlaying(!isPlaying); setTimeout(() => {
+            getSchoolLevelSubjectSeasonInfo(item);
+          }, 200);
         }}
         onVideoChange={(e) => {
-          setIsPlaying(!isPlaying); setTimeout(() => { handleChangeVideo(e); }, 200);
+          setIsPlaying(!isPlaying); setTimeout(() => {
+            handleChangeVideo(e);
+          }, 200);
         }}
       />
       <Content>
-        {/* <Button onClick={() => setIsPlaying(!isPlaying)}>Test</Button> */}
         <VideoContainer>
           {videos.length > 0 && (
             <VimeoComponent
@@ -244,21 +321,23 @@ const RecordedClasses: React.FC = () => {
               url={videos[selectedVideoPosition]
             && videos[selectedVideoPosition].url}
               video={videos[selectedVideoPosition]}
+              isLoading={isLoading}
+              isPlaying={isPlaying}
               actualTime={actualTime}
               setActualTime={setActualTime}
               onPause={handlePauseVideo}
               onFinish={handleFinishVideo}
-              isLoading={isLoading}
-              isPlaying={isPlaying}
             />
           )}
         </VideoContainer>
         <AnnotationsContainer
           hasNotes={notes.length > 0}
         >
-          <AddNoteWrapper>
-            <StyledButton>Adicionar anotação</StyledButton>
-          </AddNoteWrapper>
+          {!isLoading && videos.length > 0 && (
+            <AddNoteWrapper>
+              <StyledButton onClick={() => handleAddnote('openModal')}>Adicionar anotação</StyledButton>
+            </AddNoteWrapper>
+          )}
           <NotesWrapper className="hasVerticalScroll">
             {notes.length > 0 && notes.map((note, index) => (
               <AnnotationCard
@@ -272,7 +351,6 @@ const RecordedClasses: React.FC = () => {
               />
             ))}
           </NotesWrapper>
-
         </AnnotationsContainer>
       </Content>
     </Container>

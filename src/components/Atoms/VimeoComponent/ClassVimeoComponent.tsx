@@ -11,16 +11,34 @@ interface VimeoComponentProps {
   url?: string;
   large?: boolean;
   video?: SchoolLevelSubjectSeasonClasses;
-  actualTime: { duration: number; percent: number; seconds: number; };
-  setActualTime: Dispatch<SetStateAction<{ duration: number; percent: number; seconds: number; }>>;
   isLoading?: boolean;
   isPlaying?: boolean;
+  actualTime?: {
+    playedSeconds: number;
+    played: number;
+    loadedSeconds: number;
+    loaded: number;
+  };
+  setActualTime?: Dispatch<SetStateAction<{
+    playedSeconds: number;
+    played: number;
+    loadedSeconds: number;
+    loaded: number;
+  }>>;
   onPause?(info: any): void;
   onFinish?(info: any): void;
 }
 
 const VimeoComponent: React.FC<VimeoComponentProps> = ({
-  url, large = false, video, actualTime, isLoading, isPlaying, setActualTime, onPause, onFinish,
+  url,
+  large = false,
+  video,
+  isLoading,
+  isPlaying,
+  actualTime,
+  setActualTime,
+  onPause,
+  onFinish,
 }) => {
   const timeToStart = useMemo(() => {
     if (video) {
@@ -44,15 +62,17 @@ const VimeoComponent: React.FC<VimeoComponentProps> = ({
 
   const handlePauseVideo = useCallback((info: any) => {
     console.log('pause');
-    onPause ? onPause(info) : console.log('info');
-  }, [onPause]);
+    if (actualTime && actualTime.playedSeconds > timeToStart) {
+      onPause ? onPause(info) : console.log('info');
+    }
+  }, [onPause, actualTime, timeToStart]);
 
   const handleEndVideo = useCallback((info: any) => {
     onFinish ? onFinish(info) : console.log('end');
   }, [onFinish]);
 
   const handleProgressVideo = useCallback((info: any) => {
-    setActualTime(info);
+    setActualTime && setActualTime(info);
   }, [setActualTime]);
 
   useEffect(() => {
@@ -65,7 +85,7 @@ const VimeoComponent: React.FC<VimeoComponentProps> = ({
       <ReactPlayer
         url={url}
         playing={isPlaying}
-        progressInterval={5000}
+        progressInterval={2500}
         start={timeToStart}
         autoPlay={autoPlay}
         width="100%"
