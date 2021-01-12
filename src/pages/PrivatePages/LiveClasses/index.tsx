@@ -94,9 +94,9 @@ const AoVivo: React.FC = () => {
       />
       <VideoContainer>
         <VimeoComponent
-          large
           url={selectedVideo.url}
           video={selectedVideo}
+          width="70%"
           onPause={(info) => console.log(info)}
           onFinish={(info) => console.log(info)}
         />

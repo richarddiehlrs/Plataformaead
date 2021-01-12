@@ -8,13 +8,15 @@ import { Container } from './styles';
 interface ViemoComponentProps {
   url?: string;
   large?: boolean;
+  width?: string;
+  height?: string;
   video?: SchoolLiveClasses;
   onPause?(info: any): void;
   onFinish?(info: any): void;
 }
 
 const VimeoComponent: React.FC<ViemoComponentProps> = ({
-  url, large = false, video, onPause, onFinish,
+  url, large = false, width, height, video, onPause, onFinish,
 }) => {
   const handlePauseVideo = useCallback(async (info: any) => {
     console.log(info);
@@ -33,7 +35,8 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({
           onEnd={onFinish || ((info) => handleEndVideo(info))}
           onTimeUpdate={handleProgressVideo}
           style={{
-            width: '100%',
+            width: width || '100%',
+            height: height || '100%',
           }}
           responsive
           autoplay={false}

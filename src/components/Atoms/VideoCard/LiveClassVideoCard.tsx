@@ -6,7 +6,13 @@ import { SchoolLiveClasses } from 'models/SchoolModels';
 import ProgressBar from 'components/Atoms/ProgressBar';
 
 import {
-  Container, VideoCardWrapper, SelectedIconContainer, Thumb, Time, StyledProgressBar, VideoInfo,
+  Container,
+  VideoCardWrapper,
+  SelectedIconContainer,
+  Thumb,
+  Time,
+  StyledProgressBar,
+  VideoInfo,
 } from './styles';
 
 interface VideoCardProps {

@@ -6,7 +6,7 @@ export const Container = styled.div`
 
   justify-content: center;
 
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 
 `;
 
@@ -17,7 +17,7 @@ export const VideoCardWrapper = styled.div`
   width: 100%;
   padding: 12px 0;
 
-  margin-top: 16px;
+  margin-top: 6px;
 
   font-family: 'Roboto', sans-serif;
   color: #E9EAED;
@@ -68,6 +68,7 @@ export const AnnotationIndicator = styled.div`
   left: 0;
 
   margin-bottom: 4px;
+  margin-left: 4px;
 
   img{
     width: 26%;

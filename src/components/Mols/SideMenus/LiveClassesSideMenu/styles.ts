@@ -62,8 +62,7 @@ export const StyledButton = styled(Button)`
     height: 40px;
 
     svg{
-        color: red;
-        animation: liveButton 2s ease-in-out infinite alternate;
+        color: #353536;
         width: 20px;
         margin-left: 4px;
     }

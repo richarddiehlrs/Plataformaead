@@ -322,7 +322,7 @@ const RecordedClasses: React.FC = () => {
               isLoading={isLoading}
               isPlaying={isPlaying}
               actualTime={actualTime}
-              setActualTime={setActualTime}
+              setActualTime={!showAddNote && setActualTime}
               onPause={handlePauseVideo}
               onFinish={handleFinishVideo}
             />

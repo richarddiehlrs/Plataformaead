@@ -5,10 +5,11 @@ export const Container = styled.div`
 
     display: flex;
 
-    width: 100vw;
-    height: 100%;
-
     top:0;
+    right: 0;
+
+    margin-top: 24%;
+    margin-right: 14%;
     z-index: 4;
 
     .add-note-container{
@@ -24,13 +25,15 @@ export const Container = styled.div`
         align-items: center;
 
         width: 400px;
-        height: 140px;
+        height: 200px;
 
         padding: 12px 12px;
 
         border-radius: 4px;
 
         background: rgba(255,255,255,1);
+
+        box-shadow: 0 2px 10px rgba(0,0,0,0.6);
     }
 
     .add-note-header{
@@ -54,7 +57,7 @@ export const Container = styled.div`
 
         input{
             width: 100%;
-            height: 40px;
+            height: 80px;
         }
     }
 `;

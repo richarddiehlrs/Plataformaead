@@ -4,12 +4,13 @@ import { shade } from 'polished';
 interface ContainerProps {
   enabled?: boolean;
   contrast?: boolean;
+  noShaddow?: boolean;
   shimmer?: boolean;
   customStyle?: string;
 }
 
 export const Container = styled.button<ContainerProps>`
-  background: #ffd35c;
+  background: #FED44A;
   border-radius: 30px;
   height: 56px;
   border: 0;
@@ -30,9 +31,13 @@ export const Container = styled.button<ContainerProps>`
   color: #353536;
 
   &:hover {
-    background: ${shade(0.4, '#ffd35c')};
+    background: ${shade(0.4, '#FED44A')};
     cursor: pointer;
   }
+
+  ${(props) => props.noShaddow && css`
+    box-shadow: none;
+  `}
 
   ${(props) => props.enabled === false
     && css`
@@ -41,9 +46,11 @@ export const Container = styled.button<ContainerProps>`
     `}
 
   ${(props) => props.contrast && css`
-    background: rgba(255, 211, 92,0.4);
-    border: solid 2px #ffd35c;
-    color: #ffd35c;
+    background: rgba(255, 211, 92,0.14);
+    border: solid 2px #FED44A;
+    color: #FED44A;
+
+    box-shadow: none;
   `}
 
 

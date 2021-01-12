@@ -17,7 +17,7 @@ export const SelectContainer = styled.div`
   }
 `;
 
-export const ButtonContaier = styled.div`
+export const ButtonContainer = styled.div`
   padding: 8px;
 `;
 
