@@ -98,4 +98,13 @@ export const CarouselWrapper = styled.div`
 
     transition: opacity 0.4s;
   }
+
+  .awssld__prev{
+    width: 40px;
+    margin-left: 40px;
+  }
+  .awssld__next{
+    width: 40px;
+    margin-right: 40px;
+  }
 `;

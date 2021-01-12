@@ -5,7 +5,7 @@ import { useAuth } from 'hooks/auth';
 import Loading from 'components/Atoms/Loading';
 
 import {
-  Container, SelectContainer, ButtonContaier, StyledButton,
+  Container, SelectContainer, ButtonContainer, StyledButton,
 } from './styles';
 
 interface SelectItems {
@@ -45,25 +45,35 @@ const HorizontalSelect: React.FC<HorizontalSelectProps> = ({
       <SelectContainer className="hasHorizontalScroll" ref={selectContainerRef}>
         {options.length < 1 ? (
           <>
-            <ButtonContaier>
+            <ButtonContainer>
               <StyledButton enabled={false} contrast shimmer />
-            </ButtonContaier>
-            <ButtonContaier>
+            </ButtonContainer>
+            <ButtonContainer>
               <StyledButton enabled={false} contrast shimmer />
-            </ButtonContaier>
-            <ButtonContaier>
+            </ButtonContainer>
+            <ButtonContainer>
               <StyledButton enabled={false} contrast shimmer />
-            </ButtonContaier>
-            <ButtonContaier>
+            </ButtonContainer>
+            <ButtonContainer>
               <StyledButton enabled={false} contrast shimmer />
-            </ButtonContaier>
+            </ButtonContainer>
           </>
         ) : (
           <>
             {options.map((option) => (
-              <ButtonContaier key={option.key} ref={selectedValue === option.key ? selectedButtonOptionRef : buttonOptionRef}>
-                <StyledButton contrast={selectedValue !== option.key} onClick={() => { onChange(option); }}>{isLoading ? <Loading size={1.6} /> : option.value}</StyledButton>
-              </ButtonContaier>
+              <ButtonContainer
+                key={option.key}
+                ref={selectedValue === option.key ? selectedButtonOptionRef : buttonOptionRef}
+              >
+                <StyledButton
+                  contrast={selectedValue !== option.key}
+                  onClick={() => { onChange(option); }}
+                  noShaddow
+                >
+                  {isLoading ? <Loading size={1.6} /> : option.value}
+
+                </StyledButton>
+              </ButtonContainer>
             ))}
           </>
         )}

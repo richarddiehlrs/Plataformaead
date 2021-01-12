@@ -59,7 +59,7 @@ const LiveClassesSideMenu: React.FC<LiveClassesSideMenu> = ({
               </h4>
               <p>{recordedLiveClass.description}</p>
             </div>
-            <StyledButton onClick={() => handleOpenLiveClass(recordedLiveClass.url)}>
+            <StyledButton noShaddow onClick={() => handleOpenLiveClass(recordedLiveClass.url)}>
               LIVE
               <FiVideo size={20} />
             </StyledButton>
@@ -98,7 +98,7 @@ const LiveClassesSideMenu: React.FC<LiveClassesSideMenu> = ({
                 customHeight={40}
                 customRadius={30}
                 items={filters ? filters.map((filter) => ({ key: filter, value: filter })) : [{ key: '1', value: '1' }]}
-                defaultValue={firstFilter || { key: filters[0], value: filters[0] }}
+                defaultValue={firstFilter}
                 isLoading={false}
                 size="small"
                 onChange={(item) => onFilterChage(item)}

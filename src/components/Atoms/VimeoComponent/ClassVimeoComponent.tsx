@@ -24,7 +24,7 @@ interface VimeoComponentProps {
     played: number;
     loadedSeconds: number;
     loaded: number;
-  }>>;
+  }>> | false;
   onPause?(info: any): void;
   onFinish?(info: any): void;
 }

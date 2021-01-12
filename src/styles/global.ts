@@ -59,7 +59,7 @@ export default createGlobalStyle`
       /* max-width: 10px !important; */
     }
     &::-webkit-scrollbar-track {
-      background: #9198aa;
+      background: #ABB1C5;
       border-radius: 8px;
     }
     &::-webkit-scrollbar-thumb {
