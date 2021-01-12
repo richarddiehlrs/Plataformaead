@@ -4,8 +4,6 @@ export const Container = styled.div`
     position: absolute;
 
     display: flex;
-    justify-content: center;
-    align-items: center;
 
     width: 100vw;
     height: 100%;
@@ -13,20 +11,13 @@ export const Container = styled.div`
     top:0;
     z-index: 4;
 
-    background: rgba(0,0,0,0.7);
-
-    animation: loadModal .4s; 
-
-    @keyframes loadModal {
-        0%{
-            background: rgba(0,0,0,0);
-        }
-        100%{
-            background: rgba(0,0,0,0.7);
-        }
-    }
-
     .add-note-container{
+        position: relative;
+
+        margin-left: auto;
+        margin-top: 38%;
+        margin-right: 14%;
+
         display: flex;
         justify-content: flex-start;
         flex-direction: column;
@@ -37,9 +28,9 @@ export const Container = styled.div`
 
         padding: 12px 12px;
 
-        border-radius: 6px;
+        border-radius: 4px;
 
-        background: rgba(255,255,255,0.9);
+        background: rgba(255,255,255,1);
     }
 
     .add-note-header{
@@ -54,12 +45,15 @@ export const Container = styled.div`
     .add-note-body{
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-end;
 
         margin-top: 12px;
+        padding-bottom: 8px;
+
         width: 100%;
 
         input{
+            width: 100%;
             height: 40px;
         }
     }
@@ -67,28 +61,10 @@ export const Container = styled.div`
 
 export const Content = styled.div`
     position: relative;
+    width: 100%;
+    height: 100%;
 
     display: flex;
     flex-direction: column;
 
-`;
-
-export const CloseButton = styled.div`
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    svg{
-        color: rgba(224, 43, 43,1);
-        transition: .4s;
-    }
-
-    &:hover{
-        transform: scaleX(1.04) scaleY(1.04);
-
-        svg{
-            color: rgba(224, 43, 43,0.4);
-            cursor: pointer;
-        }
-    }
 `;

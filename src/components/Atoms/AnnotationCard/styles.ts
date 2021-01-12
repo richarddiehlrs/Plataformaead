@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
+import Button from 'components/Atoms/Button';
 
 export const Container = styled.div`
   display: flex;
@@ -84,5 +85,18 @@ export const StyledButton = styled.button`
 export const StyledInput = styled.input`
   background: rgba(83, 90, 108,0.5);
   border: none;
+  color: #fff;
+`;
+
+export const OptionStyledButton = styled(Button)`
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: "Raleway";
+
+  margin-left: 12px;
+
+  height: 32px;
+
   color: #fff;
 `;

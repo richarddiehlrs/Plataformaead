@@ -6,8 +6,17 @@ import { SchoolLevelSubjectSeasonClasses } from 'models/SchoolModels';
 import ExercisePreviewCard from 'components/Atoms/ExercisePreviewCard';
 import ProgressBar from 'components/Atoms/ProgressBar';
 
+import hasNotesIcon from 'assets/icons/hasNotes.png';
+
 import {
-  Container, VideoCardWrapper, SelectedIconContainer, Thumb, Time, StyledProgressBar, VideoInfo,
+  Container,
+  VideoCardWrapper,
+  SelectedIconContainer,
+  Thumb,
+  AnnotationIndicator,
+  Time,
+  StyledProgressBar,
+  VideoInfo,
 } from './styles';
 
 interface VideoCardProps {
@@ -66,6 +75,11 @@ const VideoCard: React.FC<VideoCardProps> = ({
           )}
         </SelectedIconContainer>
         <Thumb>
+          {video.notes.length > 0 && (
+            <AnnotationIndicator>
+              <img src={hasNotesIcon} alt="has-notes-icon" />
+            </AnnotationIndicator>
+          )}
           <img src={video.thumb} alt={video.classid} />
           <Time><p>{video.videoduration}</p></Time>
           <StyledProgressBar>

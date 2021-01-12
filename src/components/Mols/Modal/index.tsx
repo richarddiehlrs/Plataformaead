@@ -1,7 +1,8 @@
 import React from 'react';
-import { FiXCircle } from 'react-icons/fi';
 
-import { Container, Content, CloseButton } from './styles';
+import {
+  Container, Content,
+} from './styles';
 
 interface ModalInterface{
     onClose(): void;
@@ -10,9 +11,6 @@ interface ModalInterface{
 const Modal: React.FC<ModalInterface> = ({ children, onClose }) => (
   <Container>
     <Content>
-      <CloseButton onClick={onClose}>
-        <FiXCircle size={30} />
-      </CloseButton>
       {children}
     </Content>
   </Container>

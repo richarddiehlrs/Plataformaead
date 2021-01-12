@@ -13,9 +13,10 @@ import {
 import VimeoComponent from 'components/Atoms/VimeoComponent/ClassVimeoComponent';
 import AnnotationCard from 'components/Atoms/AnnotationCard';
 import Loading from 'components/Atoms/Loading';
-import Button from 'components/Atoms/Button';
 import Modal from 'components/Mols/Modal';
 import RecordedClassesSideMenu from 'components/Mols/SideMenus/RecordedClassesSideMenu';
+
+import closeIconGray from 'assets/icons/closeIcongray.png';
 
 import {
   Container,
@@ -25,6 +26,8 @@ import {
   AddNoteWrapper,
   StyledButton,
   NotesWrapper,
+  SaveNoteButton,
+  CloseModalButton,
 } from './styles';
 
 const RecordedClasses: React.FC = () => {
@@ -143,7 +146,7 @@ const RecordedClasses: React.FC = () => {
 
   const handleAddnote = useCallback(async (action: string) => {
     if (action === 'openModal') {
-      setIsPlaying(!isPlaying);
+      setIsPlaying(false);
       setShowAddNote(!showAddNote);
     }
     if (action === 'submitNote' && addNoteInputRef.current && addNoteInputRef.current.value !== null) {
@@ -171,7 +174,7 @@ const RecordedClasses: React.FC = () => {
         console.log(err.message);
       }
     }
-  }, [showAddNote, isPlaying, actualTime, notes, user, selectedVideoPosition, videos]);
+  }, [showAddNote, actualTime, notes, user, selectedVideoPosition, videos]);
 
   const getSchoolLevelSubjectSeasonInfo = useCallback(async (item) => {
     setVideos([]);
@@ -252,24 +255,19 @@ const RecordedClasses: React.FC = () => {
         >
           <div className="add-note-container">
             <div className="add-note-header">
-              <p>{`Anotação será adicionada no tempo: ${convertSecondsToHoursMinutesSeconds(actualTime.playedSeconds)}`}</p>
+              <p>{`${convertSecondsToHoursMinutesSeconds(actualTime.playedSeconds)}`}</p>
+              <CloseModalButton onClick={() => { setShowAddNote(false); setIsPlaying(true); }}>
+                <img className="edit" src={closeIconGray} alt="closeIcon" />
+              </CloseModalButton>
             </div>
             <div className="add-note-body">
               <input type="text" ref={addNoteInputRef} />
-              <Button
-                style={{
-                  width: '100px',
-                  height: '40px',
-                  alignSelf: 'center',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-                customStyle="success"
+              <SaveNoteButton
+                customStyle="white"
                 onClick={() => handleAddnote('submitNote')}
               >
-                {isAddingNote ? <Loading size={2} type="ellipsis" /> : 'Concluir'}
-              </Button>
+                {isAddingNote ? <Loading size={2} type="ellipsis" /> : 'SALVAR COMENTÁRIO'}
+              </SaveNoteButton>
             </div>
           </div>
         </Modal>

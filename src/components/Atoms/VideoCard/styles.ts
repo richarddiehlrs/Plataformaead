@@ -62,6 +62,18 @@ export const Thumb = styled.div`
   position: relative;
 `;
 
+export const AnnotationIndicator = styled.div`
+  position: absolute; 
+  bottom: 0;
+  left: 0;
+
+  margin-bottom: 4px;
+
+  img{
+    width: 26%;
+  }
+`;
+
 export const Time = styled.div`
   position: absolute;
   bottom: 4px;
@@ -70,7 +82,7 @@ export const Time = styled.div`
   p{
     font-size: 12px;
     padding: 4px;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.5);
     z-index:2;
   }
 `;

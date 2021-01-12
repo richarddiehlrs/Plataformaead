@@ -43,17 +43,27 @@ export const Container = styled.button<ContainerProps>`
   ${(props) => props.contrast && css`
     background: rgba(255, 211, 92,0.4);
     border: solid 2px #ffd35c;
+    color: #ffd35c;
   `}
 
 
   ${(props) => props.shimmer && css`
     animation: buttonShimmer 2s ease-in-out infinite;
   `}
-
+  
   ${(props) => props.customStyle === 'success' && css`
     background: #04b530;
     color: #fff;
-    
+  `}
+
+  ${(props) => props.customStyle === 'danger' && css`
+    background: #bf0202;
+    color: #fff;
+  `}
+
+  ${(props) => props.customStyle === 'white' && css`
+    background: #fff;
+    border: solid 2px #353536;
   `}
   
   @keyframes buttonShimmer {

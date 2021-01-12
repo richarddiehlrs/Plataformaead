@@ -81,3 +81,44 @@ export const NotesWrapper = styled.div`
     background: rgb(254,212,74) !important;
   }
 `;
+
+export const SaveNoteButton = styled(Button)`
+  width: 180px;
+  height: 40px;
+  
+  display: flex;
+  align-self: flex-end;
+  justify-content: center;
+  align-items: center;
+
+  font-family: "Raleway";
+  font-size: 12px;
+  font-weight: normal;
+
+`;
+
+export const CloseModalButton = styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-weight: bold;
+
+    margin-top: 8px;
+    margin-right: 8px;
+
+    img{
+        opacity: 1;
+        width: 20px;
+
+        transition: .4s;
+    }
+
+    &:hover{
+        transform: scaleX(1.04) scaleY(1.04);
+
+        img{
+            opacity: 0.5;
+            cursor: pointer;
+        }
+    }
+`;

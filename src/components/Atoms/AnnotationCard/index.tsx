@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useCallback, useState, useRef } from 'react';
-import { FiCheckCircle } from 'react-icons/fi';
 
 import closeIcon from 'assets/icons/closeIcon.png';
 import editIcon from 'assets/icons/editIcon.png';
@@ -10,7 +9,7 @@ import { formatTime } from 'utils/functions';
 import Loading from 'components/Atoms/Loading';
 
 import {
-  Container, OptionsWrapper, StyledButton, StyledInput,
+  Container, OptionsWrapper, StyledButton, StyledInput, OptionStyledButton,
 } from './styles';
 
 interface AnotationCardProps {
@@ -26,7 +25,7 @@ const AnnotationCard: React.FC<AnotationCardProps> = ({
   time, index, description, isNoteLoading = false, onDelete, onEdit,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [noteEditText, setNoteEditText] = useState('');
+  const [noteEditText, setNoteEditText] = useState(description);
   const noteRef = useRef<HTMLDivElement>(null);
 
   const handleDeleteNote = useCallback(async () => {
@@ -39,12 +38,14 @@ const AnnotationCard: React.FC<AnotationCardProps> = ({
       case 'input':
         break;
       case 'edit':
-        onEdit && onEdit(noteEditText, index);
+        if (description !== noteEditText) {
+          onEdit && onEdit(noteEditText, index);
+        }
         break;
       default:
         break;
     }
-  }, [onEdit, isEditing, noteEditText, index]);
+  }, [onEdit, isEditing, noteEditText, index, description]);
 
   return (
     <Container ref={noteRef}>
@@ -70,10 +71,13 @@ const AnnotationCard: React.FC<AnotationCardProps> = ({
             </>
           ) : (
             <div className="edit-note">
-              <StyledInput type="text" onChange={(e) => setNoteEditText(e.target.value)} />
-              <StyledButton className="edit-button" onClick={() => handleEditNote('edit')}>
-                <FiCheckCircle size={20} />
-              </StyledButton>
+              <StyledInput type="text" onChange={(e) => setNoteEditText(e.target.value)} value={noteEditText} />
+              <OptionStyledButton customStyle="success" onClick={() => handleEditNote('edit')}>
+                Confirmar alterações
+              </OptionStyledButton>
+              <OptionStyledButton className="cancel-button" customStyle="danger" onClick={() => setIsEditing(false)}>
+                Cancelar
+              </OptionStyledButton>
             </div>
           )}
         </>
