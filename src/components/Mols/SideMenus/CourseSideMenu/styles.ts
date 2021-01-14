@@ -14,7 +14,8 @@ export const Container = styled.div<ContainerProps>`
   flex-direction: column;
   align-items: center;
 
-  background: ${(props) => (props.customType === 'recordedClasses' ? 'rgba(0,0,0,0.01)' : '#242a39')};
+  /* background: ${(props) => (props.customType === 'recordedClasses' ? 'rgba(0,0,0,0.01)' : '#242a39')}; */
+  background: rgba(0,0,0,0.01);
 
   font-family: 'Raleway';
   color: #e7eaf2;

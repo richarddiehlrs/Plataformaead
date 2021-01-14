@@ -91,7 +91,13 @@ const RecordedClasses: React.FC = () => {
       });
       setPreviousVideoPosition(undefined);
     }
-  }, [videos, selectedVideoPosition, user.userid, mounted, previousVideoPosition, actualTime.playedSeconds]);
+  }, [videos,
+    selectedVideoPosition,
+    user.userid,
+    mounted,
+    previousVideoPosition,
+    actualTime.playedSeconds,
+  ]);
 
   const handleChangeVideo = useCallback(async (videoPosition) => {
     setPreviousVideoPosition(selectedVideoPosition);
@@ -171,6 +177,8 @@ const RecordedClasses: React.FC = () => {
         setNotes(updatedNotes);
         setShowAddNote(false);
       } catch (err) {
+        setIsAddingNote(false);
+        setShowAddNote(false);
         console.log(err.message);
       }
     }

@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { FiChevronRight, FiCheck } from 'react-icons/fi';
+import React, { useMemo } from 'react';
+import { FiChevronRight } from 'react-icons/fi';
 
 import { SchoolLevelSubjectSeasonClasses } from 'models/SchoolModels';
 
@@ -34,7 +34,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
   video,
   onSelect,
 }) => {
-  const [localAlreadyWatched, setLocalAlreadyWatched] = useState(false);
+  // const [localAlreadyWatched, setLocalAlreadyWatched] = useState(false);
 
   const videoProgress = useMemo(() => {
     const videoDuration = video.videoduration;
@@ -56,7 +56,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
         totalSeconds = Number(vdMinutes) * 60 + Number(vdSeconds);
       }
       progress = Math.round(((secondsWatched * 100) / totalSeconds));
-      progress >= 98 && setLocalAlreadyWatched(true);
+      // progress >= 98 && setLocalAlreadyWatched(true);
       return progress;
     }
     return 0;
@@ -68,11 +68,11 @@ const VideoCard: React.FC<VideoCardProps> = ({
       <VideoCardWrapper onClick={() => { onSelect(video.position); }}>
         <SelectedIconContainer>
           {(isWatching) && (<FiChevronRight size={22} />)}
-          {(alreadyWatched || localAlreadyWatched) && (
+          {/* {(alreadyWatched || localAlreadyWatched) && (
             <div className="checked-container">
               <FiCheck className="checked" size={22} color="#ffd35c" style={{ fontWeight: 'bolder' }} />
             </div>
-          )}
+          )} */}
         </SelectedIconContainer>
         <Thumb>
           {video.notes.length > 0 && (
