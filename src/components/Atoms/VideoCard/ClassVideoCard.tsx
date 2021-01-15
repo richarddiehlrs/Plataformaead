@@ -3,6 +3,8 @@ import { FiChevronRight } from 'react-icons/fi';
 
 import { SchoolLevelSubjectSeasonClasses } from 'models/SchoolModels';
 
+import { useProgress } from 'hooks/progress';
+
 import ExercisePreviewCard from 'components/Atoms/ExercisePreviewCard';
 import ProgressBar from 'components/Atoms/ProgressBar';
 
@@ -35,15 +37,23 @@ const VideoCard: React.FC<VideoCardProps> = ({
   onSelect,
 }) => {
   // const [localAlreadyWatched, setLocalAlreadyWatched] = useState(false);
+  const { videos } = useProgress();
 
   const videoProgress = useMemo(() => {
     const videoDuration = video.videoduration;
     if (video && video.schoollevelsubjectseasonclassuser
       && video.schoollevelsubjectseasonclassuser.videowatched) {
-      const timeWatched = video.schoollevelsubjectseasonclassuser.videowatched;
+      // const timeWatched = Object.keys(videos)[video.position] === video.url
+      // ? videos[video.url]
+      // : video.schoollevelsubjectseasonclassuser.videowatched;
+      let timeWatched = video.schoollevelsubjectseasonclassuser.videowatched;
+
       let vdHours; let vdMinutes; let vdSeconds;
       let totalSeconds;
       let progress = 0;
+      if (Number(timeWatched.split(':')[2]) > 0) {
+        timeWatched = videos[video.url];
+      }
 
       const [twHours, twMinutes, twSeconds] = timeWatched.split(':');
       const secondsWatched = (Number(twHours) * 60 * 60) + Number(twMinutes) * 60 + Number(twSeconds);
@@ -55,13 +65,15 @@ const VideoCard: React.FC<VideoCardProps> = ({
         [vdMinutes, vdSeconds] = videoDuration.split(':');
         totalSeconds = Number(vdMinutes) * 60 + Number(vdSeconds);
       }
+      console.log(timeWatched);
+
       progress = Math.round(((secondsWatched * 100) / totalSeconds));
       // progress >= 98 && setLocalAlreadyWatched(true);
       return progress;
     }
     return 0;
-  },
-  [video]);
+  }, // eslint-disable-next-line react-hooks/exhaustive-deps
+  [video, videos, videos[video.url]]);
 
   return (
     <Container>
@@ -80,7 +92,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
               <img src={hasNotesIcon} alt="has-notes-icon" />
             </AnnotationIndicator>
           )}
-          <img src={video.thumb} alt={video.classid} />
+          <img className="video-thumb" src={video.thumb} alt={video.classid} />
           <Time><p>{video.videoduration}</p></Time>
           <StyledProgressBar>
             <ProgressBar at={videoProgress} customHeight={4} />

@@ -81,7 +81,7 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({
   }, [timeToStart]);
 
   return (
-    <Container large={large}>
+    <Container large={large} from="course">
       {url && (
         <ReactPlayer
           url={url}

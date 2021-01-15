@@ -80,7 +80,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
               <img src={hasNotesIcon} alt="has-notes-icon" />
             </AnnotationIndicator>
           )}
-          <img src={video.thumb} alt={video.movieid} />
+          <img className="video-thumb" src={video.thumb} alt={video.movieid} />
           <Time><p>{video.videoduration}</p></Time>
           <StyledProgressBar>
             <ProgressBar at={videoProgress} customHeight={4} />

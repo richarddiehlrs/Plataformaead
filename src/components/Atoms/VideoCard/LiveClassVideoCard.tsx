@@ -37,7 +37,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
         )} */}
       </SelectedIconContainer>
       <Thumb>
-        <img src={video.thumb} alt={video.classid} />
+        <img src={video.thumb} className="video-thumb" alt={video.classid} />
         <Time><p>{video.videoduration}</p></Time>
       </Thumb>
       <VideoInfo>

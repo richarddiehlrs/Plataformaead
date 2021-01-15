@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface ContainerProps{
   large: boolean;
+  from?: string;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -11,13 +12,19 @@ export const Container = styled.div<ContainerProps>`
 
   border-radius: 12px;
 
-  width: 100%;
-  height: 100%;
-
+  width: 78%;
 
   transition: width .4s;
 
   ${(props) => props.large && css`
     width: 100%;
+  `}
+
+  ${(props) => props.from === 'course' && css`
+    height: 100%;
+  `}
+
+  ${(props) => props.from === 'class' && css`
+    height: 100%;
   `}
 `;

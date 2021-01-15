@@ -14,7 +14,7 @@ import { Container, VideoContainer } from './styles';
 const AoVivo: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedSubjectPosition, setSelectedSubjectPosition] = useState(0);
-  const [firstFilter, setFirstFilter] = useState({ key: '', value: '' });
+  // const [firstFilter, setFirstFilter] = useState({ key: '', value: '' });
 
   const [selectedVideo, setSelectedVideo] = useState<SchoolLiveClasses>({} as SchoolLiveClasses);
   const [schoolLiveClassesSubject, setSchoolLiveClassesSubject] = useState<SchoolLiveSubjects[]>([]);
@@ -23,6 +23,13 @@ const AoVivo: React.FC = () => {
   const [liveClasses, setLiveClasses] = useState<SchoolLiveClasses[]>([]);
 
   const { user } = useAuth();
+
+  const firstFilter = useMemo(() => {
+    if (recordedLiveClasses && recordedLiveClasses[0] && recordedLiveClasses[0].filter) {
+      return ({ key: recordedLiveClasses[0].filter, value: recordedLiveClasses[0].filter });
+    }
+    return ({ key: '', value: '' });
+  }, [recordedLiveClasses]);
 
   const getLiveClasses = useCallback(async () => {
     setIsLoading(true);
@@ -35,7 +42,6 @@ const AoVivo: React.FC = () => {
     setIsLoading(true);
     const response = await api.get<SchoolLiveClasses[]>(`/school/live/level/subject/class?schoolid=${user.schoolid}&levelid=${user.levelid}&subjectid=${subjectid}`);
     setSelectedVideo(response.data[0]);
-    setFirstFilter({ key: response.data[0].filter, value: response.data[0].filter });
     setRecordedLiveClasses(response.data);
     setIsLoading(false);
   }, [user]);
@@ -61,6 +67,7 @@ const AoVivo: React.FC = () => {
     const filteredVideos = recordedLiveClasses.filter((recordedLiveClass) => (
       recordedLiveClass.filter === item.key) && recordedLiveClass);
     setFilteredRecordedLiveClasses(filteredVideos);
+    setSelectedVideo(filteredVideos[0]);
   }, [recordedLiveClasses]);
 
   const filters = useMemo(() => {
@@ -96,7 +103,6 @@ const AoVivo: React.FC = () => {
         <VimeoComponent
           url={selectedVideo.url}
           video={selectedVideo}
-          width="70%"
           onPause={(info) => console.log(info)}
           onFinish={(info) => console.log(info)}
         />

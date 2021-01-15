@@ -40,7 +40,6 @@ export const VideoContainer = styled.div`
 export const AnnotationsContainer = styled.div<AnnotationsContainerProps>`
   display: flex;
   flex-direction: column;
-  padding: 32px 128px;
   position: relative;
 
   width: 100%;

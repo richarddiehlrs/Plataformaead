@@ -89,7 +89,7 @@ const LiveClassesSideMenu: React.FC<LiveClassesSideMenu> = ({
           </div>
           <div className="date-selection">
             <p>Filtre por datas</p>
-            {!isLoading && filters && (
+            {!isLoading && filters && firstFilter?.key !== '' && (
               <Dropdown
                 title="Selecione uma data"
                 arrowColor="#ffff"

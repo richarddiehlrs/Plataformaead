@@ -6,6 +6,7 @@ import { CancelTokenSource } from 'axios';
 import { convertSecondsToHoursMinutesSeconds } from 'utils/functions';
 import api from 'services/api';
 import { useAuth } from 'hooks/auth';
+import { useProgress } from 'hooks/progress';
 import {
   SchoolLevel, SchoolLevelSubject, SchoolLevelSubjectSeasonClasses, ClassesNotes,
 } from 'models/SchoolModels';
@@ -59,12 +60,19 @@ const RecordedClasses: React.FC = () => {
   const [previousVideoPosition, setPreviousVideoPosition] = useState<number>();
 
   const { user } = useAuth();
+  const { setVideos: setProgressVideos, setProgress } = useProgress();
 
   const cancelLevelIdReq = useRef<CancelTokenSource>({} as CancelTokenSource);
   const cancelSubjectsReq = useRef<CancelTokenSource>({} as CancelTokenSource);
   const cancelSubejectSeasonReq = useRef<CancelTokenSource>({} as CancelTokenSource);
   const cancelSubjectSeasonInfoReq = useRef<CancelTokenSource>({} as CancelTokenSource);
   const addNoteInputRef = useRef<HTMLInputElement>(null);
+
+  useMemo(() => {
+    if (videos.length > 1 && videos[selectedVideoPosition] && videos[selectedVideoPosition].url) {
+      setProgress(videos[selectedVideoPosition].url, actualTime.playedSeconds);
+    }
+  }, [actualTime, videos, selectedVideoPosition, setProgress]);
 
   useMemo(() => {
     if (videos[selectedVideoPosition] && videos[selectedVideoPosition].notes) {
@@ -102,6 +110,12 @@ const RecordedClasses: React.FC = () => {
   const handleChangeVideo = useCallback(async (videoPosition) => {
     setPreviousVideoPosition(selectedVideoPosition);
     setSelectedVideoPosition(videoPosition);
+    setActualTime({
+      playedSeconds: -1,
+      played: -1,
+      loadedSeconds: -1,
+      loaded: -1,
+    });
   }, [setSelectedVideoPosition, selectedVideoPosition]);
 
   const handleFinishVideo = useCallback((info) => {
@@ -191,11 +205,18 @@ const RecordedClasses: React.FC = () => {
       const response = await api.get<SchoolLevelSubjectSeasonClasses[]>(`/school/level/subject/season/class?schoolid=${user.schoolid}&levelid=${selectedSchoolLevel.key}&subjectid=${selectedSchoolSubject.key}&seasonid=${item.key}&userid=${user.userid}`, {
         cancelToken: cancelSubjectSeasonInfoReq.current.token,
       });
+      setProgressVideos(response.data);
       setVideos(response.data);
     } catch (err) {
       console.log(err.message);
     }
-  }, [selectedSchoolLevel, user, selectedSchoolSubject, cancelSubjectSeasonInfoReq]);
+  }, [
+    selectedSchoolLevel,
+    user,
+    selectedSchoolSubject,
+    cancelSubjectSeasonInfoReq,
+    setProgressVideos,
+  ]);
 
   const getSchoolLevelSubjectSeason = useCallback(async (item) => {
     setVideos([]);
