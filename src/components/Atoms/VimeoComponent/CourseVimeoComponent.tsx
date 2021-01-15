@@ -1,5 +1,5 @@
 import React, {
-  useCallback, useMemo, useRef, useEffect,
+  useCallback, useMemo, useRef, useEffect, Dispatch, SetStateAction,
 } from 'react';
 import ReactPlayer from 'react-player/vimeo';
 // import Vimeo from '@u-wave/react-vimeo';
@@ -12,14 +12,34 @@ interface ViemoComponentProps {
   url?: string;
   large?: boolean;
   video?: CourseSeasonMovie;
-  isPlaying?: boolean;
   isLoading?: boolean;
+  isPlaying?: boolean;
+  actualTime?: {
+    playedSeconds: number;
+    played: number;
+    loadedSeconds: number;
+    loaded: number;
+  };
+  setActualTime?: Dispatch<SetStateAction<{
+    playedSeconds: number;
+    played: number;
+    loadedSeconds: number;
+    loaded: number;
+  }>> | false;
   onPause?(info: any): void;
   onFinish?(info: any): void;
 }
 
 const VimeoComponent: React.FC<ViemoComponentProps> = ({
-  url, large = false, video, onPause, onFinish, isPlaying, isLoading,
+  url,
+  large = false,
+  video,
+  isLoading,
+  isPlaying,
+  actualTime,
+  setActualTime,
+  onPause,
+  onFinish,
 }) => {
   const vimeoPlayerReff = useRef<any>(null);
 
@@ -43,26 +63,32 @@ const VimeoComponent: React.FC<ViemoComponentProps> = ({
 
   const handlePauseVideo = useCallback((info: any) => {
     console.log('pause');
-    onPause ? onPause(info) : console.log('info');
-  }, [onPause]);
+    if (actualTime && actualTime.playedSeconds > timeToStart) {
+      onPause ? onPause(info) : console.log('info');
+    }
+  }, [onPause, actualTime, timeToStart]);
 
-  const handleEndVideo = useCallback((info: any) => { }, []);
+  const handleEndVideo = useCallback((info: any) => {
+    onFinish ? onFinish(info) : console.log('end');
+  }, [onFinish]);
 
-  const handleProgressVideo = useCallback((info: any) => { }, []);
+  const handleProgressVideo = useCallback((info: any) => {
+    setActualTime && setActualTime(info);
+  }, [setActualTime]);
 
   useEffect(() => {
     vimeoPlayerReff.current?.seekTo(timeToStart);
   }, [timeToStart]);
 
   return (
-    <Container large={large}>
+    <Container large={large} from="course">
       {url && (
         <ReactPlayer
           url={url}
           playing={isPlaying}
           width="100%"
           height="100%"
-          progressInterval={5000}
+          progressInterval={1300}
           start={timeToStart}
           autoPlay={autoPlay}
           controls

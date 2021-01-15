@@ -24,8 +24,9 @@ export const VideoCardWrapper = styled.div`
 
   transition: 0.4s;
 
-  img{
+  .video-thumb{
     width: 100px;
+    height: 56px; 
   }
 
   &:hover{
@@ -106,6 +107,7 @@ export const VideoInfo = styled.div`
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 4px;
+    padding: 0 !important;
   }
   p{
     font-size: 12px;

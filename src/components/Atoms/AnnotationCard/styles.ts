@@ -29,7 +29,7 @@ export const Container = styled.div`
   }
 
   .edit-note{
-    width: 28%;
+    width: 30%;
     display: flex;
     align-items: center;
   }
@@ -86,6 +86,7 @@ export const StyledInput = styled.input`
   background: rgba(83, 90, 108,0.5);
   border: none;
   color: #fff;
+  height: 30px;
 `;
 
 export const OptionStyledButton = styled(Button)`
@@ -93,6 +94,7 @@ export const OptionStyledButton = styled(Button)`
   font-size: 12px;
   font-weight: bold;
   font-family: "Raleway";
+  margin-top: 0;
 
   margin-left: 12px;
 

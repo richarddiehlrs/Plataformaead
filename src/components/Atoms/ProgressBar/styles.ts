@@ -8,6 +8,7 @@ interface ContainerProps {
 export const Container = styled.div<ContainerProps>`
   width: 100%;
 
+
   ${(props) => (props.customHeight ? css`
     height:${props.customHeight}px;
   ` : css`
@@ -26,6 +27,8 @@ export const Container = styled.div<ContainerProps>`
   .progress-bar{
     width: ${(props) => props.at}%;
     height: 100%;
+    transition: .4s;
+
 
     border-radius: 12px;
 
